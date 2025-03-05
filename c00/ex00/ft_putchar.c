@@ -3,24 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adeimlin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 14:47:51 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/02/25 14:51:57 by adeimlin         ###   ########.fr       */
+/*   Created: 2025/03/05 15:17:41 by adeimlin          #+#    #+#             */
+/*   Updated: 2025/03/05 15:20:12 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-void ft_putchar(char c)
+void	ft_putchar (char c)
 {
 	write(1, &c, 1);
 }
 
-/*
-int main(void)
-{
-	char test = 'a';
-	ft_putchar(a);
-}
-*/
+// int main(void)
+// {
+// 	char test = 'a';
+// 	ft_putchar(test);
+// }

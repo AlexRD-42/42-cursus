@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_reverse_alphabet.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adeimlin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:59:12 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/02/25 16:49:01 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:22:56 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,17 @@
 
 void ft_print_alphabet(void)
 {
-}
-
-int main (void)
-{
-	char z;
+	char	z;
+	
 	z = 'z';
-
-	while (z != ('a' - 1))
+	while (z >= 'a')
 	{
 		write(1, &z, 1);
 		z--;
 	}
+}
+
+int main (void)
+{
+	ft_print_alphabet();
 }
