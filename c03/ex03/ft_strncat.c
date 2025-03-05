@@ -6,35 +6,33 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:29:06 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/02/27 16:30:56 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/05 21:20:10 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 
-char *ft_strncat(char *dest, char *src, unsigned int nb)
+char	*ft_strncat(char *dest, char *src, unsigned int nb)
 {
-    while (*dest != 0)
-        dest++;
-
-    while (*src != 0 && nb > 0)
-    {
-        *dest = *src;
-        dest++;
-        src++;
-        nb--;
-    }
-    *dest = 0;
-
-    return dest;
+	while (*dest != 0)
+		dest++;
+	while (*src != 0 && nb > 0)
+	{
+		*dest = *src;
+		dest++;
+		src++;
+		nb--;
+	}
+	*dest = 0;
+	return (dest);
 }
 
-int main(void)
-{
-    char a[] = "abc";
-    char b[] = "defg";
+// int main(void)
+// {
+//     char a[] = "abc";
+//     char b[] = "defg";
 
-    printf("%s\n", a);
-    ft_strncat(a, b, 2);
-    printf("%s\n", a);
-}
+//     printf("%s\n", a);
+//     ft_strncat(a, b, 2);
+//     printf("%s\n", a);
+// }

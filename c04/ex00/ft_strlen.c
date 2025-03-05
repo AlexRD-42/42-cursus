@@ -6,28 +6,28 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:15:51 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/02/27 17:17:28 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/05 21:24:30 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 
-int ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-    int i;
-    
-    i = 0;
-    while (*str != 0)
-    {
-        str++;
-        i++;
-    }
-    return i;
+	int	i;
+
+	i = 0;
+	while (*str != 0)
+	{
+		str++;
+		i++;
+	}
+	return (i);
 }
 
-int main(void)
-{
-    char a[] = "abcdef";
+// int main(void)
+// {
+//     char a[] = "abcdef";
 
-    printf ("%d", ft_strlen(a));
-}
+//     printf ("%d", ft_strlen(a));
+// }
