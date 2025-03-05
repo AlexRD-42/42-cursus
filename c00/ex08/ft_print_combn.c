@@ -5,43 +5,53 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 18:42:39 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/02/28 12:33:28 by adeimlin         ###   ########.fr       */
+/*   Created: 2025/03/05 15:30:44 by adeimlin          #+#    #+#             */
+/*   Updated: 2025/03/05 18:50:21 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-void	func(int n)
+void	ft_print_str(int n, char *str, int flag)
 {
-	int		k;
-	char	comb[11];
+	char	num;
 
-	k = 0;
-	comb[10] = ',';
-	while (k < n)
+	n--;
+	while (n >= 0)
 	{
-		comb[k] = '0' + k;
-		k++;
+		num = str[n] + '0';
+		n--;
+		write(1, &num, 1);
 	}
-	k--;
-	while (!(comb[n - 1] == '9' && comb[0] == (10 - n + '0')))
+	if (flag)
+		write(1, ", ", 2);
+}
+
+void	ft_print_combn(int n)
+{
+	char	comb[10];
+	int		i;
+
+	if (n <= 0 || n >= 10)
+		return ;
+	i = 0;
+	while (i < n)
+		comb[i++] = n - i;
+	comb[0] -= 1;
+	i = 0;
+	while (!((comb[n - 1] == 10 - n) && (comb[0] == 9)))
 	{
-		while (comb[k] == (10 - n + k + '0') && k > 0)
-			k--;
-		comb[k]++;
-		while (k < (n - 1))
-		{
-			comb[k + 1] = comb[k] + 1;
-			k++;
-		}
-		write(1, &comb[0], n);
-		if (!(comb[n - 1] == '9' && comb[0] == (10 - n + '0')))
-			write(1, &comb[10], 1);
+		while (comb[i] == (9 - i) && i < n)
+			i++;
+		comb[i]++;
+		while (i > 0)
+			comb[i-- - 1] = comb[i] + 1;
+		ft_print_str(n, &comb[0], !((comb[n - 1] == 10 - n) && (comb[0] == 9)));
 	}
 }
 
-int	main(void)
+int main ()
 {
-	func(3);
+	int n;
+	ft_print_combn(3);
 }

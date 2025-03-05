@@ -5,50 +5,54 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 18:39:08 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/02/27 19:09:28 by adeimlin         ###   ########.fr       */
+/*   Created: 2025/03/05 18:41:29 by adeimlin          #+#    #+#             */
+/*   Updated: 2025/03/05 18:50:53 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdio.h>
 
-void ft_putnbr(int nb)
+void	ft_putnbr(int nb)
 {
-    int x;
-    int modVar;
-    int num;
+	char	a[11];
+	char	i;
+	int		sign;
 
-    if (nb == -2147483648)
-    {
-        write(1, "-2147483648", 11);
-        return;
-    }
-        
-    modVar = 1;
-    num = 0;
-    if (nb < 0)
-    {
-        write(1, "-", 1);
-        nb = -nb;
-    }
-    x = nb;
-    while (x > 9)
-    {
-        x = x / 10;
-        modVar = modVar * 10;
-    }
-    while (modVar > 0)
-    {
-        num = ((nb / modVar) % 10) + '0';
-        modVar = modVar / 10;
-        write(1, &num, 1);
-    }
+	sign = 1;
+	if (nb == 0)
+		write(1, "0", 1);
+	else if (nb < 0)
+	{
+		write(1, "-", 1);
+		sign = -1;
+	}
+	i = 0;
+	while (nb != 0)
+	{
+		a[i] = sign * (nb % 10) + '0';
+		nb = nb / 10;
+		i++;
+	}
+	i--;
+	while (i >= 0)
+		write(1, &a[i--], 1);
 }
 
 int main (void)
 {
-    int n = -2147483647;
+    ft_putnbr(-2147483648);
+    write(1, ", ", 2);
+    ft_putnbr(2147483647);
+    write(1, ", ", 2);
     ft_putnbr(0);
-    printf ("\n");
+    write(1, ", ", 2);
+    ft_putnbr(-0);
+    write(1, ", ", 2);
+    ft_putnbr(98750);
+    write(1, ", ", 2);
+    ft_putnbr(-98750);
+    write(1, ", ", 2);
+    ft_putnbr(-1);
+    write(1, ", ", 2);
+    ft_putnbr(9);
 }
