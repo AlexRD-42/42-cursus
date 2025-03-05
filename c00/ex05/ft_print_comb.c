@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:59:21 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/05 18:51:01 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:02:02 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ void	ft_print_comb(void)
 int main ()
 {
 	int n;
-	ft_print_combn();
+	ft_print_comb();
 }

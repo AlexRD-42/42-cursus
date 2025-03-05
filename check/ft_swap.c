@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 19:30:37 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/02/26 19:31:23 by adeimlin         ###   ########.fr       */
+/*   Created: 2025/03/05 19:17:03 by adeimlin          #+#    #+#             */
+/*   Updated: 2025/03/05 19:31:45 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-
-int main(void)
+void	ft_swap(int *a, int *b)
 {
-	int	a;
-	int	b;
-	
-	
-	a = 0;
-	
-	printf("asda %d", a);
-	a = sizeof(b);
-	for (int i=0;i<a;i++)
-		b = 0;
+	int	c;
+
+	c = *a;
+	*a = *b;
+	*b = c;
 }
 
+// #include <stdio.h>
+// int main (void)
+// {
+// 	int a = 2;
+// 	int b = 4;
+
+// 	printf("(%d, %d) ", a,b);
+// 	ft_swap(&a, &b);
+// 	printf("(%d, %d)", a,b);
+// }

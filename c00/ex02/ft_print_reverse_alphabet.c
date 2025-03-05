@@ -6,13 +6,13 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:59:12 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/05 18:51:13 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:01:47 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-void	ft_print_alphabet(void)
+void	ft_print_reverse_alphabet(void)
 {
 	char	z;
 
@@ -26,5 +26,5 @@ void	ft_print_alphabet(void)
 
 int main (void)
 {
-	ft_print_alphabet();
+	ft_print_reverse_alphabet();
 }

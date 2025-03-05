@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/05 19:17:22 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/05 19:46:02 by adeimlin         ###   ########.fr       */
+/*   Created: 2025/03/05 19:17:29 by adeimlin          #+#    #+#             */
+/*   Updated: 2025/03/05 19:31:57 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
-void	ft_putstr(char *str)
+int	ft_strlen(char *str)
 {
-	while (*str >= 32 && *str <= 127)
+	int	i;
+
+	i = 0;
+	while (*str >= 33 && *str <= 126)
 	{
-		write(1, str, 1);
+		i++;
 		str++;
 	}
+	return (i);
 }
 
 // #include <stdio.h>
 // int main(void)
 // {
-// 	char str[5] = {'a', 'b', 'c', 0, 'e'};
-// 	ft_putstr(&str[0]);	
+// 	char str[4] = {'a', 'b', 'c', 'd'};
+// 	int i;
+// 	i = ft_strlen(&str[0]);
+// 	printf("%d", i);
 // }

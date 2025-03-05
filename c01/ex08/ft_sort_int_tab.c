@@ -5,12 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 15:43:12 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/01 18:25:21 by adeimlin         ###   ########.fr       */
+/*   Created: 2025/03/05 19:17:39 by adeimlin          #+#    #+#             */
+/*   Updated: 2025/03/05 19:50:39 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdio.h>
 
 void	ft_sort_int_tab(int *tab, int size)
 {
@@ -19,16 +17,16 @@ void	ft_sort_int_tab(int *tab, int size)
 	int	temp;
 
 	i = 0;
-	while (i < size)
+	while (i < size - 1)
 	{
-		j = 0;
+		j = i + 1;
 		while (j < size)
 		{
-			if (*(tab + i) < *(tab + j))
+			if (tab[i] > tab[j])
 			{
-				temp = *(tab + i);
-				*(tab + i) = *(tab + j);
-				*(tab + j) = temp;
+				temp = tab[i];
+				tab[i] = tab[j];
+				tab[j] = temp;
 			}
 			j++;
 		}
@@ -36,14 +34,11 @@ void	ft_sort_int_tab(int *tab, int size)
 	}
 }
 
-int main(void)
-{
-
-	int a[] = {1, 4, 5, 2, 3, 7, 9, 13, -1, -5};
-	
-	ft_sort_int_tab(&a[0], 10);
-
-
-	for (int i=0;i<10;i++)
-		printf("%d,", a[i]);
-}
+// #include <stdio.h>
+// int main(void)
+// {
+// 	int a[] = {1, 4, 5, 2, 3, 7, 9, 13, -1, -5};
+// 	ft_sort_int_tab(&a[0], 10);
+// 	for (int i=0;i<10;i++)
+// 		printf("%d,", a[i]);
+// }

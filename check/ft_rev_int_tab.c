@@ -1,42 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_rev_int_tab.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 17:26:22 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/05 17:12:53 by adeimlin         ###   ########.fr       */
+/*   Created: 2025/03/05 19:17:34 by adeimlin          #+#    #+#             */
+/*   Updated: 2025/03/05 19:32:59 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-
-void    ft_putnbr(int nb)
+void	ft_rev_int_tab(int *tab, int size)
 {
-    int x = nb, count = 0, count2;
+	int	arr[size];
+	int	i;
 
-    while (x >=1)
-    {
-        x = x/10;
-        count++;
-    }
-    count2 = count;
-    count--;
-    char c[count];
-    while (count >=0)
-    {
-        c[count] = nb%10 + '0';
-        nb = nb/10;
-        count--;
-    }
-    write(1, &c[0], count2);
+	i = 0;
+	while (i < size)
+	{
+		arr[i] = *tab;
+		i++;
+		tab++;
+	}
+	tab--;
+	i = 0;
+	while (i < size)
+	{
+		*tab = arr[i];
+		i++;
+		tab--;
+	}
 }
 
-int main(void)
-{
-    int x = -2147483648;
-
-    ft_putnbr(x);
-}
+// #include <stdio.h>
+// int main(void)
+// {
+// 	int a[5] = {1, 2, 3, 4, 5};
+// 	ft_rev_int_tab(&a[0], 5);
+// 	for (int i=0;i<5;i++)
+// 		printf("%d,", a[i]);
+// }
