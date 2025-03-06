@@ -6,11 +6,9 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:29:06 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/05 21:20:10 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:45:25 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdio.h>
 
 char	*ft_strncat(char *dest, char *src, unsigned int nb)
 {
@@ -27,6 +25,8 @@ char	*ft_strncat(char *dest, char *src, unsigned int nb)
 	return (dest);
 }
 
+// #include <stdio.h>
+// #include <string.h>
 // int main(void)
 // {
 //     char a[] = "abc";

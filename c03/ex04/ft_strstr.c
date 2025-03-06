@@ -6,15 +6,9 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:31:35 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/05 21:22:19 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:46:26 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdio.h>
-
-// iterations should be str1Size - str2Size
-// second loop should be size of str2Size
-// return is a pointer to the beginning of substring found
 
 int	ft_strlen(char *str)
 {
@@ -57,6 +51,11 @@ char	*ft_strstr(char *str, char *to_find)
 	return ('0');
 }
 
+// #include <string.h>
+// #include <stdio.h>
+// iterations should be str1Size - str2Size
+// second loop should be size of str2Size
+// return is a pointer to the beginning of substring found
 // int main(void)
 // {
 //     char str[] = "ddkahCt";

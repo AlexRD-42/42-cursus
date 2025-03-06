@@ -6,78 +6,100 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:58:23 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/04 15:58:23 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:36:04 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <unistd.h>
 
-// For a queen to reach in one move, there are three checks (x, y)
-// Assume Queen 0 is at (3, 2), then no other queen can be at: 
-// Row 3 and (3, 2) diagonal movement respecting 1 >= num <= 10
-// (3, :), (:, 2), (2, 1) ~ (10, 9)
-
-// Function receives WIP solution and validates it checking until index
-char ft_abs(char num)
+void ft_helper(char *a, char *b, int flag) 
 {
-    if (num >= 0)
-        return (num);
-    else
-        return (-num);
+	char	i;
+	char	letter;
+
+	if (flag == 0)
+	{
+		char temp = *a;
+		*a = *b;
+		*b = temp;
+	}
+	else
+	{
+		i = 0;
+		while (i < 10)
+		{
+			letter = a[i] + '0';
+			write(1, &letter, 1);
+			i++;
+		}
+		write(1, "\n", 1);
+	}
 }
 
-int is_valid(char col[10])
+char is_valid(char col[10], char k)
 {
-    char i;
-    char k;
+    char 	i;
 
-    k = 0;
     while (k < 10)
     {
         i = 0;
-        while (i < 10)
+        while (i < k)
         {
-            if (k != i)
-                if (col[k] == col[i])
-                    return (0);
-                else if (ft_abs(col[k] - col[i]) == ft_abs(k - i))
-                    return (0);
+            if (k != i && (col[k] == col[i] || (col[k] - col[i] == k - i)))
+                return (0);
+			if (k != i && (col[k] - col[i] == i - k))
+                return (0);
             i++;
         }
         k++;
     }
-    i = 0;
-    while (i < 10)
-    {
-        col[i] += '0';
-        write(1, &col[i], 1);
-        i++;
-    }
     return (1);
 }
 
+void	ft_permute(char col[10], char start, char end, int *counter)
+{
+	char	i;
 
-// int solve_puzzle(int n)
-// {
-//     if (n == -1)
-//         return (-1);
+    if (start == end) 
+	{
+        if (is_valid(col, 0))
+		{
+			ft_helper(col, 0, 1);
+			*counter += 1;
+		}
+        return;
+    }
+	i = start;
+	while (i <= end)
+	{
+        ft_helper(&col[start], &col[i], 0);
+        ft_permute(col, start + 1, end, counter);
+        ft_helper(&col[start], &col[i], 0);
+		i++;
+    }
+}
 
-// }
+int	ft_ten_queens_puzzle(void)
+{
+	char	i;
+	char	col[10];
+	int		counter;
 
-// int ft_ten_queens_puzzle(void)
-// {
-//     if ()
-// }
+	i = 0;
+	counter = 0;
+	while (i < 10)
+	{
+		col[i] = i;
+		i++;
+	}
+	ft_permute(col, 0, 9, &counter);
+	return (counter);
+}
 
+#include <stdio.h>
 int main()
 {
-    char sol1[10] = {4,6,0,9,5,8,2,7,3,1};
-    char sol2[10] = {0,2,5,7,9,4,8,1,3,6};
-    char sol3[10] = {0,2,5,8,6,9,3,1,4,7};
-    char sol4[10] = {4,6,0,5,7,1,3,8,2,9};
-    char sol5[10] = {9,7,4,2,0,5,1,8,6,3};
-
-    is_valid(sol1);
-    // printf("%d, %d, %d, %d, %d\n", is_valid(sol1), is_valid(sol2), is_valid(sol3), is_valid(sol4), is_valid(sol5));
+	int x;
+	x = ft_ten_queens_puzzle();
+	printf("\n%d\n", x);
 }

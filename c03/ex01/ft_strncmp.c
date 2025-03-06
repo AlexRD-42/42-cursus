@@ -6,13 +6,9 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:15:53 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/05 21:19:38 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:44:43 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
 
 int	ft_strncmp(char *s1, char *s2, unsigned int n)
 {
@@ -32,13 +28,13 @@ int	ft_strncmp(char *s1, char *s2, unsigned int n)
 	return (flag);
 }
 
+// #include <stdio.h>
+// #include <string.h>
 // int main(void)
 // {
 //     char s1[] = "123456";
 //     char s2[] = "123459";
 //     unsigned int n = 6;
-
 //     printf ("%d, ", ft_strncmp(s1, s2, n));
 //     printf ("%d\n", strncmp(s1, s2, n));
-
 // }

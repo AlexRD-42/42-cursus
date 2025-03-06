@@ -6,22 +6,20 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 19:30:37 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/05 20:45:26 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:49:31 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 char	*ft_strcpy(char *dest, char *src)
 {
 	char	*start;
-	int		i;
 
-	i = 0;
+	start = dest;
 	while (*src != '\0')
 	{
 		*dest = *src;
 		src++;
 		dest++;
-		i++;
 	}
 	*dest = '\0';
 	return (start);

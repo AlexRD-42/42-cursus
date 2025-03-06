@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:34:18 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/05 21:10:52 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:54:48 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,29 @@
 	// TODO: remember taht numbers dont capitalize
 char	*ft_strcapitalize(char *str)
 {
-	int	flag;
-	int	cap;
+	int		cap;
+	char	*start;
 
+	start = str;
 	cap = 1;
 	while (*str != 0)
 	{
-		if (cap == 1 && (*str >= 95 && *str <= 122))
+		if (cap == 1 && (*str >= 97 && *str <= 122))
 		{
 			*str = *str - 32;
 			cap = 0;
 		}
 		else if (cap == 0 && (*str >= 65 && *str <= 90))
 			*str = *str + 32;
-		if (!((*str > 64 && *str < 91) || (*str > 96 && *str < 123)))
+		if (!((*str >= 'A' && *str <= 'Z') || 
+			(*str >= 'a' && *str <= 'z') || 
+			(*str >= '0' && *str <= '9')))
 			cap = 1;
+		else
+			cap = 0;
 		str++;
 	}
-	return (str);
+	return (start);
 }
 
 // #include <unistd.h>

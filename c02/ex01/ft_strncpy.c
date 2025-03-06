@@ -6,14 +6,16 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 19:38:12 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/05 20:56:01 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:49:59 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 char	*ft_strncpy(char *dest, char *src, unsigned int n)
 {
 	unsigned int	i;
+	char		*start;
 
+	start = dest;
 	i = 0;
 	while (*src != '\0' && i < n)
 	{
@@ -24,12 +26,11 @@ char	*ft_strncpy(char *dest, char *src, unsigned int n)
 	}
 	while (i < n)
 	{
-		*dest = 0;
+		*dest = '\0';
 		dest++;
 		i++;
 	}
-	*dest = '\0';
-	return (dest);
+	return (start);
 }
 
 // #include <unistd.h>

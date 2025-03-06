@@ -6,33 +6,44 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:08:17 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/05 21:21:38 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:37:51 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-
-char	*ft_strlcat(char *dest, char *src, unsigned int size)
+unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 {
-	while (*dest != 0)
-		dest++;
-	while (*src != 0 && size > 0)
+	unsigned int	dest_size;
+	unsigned int	src_size;
+	unsigned int	total_size;
+	unsigned int	i;
+
+	dest_size = 0;
+	src_size = 0;
+	i = 0;
+	while (dest[dest_size] != 0)
+		dest_size++;
+	while (src[src_size] != 0)
+		src_size++;
+	if (dest_size >= size)
+		return (size + src_size);
+	total_size = size - dest_size - 1;
+	while (i < total_size && src[i] != 0)
 	{
-		*dest = *src;
-		dest++;
-		src++;
-		size--;
+		dest[dest_size + i] = src[i];
+		i++;
 	}
-	*dest = 0;
-	return (dest);
+	dest[dest_size + i] = 0;
+	return (dest_size + src_size);
 }
 
-// int main(void)
-// {
-//     char a[] = "abc";
-//     char b[] = "defg";
-
-//     printf("%s\n", a);
-//     ft_strlcat(a, b, 2);
-//     printf("%s\n", a);
-// }
+#include <string.h>
+#include <stdio.h>
+int main(void)
+{
+    char a[] = "Ola meu";
+    char b[] = "Nome Alex";
+	
+    printf("%s\n", a);
+    ft_strlcat(a, b, 10);
+    printf("%s\n", a);
+}
