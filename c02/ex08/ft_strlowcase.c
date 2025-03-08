@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:31:34 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/08 13:39:39 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:37:47 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,4 @@ int main(void)
     char a[] = "abCD123ffzZz";
     ft_strlowcase(a);
     write(1, &a, sizeof(a));
-    printf("\n");
 }

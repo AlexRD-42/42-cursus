@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:17:28 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/08 13:55:02 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:38:36 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,9 @@ void	*ft_print_memory(void *addr, unsigned int size)
 		i += 16;
 	}
 	return (addr);
+}
+
+int main()
+{
+	
 }

@@ -6,12 +6,15 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:21:36 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/06 14:45:05 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:33:27 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 char	*ft_strcat(char *dest, char *src)
 {
+	char	*start;
+	
+	start = dest;
 	while (*dest != 0)
 		dest++;
 	while (*src != 0)
@@ -21,19 +24,18 @@ char	*ft_strcat(char *dest, char *src)
 		src++;
 	}
 	*dest = 0;
-	return (dest);
+	return (start);
 }
 
-// #include <stdio.h>
-// #include <string.h>
-// fn appends src to dest, overwriting dest's null terminator
-// how to write unsafe code in a nutshell <3
-// int main(void)
-// {
-//     char a[] = "abc";
-//     char b[] = "def";
+#include <stdio.h>
+#include <string.h>
 
-//     printf("%s\n", a);
-//     ft_strcat(a, b);
-//     printf("%s\n", a);
-// }
+int main(void)
+{
+    char a[] = "abc";
+    char b[] = "def";
+
+    printf("%s\n", a);
+    ft_strcat(a, b);
+    printf("%s\n", a);
+}

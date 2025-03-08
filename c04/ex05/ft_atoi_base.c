@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atoi_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 19:14:45 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/08 14:42:49 by adeimlin         ###   ########.fr       */
+/*   Created: 2025/03/08 14:43:31 by adeimlin          #+#    #+#             */
+/*   Updated: 2025/03/08 14:43:31 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_pow(int num, int exp)
 	return (num);
 }
 
-int	ft_atoi(char *str)
+int	ft_atoi_base(char *str)
 {
 	int	str_length;
 	int	value;
@@ -51,17 +51,15 @@ int	ft_atoi(char *str)
 	str_length = ft_strlen(str);
 	while (i < str_length)
 	{
-		value = value + (str[str_length - i - 1] - '0') * ft_pow(10, i);
+		value = value + (str[str_length - i - 1] - '0') * ft_pow(2, i);
 		i++;
 	}
 	return (value);
 }
 
-// int main(void)
-// {
-// 	int a = 2;
-// 	int b = 10;
-// 	char str[] = "123456";
-// 	printf ("%d\n", ft_atoi(str));
-// 	// printf("%d", ft_pow(a, b));
-// }
+#include <stdio.h>
+int main()
+{
+	printf("%d", ft_atoi_base("11111"));
+
+}

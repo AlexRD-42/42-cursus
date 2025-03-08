@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:34:18 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/08 14:06:33 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:35:46 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@ int	is_alphanumeric(char c)
 	int	flag;
 
 	flag = (c >= 'A') && (c <= 'Z');
-	flag = flag || (c >= 'a') && (c <= 'z');
-	flag = flag || (c >= '0') && (c <= '9');
+	flag = flag || ((c >= 'a') && (c <= 'z'));
+	flag = flag || ((c >= '0') && (c <= '9'));
 	return (flag);
 }
 
@@ -46,6 +46,7 @@ char	*ft_strcapitalize(char *str)
 }
 
 #include <unistd.h>
+#include <stdio.h>
 int main(void)
 {
     char a[] = "salut, comment tu vas ? 42mots quarante-deux; cinquante+et+un";

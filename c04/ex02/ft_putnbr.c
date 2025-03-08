@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:26:22 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/05 21:18:35 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:42:30 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,21 @@ void	ft_putnbr(int nb)
 		write(1, &a[i--], 1);
 }
 
-// int main(void)
-// {
-//     int x = -2147483648;
-
-//     ft_putnbr(x);
-// }
+int main (void)
+{
+    ft_putnbr(-2147483648);
+    write(1, ", ", 2);
+    ft_putnbr(2147483647);
+    write(1, ", ", 2);
+    ft_putnbr(0);
+    write(1, ", ", 2);
+    ft_putnbr(-0);
+    write(1, ", ", 2);
+    ft_putnbr(98750);
+    write(1, ", ", 2);
+    ft_putnbr(-98750);
+    write(1, ", ", 2);
+    ft_putnbr(-1);
+    write(1, ", ", 2);
+    ft_putnbr(9);
+}
