@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 19:17:39 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/06 15:39:56 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:32:28 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ void	ft_sort_int_tab(int *tab, int size)
 	}
 }
 
-// #include <stdio.h>
-// int main(void)
-// {
-// 	int a[] = {1, 4, 5, 2, 3, 7, 9, 13, -1, -5};
-// 	ft_sort_int_tab(&a[0], 10);
-// 	for (int i=0;i<10;i++)
-// 		printf("%d,", a[i]);
-// }
+#include <stdio.h>
+int main(void)
+{
+	int a[] = {1, 4, 5, 2, 3, 7, 9, 13, -1, -5};
+	ft_sort_int_tab(&a[0], 10);
+	for (int i=0;i<10;i++)
+		printf("%d,", a[i]);
+}

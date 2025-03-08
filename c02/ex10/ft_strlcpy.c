@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:52:54 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/06 15:52:15 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:39:47 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ unsigned int	ft_strlcpy(char *dest, char *src, unsigned int size)
 	return (src_len);
 }
 
-// #include <stdio.h>
-// int main (void)
-// {
-// }
+#include <stdio.h>
+int main (void)
+{
+}

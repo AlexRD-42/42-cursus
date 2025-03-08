@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 19:17:22 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/06 15:43:10 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:32:38 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	ft_putstr(char *str)
 	}
 }
 
-// #include <stdio.h>
-// int main(void)
-// {
-// 	char str[5] = {'a', 'b', 'c', 0, 'e'};
-// 	ft_putstr(&str[0]);	
-// }
+#include <stdio.h>
+int main(void)
+{
+	char str[5] = {'a', 'b', 'c', 0, 'e'};
+	ft_putstr(&str[0]);	
+}

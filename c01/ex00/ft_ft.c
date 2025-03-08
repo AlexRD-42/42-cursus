@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 19:13:38 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/05 19:27:44 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:32:13 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@ void	ft_ft(int *nbr)
 	*nbr = 42;
 }
 
-// #include <stdio.h>
-// int	main(void)
-// {
-// 	int a = 0;
-// 	ft_ft(&a);
-// 	printf("%d", a);
-// }
+#include <stdio.h>
+int	main(void)
+{
+	int a = 0;
+	ft_ft(&a);
+	printf("%d", a);
+}

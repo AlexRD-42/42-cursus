@@ -14,11 +14,11 @@
 
 void	ft_putstr_non_printable(char *str)
 {
-	char	slash[2];
-	char	hex[17];
+	char	slash[3];
+	char	*hex;
 	int		i;
 
-	*hex = "0123456789abcdef";
+	hex = "0123456789abcdef";
 	slash[0] = 92;
 	slash[1] = 0;
 	i = 0;
@@ -28,17 +28,20 @@ void	ft_putstr_non_printable(char *str)
 			write(1, &str[i], 1);
 		else
 		{
-			slash[1] = hex[str[i] % 16];
-			write(1, &slash[0], 2);
+			slash[1] = hex[str[i] / 16];
+			slash[2] = hex[str[i] % 16];
+			write(1, &slash[0], 3);
 		}
 		i++;
 	}
 }
 
-// #include <stdio.h>
-// int main(void)
-// {
-//	 char a[] = "Coucou\ntu vas bien ?";
-//	 ft_putstr_non_printable(a);
-//	 printf("\n");
-// }
+#include <stdio.h>
+int main(void)
+{
+	 char a[] = "Coucou\ntu vas bien ?";
+	 a[0] = 127;
+	 a[1] = 18;
+	 ft_putstr_non_printable(a);
+	 printf("\n");
+}

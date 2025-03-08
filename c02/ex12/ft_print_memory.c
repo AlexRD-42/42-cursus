@@ -6,42 +6,99 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:17:28 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/07 12:15:46 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:55:02 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-// tab = 9
-// receives a char and converts it to hex
 
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
 
-// void print_hex(char *arr, int )
-// {
-//     char hex[17] = "0123456789abcdef";
-// }
+void	ft_puthex(unsigned char c)
+{
+	char	*base;
 
-// void    *ft_print_memory(void *addr, unsigned int size)
-// {
-//     int i;
-// }
+	base = "0123456789abcdef";
+	ft_putchar(base[c / 16]);
+	ft_putchar(base[c % 16]);
+}
 
-int main() {
-    int a = 10;
-    void *addr = &a;
-    char hex[17] = "0123456789abcdef";
+void	print_address(unsigned long long addr)
+{
+	int		i;
+	char	hex[16];
+	char	*base;
 
-    unsigned char *ptr = (unsigned char *)&addr;  // Treat the address of 'a' as bytes
+	base = "0123456789abcdef";
+	i = 0;
+	while (i < 16)
+	{
+		hex[15 - i] = base[addr % 16];
+		addr /= 16;
+		i++;
+	}
+	i = 0;
+	while (i < 16)
+	{
+		ft_putchar(hex[i]);
+		i++;
+	}
+	ft_putchar(':');
+	ft_putchar(' ');
+}
 
-    // Print "0x" prefix
-    write(1, "0x", 2);
+void	print_hex_part(unsigned char *ptr, unsigned int n, unsigned int size)
+{
+	unsigned int	i;
 
-    // Assuming a 64-bit system (8 bytes for a pointer)
-    for (int i = sizeof(void *) - 1; i >= 0; i--) {
-        unsigned char byte = ptr[i];
-        // Print each byte as two hex characters without bit manipulation
-        write(1, &hex[byte / 16], 1);  // High nibble as a character
-        write(1, &hex[byte % 16], 1);  // Low nibble as a character
-    }
+	i = 0;
+	while (i < 16)
+	{
+		if (n + i < size)
+			ft_puthex(ptr[n + i]);
+		else
+		{
+			ft_putchar(' ');
+			ft_putchar(' ');
+		}
+		if (i % 2 == 1)
+			ft_putchar(' ');
+		i++;
+	}
+}
 
-    return 0;
+void	print_char_part(unsigned char *ptr, unsigned int n, unsigned int size)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < 16 && n + i < size)
+	{
+		if (ptr[n + i] >= 32 && ptr[n + i] < 127)
+			ft_putchar(ptr[n + i]);
+		else
+			ft_putchar('.');
+		i++;
+	}
+	ft_putchar('\n');
+}
+
+void	*ft_print_memory(void *addr, unsigned int size)
+{
+	unsigned int	i;
+	unsigned char	*ptr;
+
+	ptr = (unsigned char *)addr;
+	i = 0;
+	while (i < size)
+	{
+		print_address((unsigned long long)(ptr + i));
+		print_hex_part(ptr, i, size);
+		print_char_part(ptr, i, size);
+		i += 16;
+	}
+	return (addr);
 }
