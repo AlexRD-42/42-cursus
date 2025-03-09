@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:31:35 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/08 14:31:34 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/08 23:59:01 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*ft_strstr(char *str, char *to_find)
 
 int main(void)
 {
-    char str[] = "ddkahCt";
-    char substr[] = "Cat";
+    char str[] = "The word is Cat";
+    char substr[] = "w";
     printf("%s", ft_strstr(str, substr));
 }

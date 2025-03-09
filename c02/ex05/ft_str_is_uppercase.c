@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 20:01:56 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/08 13:39:30 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/08 23:57:46 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int	ft_str_is_uppercase(char *str)
 #include <stdio.h>
 int main(void)
 {
-    char a[] = "AAAA";
-    int flag;
-    flag = ft_str_is_uppercase(a);
-    printf("%d\n", flag);
+    printf("%d\n", ft_str_is_uppercase("abcd"));
+    printf("%d\n", ft_str_is_uppercase("ABCD"));
+    printf("%d\n", ft_str_is_uppercase(" --"));
 }

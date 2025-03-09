@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:10:10 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/08 13:39:24 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:38:39 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int	ft_str_is_numeric(char *str)
 #include <stdio.h>
 int main(void)
 {
-    char a[] = "";
-    int flag;
-    flag = ft_str_is_numeric(a);
-    printf("%d\n", flag);
+    printf("%d\n", ft_str_is_numeric("abcd"));
+    printf("%d\n", ft_str_is_numeric("123"));
+    printf("%d\n", ft_str_is_numeric(" --"));
 }

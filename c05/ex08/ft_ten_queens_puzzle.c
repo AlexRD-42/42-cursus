@@ -6,37 +6,35 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:58:23 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/06 14:36:04 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/09 00:29:48 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-void ft_helper(char *a, char *b, int flag) 
+void	ft_swap(char *a, char *b)
+{
+	char temp = *a;
+	*a = *b;
+	*b = temp;	
+}
+
+void	ft_printstr(char *a) 
 {
 	char	i;
 	char	letter;
 
-	if (flag == 0)
+	i = 0;
+	while (i < 10)
 	{
-		char temp = *a;
-		*a = *b;
-		*b = temp;
+		letter = a[i] + '0';
+		write(1, &letter, 1);
+		i++;
 	}
-	else
-	{
-		i = 0;
-		while (i < 10)
-		{
-			letter = a[i] + '0';
-			write(1, &letter, 1);
-			i++;
-		}
-		write(1, "\n", 1);
-	}
+	write(1, "\n", 1);
 }
 
-char is_valid(char col[10], char k)
+char	is_valid(char col[10], char k)
 {
     char 	i;
 
@@ -64,7 +62,7 @@ void	ft_permute(char col[10], char start, char end, int *counter)
 	{
         if (is_valid(col, 0))
 		{
-			ft_helper(col, 0, 1);
+			ft_printstr(col);
 			*counter += 1;
 		}
         return;
@@ -72,9 +70,9 @@ void	ft_permute(char col[10], char start, char end, int *counter)
 	i = start;
 	while (i <= end)
 	{
-        ft_helper(&col[start], &col[i], 0);
+        ft_swap(&col[start], &col[i]);
         ft_permute(col, start + 1, end, counter);
-        ft_helper(&col[start], &col[i], 0);
+        ft_swap(&col[start], &col[i]);
 		i++;
     }
 }

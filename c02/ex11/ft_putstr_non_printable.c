@@ -14,25 +14,22 @@
 
 void	ft_putstr_non_printable(char *str)
 {
-	char	slash[3];
-	char	*hex;
-	int		i;
+	unsigned char	*hex;
+	unsigned char	c;
 
 	hex = "0123456789abcdef";
-	slash[0] = 92;
-	slash[1] = 0;
-	i = 0;
-	while (str[i] != 0)
+	while (*str != 0)
 	{
-		if ((str[i] >= 32 && str[i] < 127))
-			write(1, &str[i], 1);
+		c = (unsigned char) *str;
+		if ((c >= 32 && c <= 126))
+			write(1, &c, 1);
 		else
 		{
-			slash[1] = hex[str[i] / 16];
-			slash[2] = hex[str[i] % 16];
-			write(1, &slash[0], 3);
+			write(1, "\\", 1);
+			write(1, &hex[c / 16], 1);
+			write(1, &hex[c % 16], 1);
 		}
-		i++;
+		str++;
 	}
 }
 
@@ -40,7 +37,7 @@ void	ft_putstr_non_printable(char *str)
 int main(void)
 {
 	 char a[] = "Coucou\ntu vas bien ?";
-	 a[0] = 127;
+	 a[0] = -100;
 	 a[1] = 18;
 	 ft_putstr_non_printable(a);
 	 printf("\n");

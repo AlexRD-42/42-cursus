@@ -1,0 +1,140 @@
+Summary of The Norm (Version 4.1)
+General Rules
+
+    Applies to all C projects in 42’s Common Core by default.
+
+    Enforced via norminette (Python tool), but rules marked (*) require manual review.
+
+    Non-compiling files fail the Norm.
+	
+	Code will be compiled with cc -Wall -Wextra -Werror
+
+Naming (III.1)
+
+    Prefixes: s_ (struct), t_ (typedef), u_ (union), e_ (enum), g_ (global).
+
+    Identifiers: Snake_case, lowercase, digits, underscores only. No capitals.
+
+    Files/Directories: Snake_case, lowercase.
+
+    ASCII Only: Except in literal strings/chars.
+
+    (*) Explicit Names: English, descriptive, underscores.
+
+    Globals: Must be const/static (if allowed).
+
+Formatting (III.2)
+
+    Function Length: ≤25 lines (excluding braces).
+
+    Line Width: ≤80 columns (tabs count as multiple spaces).
+
+    Indentation: 4-character tabs (ASCII 9).
+
+    Braces: On separate lines (except struct/enum/union declarations).
+
+    Spacing:
+
+        No trailing spaces/tabs.
+
+        No consecutive empty lines or spaces.
+
+        Commas/semicolons followed by a space.
+
+        Operators and operands separated by one space.
+
+        C keywords (e.g., if, while) followed by a space (except type keywords like int).
+
+    Declarations:
+
+        At function start.
+
+        One variable per line; aligned in the same column.
+
+        Pointers: char *ptr (asterisk attached to name).
+
+        Initialization: Separate from declaration (except globals/statics/constants).
+
+    Control Structures:
+
+        Braces required unless single-line instruction.
+
+        One instruction per line.
+
+Functions (III.3)
+
+    Parameters: ≤4 named parameters.
+
+    Prototypes: Use void for no arguments; parameters must be named.
+
+    Variables: ≤5 per function.
+
+    Return: Parentheses required (e.g., return (0);), except void.
+
+    Format: Single tab between return type and name.
+
+Typedef, Struct, Enum, Union (III.4)
+
+    Spacing: Space after struct, enum, union, typedef.
+
+    Indentation: Align names in the same column.
+
+    Location: Structs cannot be declared in .c files.
+
+Headers (III.5)
+
+    Allowed Content: Includes, defines, prototypes, macros.
+
+    Includes: At file start; no .c includes.
+
+    Guards: Header guards (e.g., FT_FOO_H for ft_foo.h).
+
+    (*) Unused Headers: Forbidden.
+
+42 Header (III.6)
+
+    Mandatory: Multi-line comment at file start with creator’s login, email, dates (auto-updated on save).
+
+Macros (III.7)
+
+    Usage: Only for literals/constants.
+
+    Forbidden: Multiline macros; macros bypassing the Norm.
+
+    Naming: UPPERCASE.
+
+    Indentation: Required in #if/#ifdef blocks.
+
+    Scope: Preprocessor directives only in global scope.
+
+Forbidden Constructs (III.8)
+
+    Keywords: for, do...while, switch, case, goto, ternary (?).
+
+    VLAs: Variable-length arrays.
+
+    Implicit Types: e.g., int i = 0; (explicit declarations required).
+
+Comments (III.9)
+
+    Placement: Only at line ends or standalone lines (not inside function bodies).
+
+    (*) Content: English, useful; no justification for bad code.
+
+Files (III.10)
+
+    Includes: No .c in .c files.
+
+    Function Limit: ≤5 functions per .c file.
+
+Makefile (III.11)
+
+    Mandatory Rules: $(NAME), clean, fclean, re, all (default).
+
+    No Relinking: Fails if unnecessary.
+
+    Multibinary: Individual rules for each binary; all compiles all.
+
+    Libraries: Auto-compile non-system libraries (e.g., libft).
+
+    Explicit Files: No wildcards (e.g., *.c).

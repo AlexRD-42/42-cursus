@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 19:30:37 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/08 14:36:28 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/08 23:56:39 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ char	*ft_strcpy(char *dest, char *src)
 #include <stdio.h>
 int main(void)
 {
-	char a[4] = {'a', 'b', 'c', 'd'};
-	char b[4];
+	char *a = "abcd";
+	char *b;
 	ft_strcpy(b, a);
 	write(1, a, 4);
 	printf("\n");	
