@@ -6,35 +6,26 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:23:03 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/05 21:27:51 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:42:57 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-int	ft_strlen(char *str)
+void	ft_putstr(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (*str != 0)
+	while (str[i] != 0)
 	{
-		str++;
+		write(1, &str[i], 1);
 		i++;
 	}
-	return (i);
 }
 
-void	ft_putstr(char *str)
+int main(void)
 {
-	int	str_length;
-
-	str_length = ft_strlen(str);
-	write(1, str, str_length);
+    char str[] = "abcasi102";
+    ft_putstr(str);
 }
-
-// int main(void)
-// {
-//     char str[] = "abcasi102";
-//     ft_putstr(str);
-// }

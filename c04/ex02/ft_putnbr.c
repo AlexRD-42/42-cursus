@@ -6,12 +6,11 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:26:22 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/08 14:42:30 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:07:50 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdio.h>
 
 void	ft_putnbr(int nb)
 {
@@ -39,6 +38,7 @@ void	ft_putnbr(int nb)
 		write(1, &a[i--], 1);
 }
 
+#include <stdio.h>
 int main (void)
 {
     ft_putnbr(-2147483648);

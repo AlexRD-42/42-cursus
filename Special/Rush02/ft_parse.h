@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_params.c                                  :+:      :+:    :+:   */
+/*   ft_parse.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/04 16:45:16 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/10 12:41:03 by adeimlin         ###   ########.fr       */
+/*   Created: 2025/03/10 00:13:43 by adeimlin          #+#    #+#             */
+/*   Updated: 2025/03/10 00:13:43 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 
-int main(int argc, char **argv)
-{
-    int i;
-    int k;
+#ifndef FT_PARSE_H
+#define FT_PARSE_H
 
-    k = 1;
-    if (argc > 1)
-        while (k < argc)
-        {
-            i = 0;
-            while(argv[k][i] != 0)
-            {
-                write(1, &argv[k][i], 1);
-                i++;
-            }
-            write(1, "\n", 1);
-            k++;
-        }
-}
+char    *parse_digit(char *str, int *i, int *flag);
+char    *parse_text(char *str, int *i, int *flag);
+char    **parse_input(char *str, int totalsize);
+void    parse_line(char *str, char **num_str, char **text_str, int *index);
+int     index_lookup(char *num_str);
+
+#endif

@@ -10,17 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(char *str)
+int	ft_parse_base(char *str)
 {
 	int	i;
+	int	j;
+	int	k;
 
-	i = 0;
-	while (*str != 0)
+	i = -1;
+	while (str[++i] != 0)
+		if (str[i] == ' ' || str[i] == '+' || str[i] == '-' || str[i] == '\t')
+			return (-1);
+		else if (str[i] == '\n' || str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
+			return (-1);
+	if (i <= 1)
+		return (-1);
+	k = 0;
+	while (k < i)
 	{
-		str++;
-		i++;
+		j = -1;
+		while (++j < i)
+			if (str[k] == str[j] && k != j)
+				return (-1);
+		k++;
 	}
-	return (i);
+	return(i);
 }
 
 int	ft_pow(int num, int exp)
@@ -41,25 +54,53 @@ int	ft_pow(int num, int exp)
 	return (num);
 }
 
-int	ft_atoi_base(char *str)
+int	ft_find(char *str, char c)
 {
-	int	str_length;
-	int	value;
 	int	i;
 
 	i = 0;
-	str_length = ft_strlen(str);
-	while (i < str_length)
+	while (str[i] != 0)
 	{
-		value = value + (str[str_length - i - 1] - '0') * ft_pow(2, i);
+		if (str[i] == c)
+			return (i);
 		i++;
 	}
-	return (value);
+	return (-1);
+}
+int ft_atoi_base(char *str, char *base)
+{
+    int i;
+	int	j;
+    int sign;
+    int num;
+
+    i = 0;
+    sign = 1;
+    num = 0;
+    while (str[i] != 0 && (ft_find(base, str[i]) == -1))
+		if (str[i++] == '-')
+			sign *= -1;
+	j = i;
+	while (str[i] != 0 && (ft_find(base, str[i]) != -1))
+		i++;
+	while (str[j] != 0 && (ft_find(base, str[j]) != -1))
+	{
+		if (ft_find(base, str[j]) <= -1 || ft_parse_base(base) == -1)
+			return (0);
+		num += ft_find(base, str[j]) * ft_pow(ft_parse_base(base), i - j - 1);
+		j++;
+	}
+    return (sign * num);
 }
 
 #include <stdio.h>
-int main()
+int main(void)
 {
-	printf("%d", ft_atoi_base("11111"));
-
+	printf("%d\n", ft_atoi_base("1111", "01"));
+	printf("%d\n", ft_atoi_base("af", "0123456789"));
+	printf("%d\n", ft_atoi_base("", "0123456789abcdef"));
+	printf("%d\n", ft_atoi_base("  31b2", "0123456789abcdef"));
+	printf("%d\n", ft_atoi_base("1111", "01"));
+	printf("%d\n", ft_atoi_base("1111", "01"));
+	
 }

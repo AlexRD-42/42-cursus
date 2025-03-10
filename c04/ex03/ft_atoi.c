@@ -6,22 +6,10 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 19:14:45 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/08 14:42:49 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:25:02 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (*str != 0)
-	{
-		str++;
-		i++;
-	}
-	return (i);
-}
 
 int	ft_pow(int num, int exp)
 {
@@ -41,27 +29,66 @@ int	ft_pow(int num, int exp)
 	return (num);
 }
 
-int	ft_atoi(char *str)
+int ft_atoi(char *str)
 {
-	int	str_length;
-	int	value;
-	int	i;
+    int i;
+	int	j;
+    int sign;
+    int num;
 
-	i = 0;
-	str_length = ft_strlen(str);
-	while (i < str_length)
-	{
-		value = value + (str[str_length - i - 1] - '0') * ft_pow(10, i);
+    i = 0;
+    sign = 1;
+    num = 0;
+    while (str[i] != 0 && !(str[i] >= '0' && str[i] <= '9'))
+		if (str[i++] == '-')
+			sign *= -1;
+	j = i;
+	while (str[i] != 0 && (str[i] >= '0' && str[i] <= '9'))
 		i++;
+	while (str[j] != 0 && (str[j] >= '0' && str[j] <= '9'))
+	{
+		num += (str[j] - '0') * ft_pow(10, i - j - 1);
+		j++;
 	}
-	return (value);
+    return (sign * num);
 }
 
-// int main(void)
+// int ft_atoi(char *str)
 // {
-// 	int a = 2;
-// 	int b = 10;
-// 	char str[] = "123456";
-// 	printf ("%d\n", ft_atoi(str));
-// 	// printf("%d", ft_pow(a, b));
+// 	int i;
+// 	int sign;
+// 	int num;
+
+// 	i = 0;
+// 	sign = 1;
+// 	num = 0;
+// 	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' ||
+// 		str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
+// 		i++;
+// 	while (str[i] == '+' || str[i] == '-')
+// 	{
+// 		if (str[i] == '-')
+// 			sign *= -1;
+// 		i++;
+// 	}
+// 	while (str[i] >= '0' && str[i] <= '9')
+// 	{
+// 		num = (num * 10) + (str[i] - '0');
+// 		i++;
+// 	}
+// 	return (num * sign);
 // }
+
+#include <stdio.h>
+int main(void)
+{
+	printf ("%d\n", ft_atoi("--12345b6"));
+	printf ("%d\n", ft_atoi("---12345b6"));
+	printf ("%d\n", ft_atoi(" ---+- -+1234ab567"));
+	printf ("%d\n", ft_atoi("12345"));
+	printf ("%d\n", ft_atoi("0"));
+	printf ("%d\n", ft_atoi("-0"));
+	printf ("%d\n", ft_atoi("-2147483648"));
+	printf ("%d\n", ft_atoi("2147483647"));
+	printf ("%d\n", ft_atoi(""));
+}

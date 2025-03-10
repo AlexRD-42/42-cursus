@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_params.c                                  :+:      :+:    :+:   */
+/*   ft_bool.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/04 16:45:16 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/10 12:41:03 by adeimlin         ###   ########.fr       */
+/*   Created: 2025/03/10 00:29:18 by adeimlin          #+#    #+#             */
+/*   Updated: 2025/03/10 00:29:18 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 
-int main(int argc, char **argv)
-{
-    int i;
-    int k;
+#ifndef FT_BOOL_H
+#define FT_BOOL_H
 
-    k = 1;
-    if (argc > 1)
-        while (k < argc)
-        {
-            i = 0;
-            while(argv[k][i] != 0)
-            {
-                write(1, &argv[k][i], 1);
-                i++;
-            }
-            write(1, "\n", 1);
-            k++;
-        }
-}
+int     is_digit(char c);
+int     is_space(char c);
+int     is_alpha(char c);
+
+#endif
