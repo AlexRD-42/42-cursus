@@ -6,11 +6,20 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 14:23:16 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/08 14:23:16 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:27:50 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+
+int	ft_is_space(char c)
+{
+	if (c == ' ' || c == '+' || c == '-' || c == '\t')
+		return (1);
+	if (c == '\n' || c == '\v' || c == '\f' || c == '\r')
+		return (1);
+	return (0);
+}
 
 int	ft_parse_base(char *str)
 {
@@ -20,9 +29,7 @@ int	ft_parse_base(char *str)
 
 	i = -1;
 	while (str[++i] != 0)
-		if (str[i] == ' ' || str[i] == '+' || str[i] == '-' || str[i] == '\t')
-			return (-1);
-		else if (str[i] == '\n' || str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
+		if (ft_is_space(str[i]))
 			return (-1);
 	if (i <= 1)
 		return (-1);
@@ -35,13 +42,13 @@ int	ft_parse_base(char *str)
 				return (-1);
 		k++;
 	}
-	return(i);
+	return (i);
 }
 
 void	ft_putnbr_base(int nbr, char *base)
 {
 	char	a[11];
-	char	i;
+	int		i;
 	int		base_length;
 
 	base_length = ft_parse_base(base);
@@ -64,7 +71,6 @@ void	ft_putnbr_base(int nbr, char *base)
 	while (--i >= 0)
 		write(1, &a[i], 1);
 }
-
 
 int main(void)
 {

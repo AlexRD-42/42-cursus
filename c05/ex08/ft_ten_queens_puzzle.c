@@ -6,23 +6,25 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:58:23 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/09 00:29:48 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/11 10:18:23 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-void	ft_swap(char *a, char *b)
+void	ft_swap(int *a, int *b)
 {
-	char temp = *a;
+	int	temp;
+
+	temp = *a;
 	*a = *b;
-	*b = temp;	
+	*b = temp;
 }
 
-void	ft_printstr(char *a) 
+void	ft_printstr(int *a)
 {
-	char	i;
 	char	letter;
+	int		i;
 
 	i = 0;
 	while (i < 10)
@@ -34,54 +36,54 @@ void	ft_printstr(char *a)
 	write(1, "\n", 1);
 }
 
-char	is_valid(char col[10], char k)
+int	is_valid(int col[10], int k)
 {
-    char 	i;
+	int	i;
 
-    while (k < 10)
-    {
-        i = 0;
-        while (i < k)
-        {
-            if (k != i && (col[k] == col[i] || (col[k] - col[i] == k - i)))
-                return (0);
+	while (k < 10)
+	{
+		i = 0;
+		while (i < k)
+		{
+			if (k != i && (col[k] == col[i] || (col[k] - col[i] == k - i)))
+				return (0);
 			if (k != i && (col[k] - col[i] == i - k))
-                return (0);
-            i++;
-        }
-        k++;
-    }
-    return (1);
+				return (0);
+			i++;
+		}
+		k++;
+	}
+	return (1);
 }
 
-void	ft_permute(char col[10], char start, char end, int *counter)
+void	ft_permute(int col[10], int start, int end, int *counter)
 {
-	char	i;
+	int	i;
 
-    if (start == end) 
+	if (start == end)
 	{
-        if (is_valid(col, 0))
+		if (is_valid(col, 0))
 		{
 			ft_printstr(col);
 			*counter += 1;
 		}
-        return;
-    }
+		return ;
+	}
 	i = start;
 	while (i <= end)
 	{
-        ft_swap(&col[start], &col[i]);
-        ft_permute(col, start + 1, end, counter);
-        ft_swap(&col[start], &col[i]);
+		ft_swap(&col[start], &col[i]);
+		ft_permute(col, start + 1, end, counter);
+		ft_swap(&col[start], &col[i]);
 		i++;
-    }
+	}
 }
 
 int	ft_ten_queens_puzzle(void)
 {
-	char	i;
-	char	col[10];
-	int		counter;
+	int	i;
+	int	col[10];
+	int	counter;
 
 	i = 0;
 	counter = 0;
@@ -97,7 +99,7 @@ int	ft_ten_queens_puzzle(void)
 #include <stdio.h>
 int main()
 {
-	int x;
+	int	x;
 	x = ft_ten_queens_puzzle();
-	printf("\n%d\n", x);
+	printf("===========\nThere were %d solutions\n", x);
 }

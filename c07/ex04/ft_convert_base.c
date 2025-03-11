@@ -10,97 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include <stdlib.h>
 
-int	ft_parse_base(char *str)
-{
-	int	i;
-	int	j;
-	int	k;
-
-	i = -1;
-	while (str[++i] != 0)
-		if (str[i] == ' ' || str[i] == '+' || str[i] == '-' || str[i] == '\t')
-			return (-1);
-		else if (str[i] == '\n' || str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
-			return (-1);
-	if (i <= 1)
-		return (-1);
-	k = 0;
-	while (k < i)
-	{
-		j = -1;
-		while (++j < i)
-			if (str[k] == str[j] && k != j)
-				return (-1);
-		k++;
-	}
-	return (i);
-}
-
-int	ft_find(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != 0)
-	{
-		if (str[i] == c)
-			return (i);
-		i++;
-	}
-	return (0);
-}
-
-int	ft_pow(int num, int exp)
-{
-	int	base;
-
-	base = num;
-	if (exp == 0)
-		return (1);
-	else
-	{
-		while (exp > 1)
-		{
-			num = num * base;
-			exp--;
-		}
-	}
-	return (num);
-}
-
-int ft_atoi_base(char *str, char *base)
-{
-    int i;
-	int	j;
-    int sign;
-    int num;
-	int	base_length;
-
-    i = 0;
-    sign = 1;
-    num = 0;
-	base_length = ft_parse_base(base);
-    while (str[i] != 0 && !(str[i] >= '0' && str[i] <= '9'))
-		if (str[i++] == '-')
-			sign *= -1;
-	j = i;
-	while (str[i] != 0 && (str[i] >= '0' && str[i] <= '9'))
-		i++;
-	while (str[j] != 0 && (str[j] >= '0' && str[j] <= '9'))
-	{
-		num += ft_find(base, str[j]) * ft_pow(base_length, i - j - 1);
-		j++;
-	}
-    return (sign * num);
-}
+int	ft_parse_base(char *str, int k);
+int	ft_find(char *str, char c);
+int	ft_parse_number(char *str, char *base, int *i, int *sign);
+int	ft_atoi_base(char *str, char *base);
 
 int	ft_num_digits(int number, int base)
 {
 	int	i;
 
+	if (number == 0)
+		return (1);
 	i = 0;
 	while (number != 0)
 	{
@@ -117,7 +39,7 @@ char	*ft_fill_string(int number, char *num_str, char *base, int num_digits)
 	int	base_length;
 
 	i = 0;
-	base_length = ft_parse_base(base);
+	base_length = ft_parse_base(base, 0);
 	sign = -1 * (number < 0) + (number > 0);
 	if (sign == -1)
 	{
@@ -141,8 +63,8 @@ char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 	int		base_length[2];
 	int		num_digits;
 
-	base_length[0] = ft_parse_base(base_from);
-	base_length[1] = ft_parse_base(base_to);
+	base_length[0] = ft_parse_base(base_from, 0);
+	base_length[1] = ft_parse_base(base_to, 0);
 	if (base_length[0] <= 1 || base_length[1] <= 1)
 		return (NULL);
 	number = ft_atoi_base(nbr, base_from);
@@ -156,5 +78,5 @@ int main()
 {
 	printf("%s\n", ft_convert_base("4096", "0123456789", "0123456789abcdef"));
 	printf("%s\n", ft_convert_base("-4096", "0123456789", "0123456789abcdef"));
-	printf("%s\n", ft_convert_base("-255", "0123456789", "0123456789abcdef"));
+	printf("%s\n", ft_convert_base("-255", "0123456789", "0123456789abcdff"));
 }

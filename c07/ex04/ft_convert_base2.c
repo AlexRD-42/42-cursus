@@ -1,15 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi_base.c                                     :+:      :+:    :+:   */
+/*   ft_convert_base2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/08 14:43:31 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/11 12:26:46 by adeimlin         ###   ########.fr       */
+/*   Created: 2025/03/11 12:37:04 by adeimlin          #+#    #+#             */
+/*   Updated: 2025/03/11 12:37:04 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+int	ft_parse_base(char *str, int k);
+int	ft_find(char *str, char c);
+int	ft_parse_number(char *str, char *base, int *i, int *sign);
+int	ft_atoi_base(char *str, char *base);
+ 
 int	ft_parse_base(char *str, int k)
 {
 	int	i;
@@ -86,15 +91,4 @@ int	ft_atoi_base(char *str, char *base)
 	while (i < n)
 		num = num * base_length + ft_find(base, str[i++]);
 	return (sign * num);
-}
-
-#include <stdio.h>
-int main(void)
-{
-	printf("%d\n", ft_atoi_base("- 1111", "01"));
-	printf("%d\n", ft_atoi_base("af", "0123456789"));
-	printf("%d\n", ft_atoi_base("", "0123456789abcdef"));
-	printf("%d\n", ft_atoi_base("  31b2", "0123456789abcdef"));
-	printf("%d\n", ft_atoi_base("1111", "01"));
-	printf("%d\n", ft_atoi_base("1111", "-11"));
 }

@@ -6,37 +6,30 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:45:55 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/10 14:30:25 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/11 10:28:00 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 
-char *ft_strdup(char *src)
+char	*ft_strdup(char *src)
 {
 	char	*str;
-	int	 	len;
-	int	 	i;
+	int		i;
 
 	i = 0;
 	while (src[i] != 0)
 		i++;
-	len = i + 1;
-	str = (char*) malloc(len);
+	str = (char*) malloc(i + 1);
 	if (str == NULL)
 		return (NULL);
-	i = 0;
-	while (i < len - 1)
-	{
-		str[i] = src[i];
-		i++;
-	}
 	str[i] = 0;
+	while (--i >= 0)
+		str[i] = src[i];
 	return (str);
 }
 
+#include <stdio.h>
 int main()
 {
     char a[] = "string 1";

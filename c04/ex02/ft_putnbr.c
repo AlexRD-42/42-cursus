@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:26:22 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/10 11:07:50 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/11 10:00:25 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_putnbr(int nb)
 {
 	char	a[11];
-	char	i;
+	int		i;
 	int		sign;
 
 	sign = 1;
