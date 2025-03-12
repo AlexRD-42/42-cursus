@@ -6,117 +6,110 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 12:44:59 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/10 12:44:59 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/11 21:51:45 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include <stdlib.h>
 
-int	ft_is_sep(char *str, char *sep, int i)
+int	ft_is_sep(char c, char *charset)
 {
-	int	j;
-
-	j = 0;
-	while (sep[j] != 0 && str[i] != 0)
-	{
-		if (sep[j] != str[i])
-			return (0);
-		i++;
-		j++;
-	}
-	return (1);
-}
-
-int ft_count_words(char *str, char *sep)
-{
-    int i;
-    int flag;
-    int count;
-
-    i = 0;
-    count = 0;
-    flag = 1;
-
-    while (str[i] != 0)
-    {
-        if (!ft_is_sep(str, sep, i) && flag == 1)
-        {
-            count++;
-            flag = 0;
-        }
-        if (ft_is_sep(str, sep, i))
-        {
-            flag = 1;
-        }
-        i++;
-    }
-    return (count);
-}
-
-char *ft_create(char *str, int word_size, char *charset)
-{
-	int	sep_size;
-    int i;
-	int	j;
-    char *new_str;
-
-	j = 0;
-	sep_size = 0;
-	while (charset[sep_size] != 0)
-		sep_size++;
-    new_str = (char *) malloc(2 * sep_size + word_size + 1);
-    i = -1;
-	while (++i < sep_size)
-		new_str[j++] = charset[i];
-	i = -1;
-	while (++i < word_size)
-		new_str[j++] = str[i];
-	i = -1;
-	while (++i < sep_size)
-		new_str[j++] = charset[i];
-    new_str[j] = 0;
-    return (new_str);
-}
-
-char **ft_split(char *str, char *charset)
-{
-    int i;
-    int j;
-    int k;
-    char **str2;
+	int	i;
 
 	i = 0;
-    k = 0;
-    str2 = (char **) malloc((ft_count_words(str, charset) + 1) * sizeof(char*));
-    while (str[i] != 0)
-    {
-        if (ft_is_sep(str, charset, i) || (i == 0 && !ft_is_sep(str, charset, i)))
-        {
-            j = i++;
-            while (!ft_is_sep(str, charset, i))
-                i++;
-            if (i != j)
-				str2[k++] = ft_create(&str[j], i - j, charset);
-			i--;
-        }
-        i++;
-    }
+	while (charset[i] != 0 && c != 0)
+	{
+		if (charset[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	ft_cwords(char *str, char *sep)
+{
+	int	i;
+	int	flag;
+	int	count;
+
+	i = 0;
+	count = 0;
+	flag = 0;
+	while (str[i] != 0)
+	{
+		if (!ft_is_sep(str[i], sep) && flag == 1)
+		{
+			count++;
+			flag = 0;
+		}
+		if (ft_is_sep(str[i], sep))
+		{
+			flag = 1;
+		}
+		i++;
+	}
+	return (count);
+}
+
+char	*ft_create(char *str, int word_size)
+{
+	char	*new_str;
+	int		i;
+
+	new_str = (char *) malloc(word_size + 1);
+	if (new_str == NULL)
+		return (NULL);
+	i = 0;
+	while (i < word_size)
+	{
+		new_str[i] = str[i];
+		i++;
+	}
+	new_str[i] = 0;
+	return (new_str);
+}
+
+char	**ft_split(char *str, char *charset)
+{
+	char	**str2;
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	k = 0;
+	str2 = (char **) malloc((ft_cwords(str, charset) + 1) * sizeof(char *));
+	while (str[i] != 0 && !ft_is_sep(str[i], charset))
+		i++;
+	while (str[i] != 0)
+	{
+		if (ft_is_sep(str[i], charset))
+		{
+			j = ++i;
+			while (str[i] != 0 && !ft_is_sep(str[i], charset))
+				i++;
+			if (i > j)
+				str2[k++] = ft_create(&str[j], i - j);
+		}
+		else
+			i++;
+	}
 	str2[k] = 0;
-    return (str2);
+	return (str2);
 }
 
 #include <stdio.h>
 int main()
 {
-	char *str = "abcd,,efgh,,ija,,k,,";
+	char *str = "ab cd,,efgh,,k,+,";
 	char **str2;
-	char *sep = ",,";
-
+	char *sep = ",+";
+	printf("====\n");
 	str2 = ft_split(str, sep);
-
-	printf("%s\n", str2[0]);
-	printf("%s\n", str2[1]);
-	printf("%s\n", str2[2]);
-	printf("%s", str2[3]);
+	int i = 0;
+	while (str2[i] != 0)
+	{
+		printf("%s\n", str2[i]);
+		i++;
+	}
 }

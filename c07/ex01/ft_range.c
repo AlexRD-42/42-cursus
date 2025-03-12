@@ -6,10 +6,9 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 18:12:05 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/11 10:34:46 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/11 20:56:16 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <stdlib.h>
 
@@ -37,10 +36,8 @@ int main()
 {
     int *arr, n;
     int min = -10, max = 10;
-
     arr = ft_range(min, max);
     n = max - min;
-
     for (int i=0;i<n;i++)
         printf("%d, ", arr[i]);
 }

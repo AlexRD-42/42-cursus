@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:45:55 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/11 10:28:00 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/11 20:56:11 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strdup(char *src)
 	i = 0;
 	while (src[i] != 0)
 		i++;
-	str = (char*) malloc(i + 1);
+	str = (char *) malloc(i + 1);
 	if (str == NULL)
 		return (NULL);
 	str[i] = 0;

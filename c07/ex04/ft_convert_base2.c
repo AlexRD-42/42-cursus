@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 12:37:04 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/11 12:37:04 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/03/11 19:47:30 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@ int	ft_parse_base(char *str, int k);
 int	ft_find(char *str, char c);
 int	ft_parse_number(char *str, char *base, int *i, int *sign);
 int	ft_atoi_base(char *str, char *base);
- 
+
 int	ft_parse_base(char *str, int k)
 {
 	int	i;
