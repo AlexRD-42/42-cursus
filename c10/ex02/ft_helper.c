@@ -1,19 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_boolean.h                                       :+:      :+:    :+:   */
+/*   ft_helper.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 12:33:31 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/03/12 12:33:31 by adeimlin         ###   ########.fr       */
+/*   Created: 2025/03/13 14:33:21 by adeimlin          #+#    #+#             */
+/*   Updated: 2025/03/13 14:33:21 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define TRUE 1
-#define FALSE 0
-#define EVEN(x) (x % 2 == 0)
-#define EVEN_MSG "I have an even number of arguments."
-#define ODD_MSG "I have an odd number of arguments."
-#define SUCCESS 0 // CHECK
-typedef int t_bool;
+
+int	ft_strlen(char *str);
+int ft_atoi(char *str);
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != 0)
+		i++;
+	return (i);
+}
+
+int ft_atoi(char *str)
+{
+    int result = 0;
+    int i = 0;
+
+    while (str[i] >= '0' && str[i] <= '9')
+    {
+        result = result * 10 + (str[i] - '0');
+        i++;
+    }
+    return (result);
+}
