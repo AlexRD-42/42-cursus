@@ -6,9 +6,11 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:06:43 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/04/02 13:06:43 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:11:10 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+void	ft_putchar(char c);
 
 void	ft_putstr(char *str)
 {

@@ -6,11 +6,11 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 11:22:41 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/04/03 11:22:41 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:18:16 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_count_if(char **tab, int (*f)(char*))
+int	ft_count_if(char **tab, int (*f)(char*))
 {
 	int	count;
 

@@ -5,9 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 11:12:44 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/04/03 11:12:44 by adeimlin         ###   ########.fr       */
+/*   Created: 2025/03/12 12:41:06 by adeimlin          #+#    #+#             */
+/*   Updated: 2025/04/03 14:38:18 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define ABS(x) ((x >= 0) * (x) + (x < 0) * (-x))
+#ifndef FT_ABS_H
+# define FT_ABS_H
+# define ABS(Value) (((Value > 0) - (Value < 0)) * Value)
+#endif

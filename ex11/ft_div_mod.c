@@ -6,10 +6,9 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 12:20:30 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/04/02 12:20:30 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:16:21 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 void	ft_div_mod(int a, int b, int *div, int *mod)
 {
