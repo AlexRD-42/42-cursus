@@ -1,2 +1,0 @@
-find . -name "*.c" -exec sh -c 'gcc -Wall -Wextra -Werror -o "${1%.*}" "$1"' _ {} \;
-find . -name "*.c" -exec sh -c 'cc -Wall -Wextra -Werror -o "${1%.*}" "$1"' _ {} \;
