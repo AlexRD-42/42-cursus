@@ -1,0 +1,83 @@
+I am tasked with solving a game of skyscrapers in C using only malloc, free and write. I don't want the solution, I just want to see if my idea will work.
+
+	This defines the problem:
+Given a map of 4x4, place boxes of height 1 to 4 on each available square in a way
+that every row and column sees the correct number of boxes from each the possible
+points of view (left/right for rows, up/down for columns). Each of the views (2 per row and 2 per column) will have a given value. Your program must place the boxes correctly, while making sure each row and column only has one box of each size. Bonus points if you can make this work up until 9x9 rows/columns.
+
+	My Solution:
+My solution is to first compute all of the valid permutations of 1:N, then store it in a way that the index of the variable represents the view from left/right value.
+For example, for n=3, 123 would have a left value of 3 and a right value of 1, so results[3][1] = 123
+
+Effectively, results is a lookup table indexed by the left/right constraints that allows us to access valid permutations given the constraints.
+
+The solution space is defined:
+The program would start at (1, 1), acquire valid permutations using the constraints of that point as an index. It would check for both horizontal and vertical constraints, thus generating two lines.
+It would then walk diagonally towards (2, 2) so that it checks for all of constraints only ONCE, until (N, N).
+
+Given the solution space, it would iterate through all possible combinations until it finds a solution where all line requirements are satisfied.
+Basically a loop that resets once a line condition isn't met. 
+
+Example:
+   3 2 1
+3 [1 2 3] 1
+2 [2 3 1] 2
+1 [3 1 2] 2
+   1 2 3
+
+results[1,2] = 312
+results[1,3] = 321
+results[2,1] = 213
+results[2,2] = 132, 231
+results[3,1] = 123
+
+(1,1)
+horizontal, results[3 1] = 123
+vertical, results [3 1] = 123
+
+    A01
+   3 2 1
+3 [1 2 3] 1
+2 [2 _ _] 2
+1 [3 _ _] 2
+   1 2 2
+
+(2,2)
+horizontal, results[2 2] = 132, 231
+vertical, results [2 2] = 132, 231
+
+    B01             B02             B03             B04
+   3 2 1		   3 2 1		   3 2 1		   3 2 1
+3 [_ 1 _] 1		3 [_ 2 _] 1		3 [_ 1 _] 1		3 [_ 2 _] 1
+2 [1 3 2] 2		2 [1 3 2] 2		2 [2 3 1] 2		2 [2 3 1] 2
+1 [_ 2 _] 2		1 [_ 1 _] 2		1 [_ 2 _] 2		1 [_ 1 _] 2
+   1 2 2		   1 2 2		   1 2 2		   1 2 2
+
+(3,3)
+horizontal, results[1 2] = 312
+vertical, results [1 2] = 312
+
+    C01
+   3 2 1
+3 [_ _ 3] 1
+2 [_ _ 1] 2
+1 [3 1 2] 2
+   1 2 2
+
+When testing A01 against B01, we see that they don't match. Same for B02, and B03, leaving only B04 as valid.
+So solution would be the horizontal lines of A01 B04 and C01, giving us 
+
+   3 2 1
+3 [1 2 3] 1
+2 [2 3 1] 2
+1 [3 1 2] 2
+   1 2 2
+
+What do you think?
+
+
+
+
+Problems: 
+	Storing the results where we don't know the number of permutations for a given constraint
+	The index isn't linear, some combinations are impossible like [3] [4] and they will consume memory
