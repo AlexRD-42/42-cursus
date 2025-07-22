@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:45:20 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/07/12 16:01:44 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/07/12 23:59:20 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 #include <stdio.h>
 #include "pipex.h"
 
-// State[0]: {in_file, 			fd_write_end(0)}
-// State[1]: {fd_read_end(0),	fd_write_end(1)}
 static
 int	ft_child(char *cmd, int fd_read, int fd_write, char **envp)
 {
@@ -38,8 +36,6 @@ int	ft_child(char *cmd, int fd_read, int fd_write, char **envp)
 	exit(127);
 }
 
-// State[0]: {fd_read_end(0), stdout}
-// State[1]: {fd_read_end(1), stdout}
 static
 int	ft_parent(int fd_read, int fd_write)
 {
@@ -56,7 +52,6 @@ int	ft_parent(int fd_read, int fd_write)
 		return (1);
 }
 
-// fd[0] read_end, fd[1] write_end
 static
 int	ft_pipe(char *cmd, char **envp, pid_t *cpid)
 {
@@ -100,11 +95,9 @@ int	wait_child(pid_t *pid, size_t length)
 int	ft_pipe_loop(size_t argc, char **argv, char **envp, int *fd)
 {
 	size_t	i;
-	pid_t	pid_list[1024];
+	pid_t	pid_list[FD_MAX];
 
-	ft_memset(pid_list, 0, 1024 * sizeof(pid_t));
 	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
 	i = 0;
 	while (i < argc - 2)
 	{
@@ -120,6 +113,7 @@ int	ft_pipe_loop(size_t argc, char **argv, char **envp, int *fd)
 	}
 	if (pid_list[i] == 0)
 		ft_child(argv[argc - 2], fd[0], fd[1], envp);
+	close(fd[0]);
 	close(fd[1]);
 	close(STDIN_FILENO);
 	return (wait_child(pid_list, i));

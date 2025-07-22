@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 18:16:19 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/07/12 16:47:28 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/07/13 00:31:50 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,21 @@ uint8_t	eof_cmp(const char *str, const char *eof)
 // Can be optimized to search for first /n prior to length
 size_t	is_eof(const char *str, const char *eof, size_t eof_len, size_t length)
 {
-	size_t	i;
+	static size_t	start = 0;
+	size_t			i;
 
-	i = 0;
+	i = start;
 	if (length <= eof_len)
-		return (0);
+		return (SIZE_MAX);
 	length -= eof_len;
-	while (i < length)
+	while (eof_cmp(str, eof) == 0 && i < length)
 	{
-		if (eof_cmp(str + i, eof) == 1)
-			return (i);
-		i++;
+		while (str[i] != '\n' && i < length)
+			i++;
+		if (str[i] == '\n')
+			start = ++i;
 	}
-	return (0);
+	return (i < length ? i : SIZE_MAX);
 }
 
 int	write_to_buffer(char *buffer, size_t length)
@@ -75,12 +77,12 @@ int	here_doc(const char *eof)
 	{
 		offset += (size_t) bytes_read;
 		length = is_eof(buffer, eof, eof_length, offset);
-		if (length != 0)
+		if (length != SIZE_MAX)
 			return (write_to_buffer(buffer, length));
 		bytes_read = read(STDIN_FILENO, buffer + offset, PAGE_SIZE);
 	}
 	length = is_eof(buffer, eof, eof_length, offset);
-	if (length != 0)
+	if (length != SIZE_MAX)
 		return (write_to_buffer(buffer, length));
 	return (-1);
 }
