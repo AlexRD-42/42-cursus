@@ -1,0 +1,56 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Iincludes",
+      "-flto",
+      "-fstrict-aliasing",
+      "-g",
+      "-Wpedantic",
+      "-Wcast-qual",
+      "-Wfloat-equal",
+      "-Wswitch-default",
+      "-Wduplicated-branches",
+      "-Wduplicated-cond",
+      "-Wsign-conversion",
+      "-fsanitize=address,undefined,leak",
+      "-fno-omit-frame-pointer",
+      "-c",
+      "-o",
+      "build/obj/main.o",
+      "sources/main.c"
+    ],
+    "directory": "/home/alex/Github/philosophers/philo",
+    "file": "/home/alex/Github/philosophers/philo/sources/main.c",
+    "output": "/home/alex/Github/philosophers/philo/build/obj/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Iincludes",
+      "-flto",
+      "-fstrict-aliasing",
+      "-g",
+      "-Wpedantic",
+      "-Wcast-qual",
+      "-Wfloat-equal",
+      "-Wswitch-default",
+      "-Wduplicated-branches",
+      "-Wduplicated-cond",
+      "-Wsign-conversion",
+      "-fsanitize=address,undefined,leak",
+      "-fno-omit-frame-pointer",
+      "-c",
+      "-o",
+      "build/obj/utils.o",
+      "sources/utils.c"
+    ],
+    "directory": "/home/alex/Github/philosophers/philo",
+    "file": "/home/alex/Github/philosophers/philo/sources/utils.c",
+    "output": "/home/alex/Github/philosophers/philo/build/obj/utils.o"
+  }
+]
