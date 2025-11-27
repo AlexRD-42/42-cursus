@@ -7,6 +7,7 @@
       "-Iincludes",
       "-flto",
       "-fstrict-aliasing",
+      "-pthread",
       "-g",
       "-Wpedantic",
       "-Wcast-qual",
@@ -19,12 +20,12 @@
       "-fno-omit-frame-pointer",
       "-c",
       "-o",
-      "build/obj/main.o",
-      "sources/main.c"
+      "build/obj/threads.o",
+      "sources/threads.c"
     ],
     "directory": "/home/alex/Github/philosophers/philo",
-    "file": "/home/alex/Github/philosophers/philo/sources/main.c",
-    "output": "/home/alex/Github/philosophers/philo/build/obj/main.o"
+    "file": "/home/alex/Github/philosophers/philo/sources/threads.c",
+    "output": "/home/alex/Github/philosophers/philo/build/obj/threads.o"
   },
   {
     "arguments": [
@@ -34,6 +35,7 @@
       "-Iincludes",
       "-flto",
       "-fstrict-aliasing",
+      "-pthread",
       "-g",
       "-Wpedantic",
       "-Wcast-qual",
@@ -46,11 +48,39 @@
       "-fno-omit-frame-pointer",
       "-c",
       "-o",
-      "build/obj/utils.o",
-      "sources/utils.c"
+      "build/obj/memory.o",
+      "sources/utils/memory.c"
     ],
     "directory": "/home/alex/Github/philosophers/philo",
-    "file": "/home/alex/Github/philosophers/philo/sources/utils.c",
-    "output": "/home/alex/Github/philosophers/philo/build/obj/utils.o"
+    "file": "/home/alex/Github/philosophers/philo/sources/utils/memory.c",
+    "output": "/home/alex/Github/philosophers/philo/build/obj/memory.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Iincludes",
+      "-flto",
+      "-fstrict-aliasing",
+      "-pthread",
+      "-g",
+      "-Wpedantic",
+      "-Wcast-qual",
+      "-Wfloat-equal",
+      "-Wswitch-default",
+      "-Wduplicated-branches",
+      "-Wduplicated-cond",
+      "-Wsign-conversion",
+      "-fsanitize=address,undefined,leak",
+      "-fno-omit-frame-pointer",
+      "-c",
+      "-o",
+      "build/obj/io_utils.o",
+      "sources/utils/io_utils.c"
+    ],
+    "directory": "/home/alex/Github/philosophers/philo",
+    "file": "/home/alex/Github/philosophers/philo/sources/utils/io_utils.c",
+    "output": "/home/alex/Github/philosophers/philo/build/obj/io_utils.o"
   }
 ]
