@@ -4,16 +4,16 @@ BUILD_PATH = build
 INC_PATH = includes
 OBJ_PATH = $(BUILD_PATH)/obj
 BIN = $(BUILD_PATH)/$(NAME)
-VPATH = sources sources/utils
+VPATH = sources sources/utils sources/tests
 
 # Files --------------------------------------- #
 LIBS =
-SRCS = threads.c memory.c io_utils.c
+SRCS = test.c memory.c io_utils.c
 OBJS = $(addprefix $(OBJ_PATH)/, $(SRCS:.c=.o))
 
 # Flags --------------------------------------- #
 CC = clang
-CFLAGS = -Wall -Wextra $(addprefix -I,$(INC_PATH)) -flto -fstrict-aliasing -pthread
+CFLAGS = -Wall -Wextra $(addprefix -I,$(INC_PATH)) -flto -fstrict-aliasing -pthread -std=c99
 LFLAGS =
 DEBUG = -g -Wpedantic -Wcast-qual -Wfloat-equal -Wswitch-default -Wduplicated-branches -Wduplicated-cond -Wsign-conversion
 SANITIZERS = -fsanitize=address,undefined,leak -fno-omit-frame-pointer

@@ -6,18 +6,19 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 12:04:26 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/27 12:27:54 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/27 16:21:29 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
 #include <stddef.h>
 #include <unistd.h>
+#include <pthread.h>
 #include "philosophers.h"
 
 // Returns: 0) OK, -1) ARGCOUNT
 static
-int	stt_init_multiple(const char **argv, t_philo *philos)
+int	stt_init_multiple(const char **argv, t_philo_cfg *philos)
 {
 	size_t		i;
 	const char	*str;
@@ -36,7 +37,7 @@ int	stt_init_multiple(const char **argv, t_philo *philos)
 			return (-1);
 		i++;
 	}
-	philos->index = (uint32_t) vars[0];
+	philos->count = (uint32_t) vars[0];
 	philos->eat_count = (uint32_t) vars[4];
 	philos->death_time = (size_t) vars[1];
 	philos->eat_time = (size_t) vars[2];
@@ -48,7 +49,7 @@ int	stt_init_multiple(const char **argv, t_philo *philos)
 // [number_of_times_each_philosopher_must_eat]
 // Returns: 0) OK, -1) ARGCOUNT
 static
-int	stt_init_single(const char *str, t_philo *philos)
+int	stt_init_single(const char *str, t_philo_cfg *philos)
 {
 	size_t	i;
 	int64_t	vars[5];
@@ -65,7 +66,7 @@ int	stt_init_single(const char *str, t_philo *philos)
 	}
 	if (*str != 0)
 		return (-1);
-	philos->index = (uint32_t) vars[0];
+	philos->count = (uint32_t) vars[0];
 	philos->eat_count = (uint32_t) vars[4];
 	philos->death_time = (size_t) vars[1];
 	philos->eat_time = (size_t) vars[2];
@@ -74,7 +75,8 @@ int	stt_init_single(const char *str, t_philo *philos)
 }
 
 // Returns: 0) OK, -1) ARGCOUNT, -2) EINVAL, -4) Philos exceeded count
-int	philo_init(int argc, const char **argv, t_philo *philos)
+static
+int	stt_input_validation(int argc, const char **argv, t_philo_cfg *philos)
 {
 	int	rvalue;
 
@@ -92,10 +94,35 @@ int	philo_init(int argc, const char **argv, t_philo *philos)
 		write(STDERR_FILENO, "init_error: argument is not a number\n", 37);
 		return (-2);
 	}
-	if (philos->index > FT_MAX_PHILO)
+	if (philos->count > FT_MAX_PHILO)
 	{
 		write(STDERR_FILENO, "init_error: too many philos\n", 28);
 		return (-4);
 	}
 	return (0);
+}
+
+// Returns: SIZE_MAX) Failure (P), !SIZE_MAX) OK
+void	*philo_init(int argc, const char **argv)
+{
+	static t_philo_cfg		cfg;
+	static t_philo			philos[FT_MAX_PHILO];
+	static pthread_t		threads[FT_MAX_PHILO];
+	static pthread_mutex_t	mutex[FT_MAX_PHILO];
+	size_t					i;
+
+	if (stt_input_validation(argc, argv, &cfg) != 0)
+		return (NULL);
+	i = 0;
+	while (i < cfg.count)
+	{
+		philos[i].index = i;
+		philos[i].cfg = &cfg;
+		pthread_mutex_init(mutex + i, NULL);	// Always returns 0
+		i++;
+	}
+	cfg.philos = &philos;
+	cfg.mutex = &mutex;
+	cfg.threads = &threads;
+	return (&cfg);
 }

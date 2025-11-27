@@ -6,18 +6,17 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/27 12:25:57 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/27 16:11:45 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <bits/types.h>
 #include <bits/types/struct_timeval.h>
 #include <stdint.h>
 #include <stddef.h>
-#include <sys/select.h>
-#include <sys/time.h>
-#include <threads.h>
+#include <stdbool.h>
 #include <unistd.h>
+#include <stdatomic.h>
+#include <sys/time.h>
 #include <pthread.h>
 #include "philosophers.h"
 
@@ -28,32 +27,30 @@
 	that death should be avoided at all costs, it's not a problem.
 */
 
-long	usec_interval(void)
-{
-	static thread_local struct timeval	time;
-	long								usec;
-
-	usec = time.tv_usec;
-	gettimeofday(&time, NULL);
-	return (time.tv_usec - usec);
-}
-
-long	get_usec(void)
-{
-	struct timeval	time;
-
-	gettimeofday(&time, NULL);
-	return (time.tv_usec);
-}
-
-// number_of_philosophers time_to_die time_to_eat time_to_sleep
-// [number_of_times_each_philosopher_must_eat]
 int	main(int argc, const char **argv)
 {
-	struct timeval	var;
-	struct timeval	var2;
+	size_t			i;
+	atomic_long		time;
+	atomic_long		start;
+	t_philo_cfg		*cfg;
+	struct timeval	timer;
 
-	gettimeofday(&var, NULL);
-	usleep(1);
-	gettimeofday(&var2, NULL);
+	time = 0;
+	cfg = philo_init(argc, argv);
+	if (cfg == NULL)
+		return (1);
+	usleep(5000);
+	gettimeofday(&timer, NULL);
+	start = timer.tv_usec;
+	time = 1;
+	while (true)
+	{
+		time = timer.tv_usec - start;
+		gettimeofday(&timer, NULL);
+		usleep(8);
+		i = 0;
+		// while (i < cfg->count)
+		
+	}
+	return (0);
 }
