@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/27 16:11:45 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/28 12:36:07 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,37 +20,41 @@
 #include <pthread.h>
 #include "philosophers.h"
 
-/* Compensation
-	Assuming the outcome of grabbing forks (mutex locking) is random, we can
-	introduce a rule where philos that are fine relinquish the fork, while those
-	near death hold on to it. This can introduce a deadlock, but considering
-	that death should be avoided at all costs, it's not a problem.
-*/
-
-int	main(int argc, const char **argv)
+static
+int	stt_start()
 {
-	size_t			i;
-	atomic_long		time;
-	atomic_long		start;
-	t_philo_cfg		*cfg;
-	struct timeval	timer;
+	atomic_long				time;
+	long					start;
+	volatile atomic_size_t	philo_death;	// Flag for philo death
+	struct timeval			timer;
 
 	time = 0;
-	cfg = philo_init(argc, argv);
-	if (cfg == NULL)
-		return (1);
+	philo_death = 0;
 	usleep(5000);
 	gettimeofday(&timer, NULL);
 	start = timer.tv_usec;
 	time = 1;
-	while (true)
+	while (philo_death == 0 && count < total)	// condition where each philo eats min
 	{
 		time = timer.tv_usec - start;
 		gettimeofday(&timer, NULL);
 		usleep(8);
-		i = 0;
-		// while (i < cfg->count)
-		
 	}
 	return (0);
 }
+
+// Could do interpolation per update!
+// Each worker has its own internal tick, where then the average speed of 
+// each tick is calculated by the linear interp of each update. Really unnecessary though
+int	main(int argc, const char **argv)
+{
+	size_t				i;
+	static t_philo_shared	philo_cfg;
+	static t_sim_cfg	sim_cfg;
+
+	if (sim_init(argc, argv))
+		return (1);
+
+}
+
+

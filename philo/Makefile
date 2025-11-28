@@ -13,7 +13,7 @@ OBJS = $(addprefix $(OBJ_PATH)/, $(SRCS:.c=.o))
 
 # Flags --------------------------------------- #
 CC = clang
-CFLAGS = -Wall -Wextra $(addprefix -I,$(INC_PATH)) -flto -fstrict-aliasing -pthread -std=c99
+CFLAGS = -Wall -Wextra $(addprefix -I,$(INC_PATH)) -flto -fstrict-aliasing -pthread
 LFLAGS =
 DEBUG = -g -Wpedantic -Wcast-qual -Wfloat-equal -Wswitch-default -Wduplicated-branches -Wduplicated-cond -Wsign-conversion
 SANITIZERS = -fsanitize=address,undefined,leak -fno-omit-frame-pointer

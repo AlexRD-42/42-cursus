@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:18 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/27 15:10:20 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/28 17:07:24 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,56 @@
 #  define FT_MAX_PHILO 256
 # endif
 
+// In microseconds
+# ifndef FT_UPDATE_INTERVAL
+#  define FT_UPDATE_INTERVAL 8
+# endif
+
 # include <stdint.h>
 # include <stddef.h>
+# include <stdatomic.h>
+# include <pthread.h>
 
-typedef struct s_pcfg
+typedef struct s_time
 {
-	size_t	count;
-	size_t	eat_count;
-	size_t	death_time;
-	size_t	eat_time;
-	size_t	sleep_time;
-	void	*mutex;
-	void	*threads;
-	void	*philos;
-}	t_philo_cfg;
+	const long			death;
+	const long			eat;
+	const long			sleep;
+	const atomic_long	*real;
+}	t_time;
 
 typedef struct s_philo
 {
-	size_t		index;
-	t_philo_cfg	*cfg;
+	const size_t	index;
+	const size_t	eat_count;
+	const t_time	time;
+	pthread_mutex_t	*lfork;
+	pthread_mutex_t	*rfork;
 }	t_philo;
+
+// 40 bytes per fork
+typedef struct s_shared_cfg
+{
+	size_t					count;
+	size_t					eat_count;
+	t_time					time;					// Read by philos, written by main				
+	volatile atomic_size_t	death_id;				// Read by main, written by philos
+	pthread_mutex_t			mutex[FT_MAX_PHILO];	// Wtf, 10 kb?
+}	t_shared_cfg;
+
+// 16 bytes per philo
+typedef struct s_philo_cfg
+{
+	size_t			index;
+	t_shared_cfg	*cfg;
+}	t_philo_cfg;
+
+// 24 bytes per philo
+typedef struct s_sim_cfg
+{
+	pthread_t	threads[FT_MAX_PHILO];
+	t_philo_cfg	philos[FT_MAX_PHILO];
+}	t_sim_cfg;
 
 enum e_philo_state
 {
@@ -47,7 +77,7 @@ enum e_philo_state
 
 int64_t	ft_strtol(const char *str);
 void	*ft_memcpy(void *restrict dst, const void *restrict src, size_t length);
-void	*philo_init(int argc, const char **argv);
+int		sim_init(int argc, const char **argv, t_shared_cfg *philo_cfg, t_sim_cfg *sim_cfg);
 char	*ft_itoa_stack(int64_t number, char *ptr);
 
 #endif

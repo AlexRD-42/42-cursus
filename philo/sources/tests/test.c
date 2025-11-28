@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 14:53:11 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/27 16:19:55 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/27 19:08:33 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 
 // number_of_philosophers time_to_die time_to_eat time_to_sleep
 // [number_of_times_each_philosopher_must_eat]
-int usleep(__suseconds_t usec);
 
 int	test(long delay)
 {
