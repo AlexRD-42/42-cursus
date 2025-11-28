@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:18 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/28 17:07:24 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/28 18:28:07 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,17 @@ typedef struct s_philo
 	const size_t	index;
 	const size_t	eat_count;
 	const t_time	time;
-	pthread_mutex_t	*lfork;
-	pthread_mutex_t	*rfork;
+	union
+	{
+		pthread_mutex_t	*forks[2];
+		struct
+		{
+			pthread_mutex_t	*lfork;
+			pthread_mutex_t	*rfork;	
+		};
+	};
+	// pthread_mutex_t	*lfork;
+	// pthread_mutex_t	*rfork;
 }	t_philo;
 
 // 40 bytes per fork
