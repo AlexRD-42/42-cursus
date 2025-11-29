@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/28 12:36:07 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/29 15:56:50 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,41 +20,28 @@
 #include <pthread.h>
 #include "philosophers.h"
 
-static
-int	stt_start()
-{
-	atomic_long				time;
-	long					start;
-	volatile atomic_size_t	philo_death;	// Flag for philo death
-	struct timeval			timer;
-
-	time = 0;
-	philo_death = 0;
-	usleep(5000);
-	gettimeofday(&timer, NULL);
-	start = timer.tv_usec;
-	time = 1;
-	while (philo_death == 0 && count < total)	// condition where each philo eats min
-	{
-		time = timer.tv_usec - start;
-		gettimeofday(&timer, NULL);
-		usleep(8);
-	}
-	return (0);
-}
-
+// num_ph, die, eat, sleep, eat_count
 // Could do interpolation per update!
 // Each worker has its own internal tick, where then the average speed of 
 // each tick is calculated by the linear interp of each update. Really unnecessary though
-int	main(int argc, const char **argv)
+int	main(void)
 {
-	size_t				i;
-	static t_philo_shared	philo_cfg;
-	static t_sim_cfg	sim_cfg;
+	static t_shared_cfg	cfg = {.time_now = 0};
+	long				start;
+	struct timeval		now;
 
-	if (sim_init(argc, argv))
+	int			argc = 2;
+	const char	*argv[2] = {NULL, "5 1600 100 800"};
+
+	if (sim_init(argc, argv, &cfg))
 		return (1);
-
+	gettimeofday(&now, NULL);
+	start = now.tv_sec * 1000000 + now.tv_usec;
+	while (cfg.death_id == SIZE_MAX)	// condition where each philo eats min
+	{
+		gettimeofday(&now, NULL);
+		cfg.time_now = (1000000 * now.tv_sec + now.tv_usec) - start;
+		usleep(FT_UPDATE_INTERVAL);
+	}
+	return (0);
 }
-
-

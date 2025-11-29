@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 11:18:54 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/28 18:41:04 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/29 15:59:16 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,25 @@
 // timestamp_in_ms X is sleeping
 // timestamp_in_ms X is thinking
 // timestamp_in_ms X died
+
+// state = 0 update clock
+static
+int	stt_print_state(uint8_t state, const char *index_str)
+{
+	static const char	*msg[5] = {" died", " is eating", " is thinking", " is sleeping", " has taken a fork"};
+	const char			*array[3] = {index_str, msg[state], NULL};
+
+	ft_writev(STDOUT_FILENO, array, '\n');
+	return (0);
+}
+
 static inline
-int	stt_update_clock(bool eat, long delay, long death_time, const atomic_long *real_time)
+long	stt_update_clock(bool eat, long delay, long death_time, const volatile atomic_long *real_time)
 {
 	static thread_local long	cur_time = 0;
 	static thread_local long	death_timer = 0;
 	long						dt;
 	long						prev_time;
-	const long					interval = FT_UPDATE_INTERVAL + delay / 4;	// 2x nyquist freq
 
 	if (eat == 1)
 		death_timer = 0;
@@ -42,7 +53,7 @@ int	stt_update_clock(bool eat, long delay, long death_time, const atomic_long *r
 		while (cur_time == prev_time)
 		{
 			cur_time = *real_time;
-			usleep(interval);
+			usleep(FT_UPDATE_INTERVAL + delay / 4);	// Gets more precise the closer it is
 		}
 		dt = (cur_time - prev_time);
 		death_timer += dt;
@@ -54,55 +65,60 @@ int	stt_update_clock(bool eat, long delay, long death_time, const atomic_long *r
 }
 
 static
-int	stt_update_sim(bool eat, const t_philo *philo)
+int	stt_update_sim(bool eat, t_philo *philo, const char *index_str)
 {
+	stt_update_clock(0, 0, philo->time.death, philo->time_now);
 	if (eat == 1)
 	{
-		write(STDOUT_FILENO, "A philosopher is eating\n", 24);
-		if (stt_update_clock(eat, philo->time.eat, philo->time.death, philo->time.real))
+		stt_print_state(1, index_str);
+		philo->eat_count--;
+		if (stt_update_clock(eat, philo->time.eat, philo->time.death, philo->time_now))
 			return (1);
 		pthread_mutex_unlock(philo->lfork);
 		pthread_mutex_unlock(philo->rfork);
-		write(STDOUT_FILENO, "A philosopher is sleeping\n", 26);
-		if (stt_update_clock(eat, philo->time.sleep, philo->time.death, philo->time.real))
+		stt_print_state(3, index_str);
+		if (stt_update_clock(0, philo->time.sleep, philo->time.death, philo->time_now))
 			return (1);
-		write(STDOUT_FILENO, "A philosopher is thinking\n", 26);
-	}
-	else
-	{
-		if (stt_update_clock(eat, 0, philo->time.death, philo->time.real))
-			return (1);
+		stt_print_state(2, index_str);
 	}
 	return (0);
 }
 
+// Returns: 0) Alive, 1) Dead
 static
-void	stt_philo_main(const t_philo philo, volatile atomic_size_t *death_id)
+int	stt_philo_main(t_philo philo, const char *index_str)
 {
 	while (true)
 	{
+		if (philo.eat_count == 0)
+			return (0);
+		stt_print_state(4, index_str);
 		pthread_mutex_lock(philo.forks[philo.index & 1]);
-		if (stt_update_sim(0, &philo))
+		if (stt_update_sim(0, &philo, index_str))
 			break ;
+		stt_print_state(4, index_str);
 		pthread_mutex_lock(philo.forks[!(philo.index & 1)]);
-		if (stt_update_sim(1, &philo))
+		if (stt_update_sim(1, &philo, index_str))
 			break ;
-		if (stt_update_sim(0, &philo))
+		if (stt_update_sim(0, &philo, index_str))
 			break ;
 	}
-	*death_id = philo.index;
-	write(STDOUT_FILENO, "A philosopher has died\n", 23);
+	*philo.death_id = philo.index;
+	stt_print_state(0, index_str);
+	return (1);
 }
 
 // Preps the needs structs, preps the messages
 // Then waits until the timer starts
 void	*philo_start(void *varg)
 {
-	const t_philo_cfg	*arg = (t_philo_cfg *)varg;
-	const t_philo		philo = {arg->index, arg->cfg->eat_count, arg->cfg->time,
-		{{arg->cfg->mutex, arg->cfg->mutex + arg->index % arg->cfg->count}}};
+	char				index_str[32];
+	const t_philo		philo = *(t_philo *)varg;
+	const char			*ptr = ft_itoa_stack((int64_t)philo.index, index_str + 31);
 
-	while (*philo.time.real != 0)
+	*philo.death_id = 1;
+	while (*philo.time_now == 0)
 		usleep(FT_UPDATE_INTERVAL);
-	stt_philo_main(philo, &(arg->cfg->death_id));
+	stt_philo_main(philo, ptr);
+	return (NULL);
 }
