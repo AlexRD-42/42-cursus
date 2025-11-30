@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/29 15:56:50 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/29 17:45:47 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(void)
 	struct timeval		now;
 
 	int			argc = 2;
-	const char	*argv[2] = {NULL, "5 1600 100 800"};
+	const char	*argv[2] = {NULL, "4 301 200 100"};
 
 	if (sim_init(argc, argv, &cfg))
 		return (1);
@@ -39,9 +39,9 @@ int	main(void)
 	start = now.tv_sec * 1000000 + now.tv_usec;
 	while (cfg.death_id == SIZE_MAX)	// condition where each philo eats min
 	{
+		usleep(FT_UPDATE_INTERVAL);
 		gettimeofday(&now, NULL);
 		cfg.time_now = (1000000 * now.tv_sec + now.tv_usec) - start;
-		usleep(FT_UPDATE_INTERVAL);
 	}
 	return (0);
 }

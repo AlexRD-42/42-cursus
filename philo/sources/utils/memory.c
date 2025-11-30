@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mem_write.c                                        :+:      :+:    :+:   */
+/*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 17:35:52 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/27 10:29:29 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/30 11:44:53 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,7 @@ void	*ft_memmove(void *vdst, const void *vsrc, size_t length)
 }
 
 // With O1, calls builtin memcpy
-void	\
-*ft_memcpy(void *restrict vdst, const void *restrict vsrc, size_t length)
+void	*ft_memcpy(void *restrict vdst, const void *restrict vsrc, size_t length)
 {
 	unsigned char		*restrict dst;
 	const unsigned char	*restrict src = vsrc;
@@ -92,7 +91,7 @@ void	\
 // With O1, calls builtin memset
 void	*ft_memset(void *vdst, const uint8_t byte, size_t length)
 {
-	uint8_t			*dst;
+	uint8_t	*dst;
 
 	dst = (uint8_t *) vdst;
 	while (length > 0)
@@ -101,4 +100,19 @@ void	*ft_memset(void *vdst, const uint8_t byte, size_t length)
 		length--;
 	}
 	return (vdst);
+}
+
+const
+void	*ft_memchr(const void *vptr, uint8_t byte, size_t length)
+{
+	const uint8_t	*ptr = (const uint8_t *) vptr;
+
+	while (length > 0)
+	{
+		if (*ptr == byte)
+			return (ptr);
+		length--;
+		ptr++;
+	}
+	return (NULL);
 }

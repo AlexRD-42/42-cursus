@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:18 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/29 14:12:04 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/30 13:56:16 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,32 +37,24 @@ typedef struct s_time
 
 typedef struct s_philo
 {
-	const size_t				index;
-	size_t						eat_count;
-	const volatile atomic_long	*time_now;
-	volatile atomic_size_t		*death_id;
-	const t_time				time;
-	union
-	{
-		struct
-		{
-			const pthread_mutex_t	*lfork;
-			const pthread_mutex_t	*rfork;	
-		};
-		const pthread_mutex_t	*forks[2];
-	};
+	const size_t		index;
+	size_t				eat_count;
+	const atomic_long	*time_now;
+	atomic_size_t		*death_id;
+	const t_time		time;
+	pthread_mutex_t		*forks[2];
 }	t_philo;
 
 // 40 bytes per fork
 typedef struct s_shared_cfg
 {
-	size_t					count;
-	size_t					eat_count;
-	atomic_long				time_now;
-	t_time					time;					// Read by philos, written by main				
-	volatile atomic_size_t	death_id;				// Read by main, written by philos
-	pthread_mutex_t			mutex[FT_MAX_PHILO];	// Wtf, 10 kb?
-	pthread_t				threads[FT_MAX_PHILO];
+	size_t			count;
+	size_t			eat_count;
+	atomic_long		time_now;
+	t_time			time;					// Read by philos, written by main				
+	atomic_size_t	death_id;				// Read by main, written by philos
+	pthread_mutex_t	mutex[FT_MAX_PHILO];	// Wtf, 10 kb?
+	pthread_t		threads[FT_MAX_PHILO];
 }	t_shared_cfg;
 
 enum e_philo_state
@@ -72,12 +64,19 @@ enum e_philo_state
 	e_eat = 2
 };
 
-size_t	ft_strlen(const char *str);
-int64_t	ft_strtol(const char *str);
-void	*ft_memcpy(void *restrict dst, const void *restrict src, size_t length);
-int		sim_init(int argc, const char **argv, t_shared_cfg *philo_cfg);
-char	*ft_itoa_stack(int64_t number, char *ptr);
-ssize_t	ft_writev(int fd, const char **vec, char endl);
-void	*philo_start(void *varg);
+size_t		ft_strlen(const char *str);
+int64_t		ft_strtol(const char *str);
+void		*ft_memcpy(void *restrict dst, const void *restrict src, size_t length);
+int			sim_init(int argc, const char **argv, t_shared_cfg *philo_cfg);
+char		*ft_itoa_stack(int64_t number, char *ptr);
+ssize_t		ft_writev(int fd, const char **vec, char endl);
+void		*philo_start(void *varg);
+
+const	\
+char	**ft_strvcpy(
+				char **restrict wdst		/* Test */,
+				const char **restrict vec,
+				char *restrict end\
+			);
 
 #endif

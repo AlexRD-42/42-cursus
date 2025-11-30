@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 12:04:26 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/29 16:06:58 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/29 18:30:19 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,11 @@ int	stt_input_validation(int argc, const char **argv, t_shared_cfg *philos)
 static
 int	stt_let_there_be_life(size_t index, t_shared_cfg *cfg)
 {
-	const pthread_mutex_t	*forks[2] = {cfg->mutex + index, cfg->mutex + (index + 1) % cfg->count};
-	const t_time			time = cfg->time;
-	const t_philo			philo = {.index = index, .eat_count = cfg->eat_count,
-		.time_now = &cfg->time_now, .time = time, .death_id = &cfg->death_id,
-		.lfork = forks[0], .rfork = forks[1]};
+	t_philo	*philo;
 
+	philo = &(t_philo){.index = index, .eat_count = cfg->eat_count,
+		.time_now = &cfg->time_now, .time = cfg->time, .death_id = &cfg->death_id,
+		.forks = {cfg->mutex + index, cfg->mutex + (index + 1) % cfg->count}};
 	cfg->death_id = 0;
 	pthread_create(cfg->threads + index, NULL, philo_start, (void *) &philo);
 	while (cfg->death_id == 0)				// Waits for thread to confirm it has copied the struct

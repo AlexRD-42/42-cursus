@@ -8,7 +8,7 @@ VPATH = sources sources/utils sources/tests
 
 # Files --------------------------------------- #
 LIBS =
-SRCS = main.c loop.c init.c io_buffer.c memory.c str_read.c io_utils.c
+SRCS = main.c loop.c init.c io.c memory.c string.c
 OBJS = $(addprefix $(OBJ_PATH)/, $(SRCS:.c=.o))
 
 # Flags --------------------------------------- #

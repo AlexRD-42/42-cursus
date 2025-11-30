@@ -20,12 +20,96 @@
       "-fno-omit-frame-pointer",
       "-c",
       "-o",
-      "build/obj/test.o",
-      "sources/tests/test.c"
+      "build/obj/main.o",
+      "sources/main.c"
     ],
     "directory": "/home/alex/Github/philosophers/philo",
-    "file": "/home/alex/Github/philosophers/philo/sources/tests/test.c",
-    "output": "/home/alex/Github/philosophers/philo/build/obj/test.o"
+    "file": "/home/alex/Github/philosophers/philo/sources/main.c",
+    "output": "/home/alex/Github/philosophers/philo/build/obj/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Iincludes",
+      "-flto",
+      "-fstrict-aliasing",
+      "-pthread",
+      "-g",
+      "-Wpedantic",
+      "-Wcast-qual",
+      "-Wfloat-equal",
+      "-Wswitch-default",
+      "-Wduplicated-branches",
+      "-Wduplicated-cond",
+      "-Wsign-conversion",
+      "-fsanitize=address,undefined,leak",
+      "-fno-omit-frame-pointer",
+      "-c",
+      "-o",
+      "build/obj/loop.o",
+      "sources/loop.c"
+    ],
+    "directory": "/home/alex/Github/philosophers/philo",
+    "file": "/home/alex/Github/philosophers/philo/sources/loop.c",
+    "output": "/home/alex/Github/philosophers/philo/build/obj/loop.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Iincludes",
+      "-flto",
+      "-fstrict-aliasing",
+      "-pthread",
+      "-g",
+      "-Wpedantic",
+      "-Wcast-qual",
+      "-Wfloat-equal",
+      "-Wswitch-default",
+      "-Wduplicated-branches",
+      "-Wduplicated-cond",
+      "-Wsign-conversion",
+      "-fsanitize=address,undefined,leak",
+      "-fno-omit-frame-pointer",
+      "-c",
+      "-o",
+      "build/obj/init.o",
+      "sources/init.c"
+    ],
+    "directory": "/home/alex/Github/philosophers/philo",
+    "file": "/home/alex/Github/philosophers/philo/sources/init.c",
+    "output": "/home/alex/Github/philosophers/philo/build/obj/init.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Iincludes",
+      "-flto",
+      "-fstrict-aliasing",
+      "-pthread",
+      "-g",
+      "-Wpedantic",
+      "-Wcast-qual",
+      "-Wfloat-equal",
+      "-Wswitch-default",
+      "-Wduplicated-branches",
+      "-Wduplicated-cond",
+      "-Wsign-conversion",
+      "-fsanitize=address,undefined,leak",
+      "-fno-omit-frame-pointer",
+      "-c",
+      "-o",
+      "build/obj/io_buffer.o",
+      "sources/utils/io_buffer.c"
+    ],
+    "directory": "/home/alex/Github/philosophers/philo",
+    "file": "/home/alex/Github/philosophers/philo/sources/utils/io_buffer.c",
+    "output": "/home/alex/Github/philosophers/philo/build/obj/io_buffer.o"
   },
   {
     "arguments": [
@@ -54,6 +138,34 @@
     "directory": "/home/alex/Github/philosophers/philo",
     "file": "/home/alex/Github/philosophers/philo/sources/utils/memory.c",
     "output": "/home/alex/Github/philosophers/philo/build/obj/memory.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Iincludes",
+      "-flto",
+      "-fstrict-aliasing",
+      "-pthread",
+      "-g",
+      "-Wpedantic",
+      "-Wcast-qual",
+      "-Wfloat-equal",
+      "-Wswitch-default",
+      "-Wduplicated-branches",
+      "-Wduplicated-cond",
+      "-Wsign-conversion",
+      "-fsanitize=address,undefined,leak",
+      "-fno-omit-frame-pointer",
+      "-c",
+      "-o",
+      "build/obj/str_read.o",
+      "sources/utils/str_read.c"
+    ],
+    "directory": "/home/alex/Github/philosophers/philo",
+    "file": "/home/alex/Github/philosophers/philo/sources/utils/str_read.c",
+    "output": "/home/alex/Github/philosophers/philo/build/obj/str_read.o"
   },
   {
     "arguments": [
