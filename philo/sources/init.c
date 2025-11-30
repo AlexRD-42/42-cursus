@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 12:04:26 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/29 18:30:19 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/30 17:28:13 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,12 @@ int	stt_let_there_be_life(size_t index, t_shared_cfg *cfg)
 	t_philo	*philo;
 
 	philo = &(t_philo){.index = index, .eat_count = cfg->eat_count,
-		.time_now = &cfg->time_now, .time = cfg->time, .death_id = &cfg->death_id,
+		.time_now = &cfg->time_now, .time = cfg->time, .state = cfg->state + index,
 		.forks = {cfg->mutex + index, cfg->mutex + (index + 1) % cfg->count}};
-	cfg->death_id = 0;
-	pthread_create(cfg->threads + index, NULL, philo_start, (void *) &philo);
-	while (cfg->death_id == 0)				// Waits for thread to confirm it has copied the struct
+	cfg->prev_state[index] = e_idle;
+	cfg->state[index] = e_death;
+	pthread_create(cfg->threads + index, NULL, philo_start, (void *) philo);
+	while (cfg->state[index] == e_death)				// Waits for thread to confirm it has copied the struct
 			usleep(FT_UPDATE_INTERVAL);
 	return (0);
 }
@@ -133,6 +134,5 @@ int	sim_init(int argc, const char **argv, t_shared_cfg *shared_cfg)
 	i = 0;
 	while (i < shared_cfg->count)
 		stt_let_there_be_life(i++, shared_cfg);
-	shared_cfg->death_id = SIZE_MAX;
 	return (0);
 }

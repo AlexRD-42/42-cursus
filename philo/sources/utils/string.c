@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 11:44:46 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/30 13:16:56 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/30 15:32:12 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,20 +81,30 @@ const char	**ft_strvcpy(
 	return (NULL);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dst_size)
+char	*ft_strlcpy(char *restrict dst, const char *restrict src, size_t dst_size)
 {
-	const char	*osrc = src;
+	char		*odst;
+	size_t		src_len;
+	size_t		length;
 
-	while (*src != 0 && dst_size > 1)
-	{
-		*dst++ = *src++;
-		dst_size--;
-	}
+	odst = dst;
+	src_len = 0;
+	while (src[src_len] != 0)
+		src_len++;
 	if (dst_size != 0)
+	{
+		if (dst_size > src_len)
+			length = src_len;
+		else
+			length = dst_size - 1;
+		while (length > 0)
+		{
+			*dst++ = *src++;
+			length--;
+		}
 		*dst = 0;
-	while (*src != 0)
-		src++;
-	return ((size_t)(src - osrc));
+	}
+	return (odst);
 }
 
 size_t	ft_strlcat(char *dst, const char *src, size_t dst_size)

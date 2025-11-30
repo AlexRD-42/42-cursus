@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:50:30 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/30 13:49:20 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/30 16:09:19 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,23 @@ char	*ft_itoa_stt(int64_t number)
 	const int8_t				sign = (number >= 0) - (number < 0);
 
 	ptr = buffer + 31;
+	*ptr = 0;
+	*(--ptr) = sign * (number % 10) + '0';
+	number = sign * (number / 10);
+	while (number != 0)
+	{
+		*(--ptr) = (number % 10) + '0';
+		number /= 10;
+	}
+	if (sign == -1)
+		*(--ptr) = '-';
+	return (ptr);
+}
+
+char	*ft_itoa_r(int64_t number, char *ptr)
+{
+	const int8_t	sign = (number >= 0) - (number < 0);
+
 	*ptr = 0;
 	*(--ptr) = sign * (number % 10) + '0';
 	number = sign * (number / 10);

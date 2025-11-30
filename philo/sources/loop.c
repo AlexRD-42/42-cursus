@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 11:18:54 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/30 13:55:36 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/30 18:20:12 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,111 +26,92 @@
 // timestamp_in_ms X is thinking
 // timestamp_in_ms X died
 
-static
-int	stt_print_state(uint8_t state, const char *index_str, const atomic_long *time_now, const atomic_size_t *death_id)
-{
-	static const char	*msg[5] = {" died", " is eating", " is thinking", " is sleeping", " has taken a fork"};
-	char				buffer[32];
-	const char			*ptr = ft_itoa_stack(*time_now / 1000, buffer + 31);
-
-	if (*death_id == SIZE_MAX || (*death_id != SIZE_MAX && state == 0))
-		ft_writev(STDOUT_FILENO, (const char *[5]){ptr, "ms: ", index_str, msg[state], NULL}, '\n');
-	return (0);
-}
-
 static inline
-long	stt_update_clock(bool eat, long delay, long death_time, const atomic_long *time_now)
+long	stt_update_clock(bool eat, long delay, t_philo *philo)
 {
 	static thread_local long	cur_time = 0;
-	static thread_local long	death_timer = 0;
+	static thread_local long	last_meal = 0;
 	long						dt;
 	long						prev_time;
-	long						elapsed_time;
 
 	if (eat == 1)
-		death_timer = 0;
-	elapsed_time = 0;
-	while (elapsed_time <= delay)
+		last_meal = cur_time;
+	while (delay >= 0)
 	{
 		prev_time = cur_time;
 		while (cur_time == prev_time)
 		{
-			cur_time = *time_now;
+			cur_time = *philo->time_now;
 			usleep(FT_UPDATE_INTERVAL);
 		}
 		dt = (cur_time - prev_time);
-		death_timer += dt;
-		if (death_timer >= death_time)
+		if (cur_time - last_meal >= philo->time.death)
 			return (1);	// DED
-		elapsed_time += dt;
+		delay -= dt;
 	}
 	return (0);
 }
 
 static
-int	stt_update_sim(bool eat, t_philo *philo, const char *index_str)
+int	stt_update_sim(bool eat, t_philo *philo)
 {
-	if (stt_update_clock(0, 10, philo->time.death, philo->time_now))
+	if (stt_update_clock(0, 10, philo))
 		return (1);
 	if (eat == 1)
 	{
-		stt_print_state(1, index_str, philo->time_now, philo->death_id);
+		*philo->state = e_eat;
 		philo->eat_count--;
-		if (stt_update_clock(1, philo->time.eat, philo->time.death, philo->time_now))
+		if (stt_update_clock(1, philo->time.eat, philo))
 			return (1);
 		pthread_mutex_unlock(philo->forks[0]);
-		pthread_mutex_unlock(philo->forks[0]);
-		stt_print_state(3, index_str, philo->time_now, philo->death_id);
-		if (stt_update_clock(0, philo->time.sleep, philo->time.death, philo->time_now))
+		pthread_mutex_unlock(philo->forks[1]);
+		*philo->state = e_sleep;
+		if (stt_update_clock(0, philo->time.sleep, philo))
 			return (1);
-		stt_print_state(2, index_str, philo->time_now, philo->death_id);
+		*philo->state = e_idle;
 	}
 	return (0);
 }
 
 // Returns: 0) Alive, 1) Dead
 static
-int	stt_philo_main(t_philo philo, const char *index_str)
+int	stt_philo_main(t_philo philo)
 {
 	while (true)
 	{
 		if (philo.eat_count == 0)
 			return (0);
-		if (stt_update_sim(0, &philo, index_str))
+		if (stt_update_sim(0, &philo))
 			break ;
 		pthread_mutex_lock(philo.forks[philo.index & 1]);
-		stt_print_state(4, index_str, philo.time_now, philo.death_id);
-		if (stt_update_sim(0, &philo, index_str))
+		*philo.state = e_fork;
+		if (stt_update_sim(0, &philo))
 			break ;
 		pthread_mutex_lock(philo.forks[!(philo.index & 1)]);
-		stt_print_state(4, index_str, philo.time_now, philo.death_id);
-		if (stt_update_sim(1, &philo, index_str))
+		*philo.state = e_fork;
+		if (stt_update_sim(1, &philo))
 			break ;
 	}
-	*philo.death_id = philo.index;
-	stt_print_state(0, index_str, philo.time_now, philo.death_id);
+	*philo.state = e_death;
 	return (1);
 }
 
 void	*philo_start(void *varg)
 {
-	char				index_str[32];
-	const t_philo		philo = *(t_philo *)varg;
-	const char			*ptr = ft_itoa_stack((int64_t)philo.index, index_str + 31);
+	const t_philo	philo = *(t_philo *)varg;
 
-	*philo.death_id = 1;
+	*philo.state = e_idle;
 	while (*philo.time_now == 0)
 		usleep(FT_UPDATE_INTERVAL);
 	if (philo.forks[0] == philo.forks[1])
 	{
 		pthread_mutex_lock(philo.forks[0]);
-		stt_print_state(4, ptr, philo.time_now, philo.death_id);
-		while (stt_update_clock(0, 0, philo.time.death, philo.time_now) == 0)
+		*philo.state = e_fork;
+		while (stt_update_clock(0, 0, &philo) == 0)
 			;
-		*philo.death_id = philo.index;
-		stt_print_state(0, ptr, philo.time_now, philo.death_id);
+		*philo.state = e_death;
 		return (NULL);
 	}
-	stt_philo_main(philo, ptr);
+	stt_philo_main(philo);
 	return (NULL);
 }
