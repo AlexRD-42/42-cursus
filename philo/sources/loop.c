@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 11:18:54 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/30 18:20:12 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/30 18:55:46 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,12 @@
 // timestamp_in_ms X died
 
 static inline
-long	stt_update_clock(bool eat, long delay, t_philo *philo)
+void	stt_update_clock(long delay, t_philo *philo)
 {
 	static thread_local long	cur_time = 0;
-	static thread_local long	last_meal = 0;
 	long						dt;
 	long						prev_time;
 
-	if (eat == 1)
-		last_meal = cur_time;
 	while (delay >= 0)
 	{
 		prev_time = cur_time;
@@ -45,55 +42,41 @@ long	stt_update_clock(bool eat, long delay, t_philo *philo)
 			usleep(FT_UPDATE_INTERVAL);
 		}
 		dt = (cur_time - prev_time);
-		if (cur_time - last_meal >= philo->time.death)
-			return (1);	// DED
 		delay -= dt;
 	}
-	return (0);
 }
 
 static
-int	stt_update_sim(bool eat, t_philo *philo)
+void	stt_update_sim(bool eat, t_philo *philo)
 {
-	if (stt_update_clock(0, 10, philo))
-		return (1);
+	stt_update_clock(0, philo);
 	if (eat == 1)
 	{
 		*philo->state = e_eat;
 		philo->eat_count--;
-		if (stt_update_clock(1, philo->time.eat, philo))
-			return (1);
+		stt_update_clock(philo->time.eat, philo);
 		pthread_mutex_unlock(philo->forks[0]);
 		pthread_mutex_unlock(philo->forks[1]);
 		*philo->state = e_sleep;
-		if (stt_update_clock(0, philo->time.sleep, philo))
-			return (1);
+		stt_update_clock(philo->time.sleep, philo);
 		*philo->state = e_idle;
 	}
-	return (0);
 }
 
-// Returns: 0) Alive, 1) Dead
 static
-int	stt_philo_main(t_philo philo)
+void	stt_philo_main(t_philo philo)
 {
-	while (true)
+	while (philo.eat_count > 0)
 	{
-		if (philo.eat_count == 0)
-			return (0);
-		if (stt_update_sim(0, &philo))
-			break ;
+		stt_update_sim(0, &philo);
 		pthread_mutex_lock(philo.forks[philo.index & 1]);
-		*philo.state = e_fork;
-		if (stt_update_sim(0, &philo))
-			break ;
+		*philo.state = e_fork0;
+		stt_update_sim(0, &philo);
 		pthread_mutex_lock(philo.forks[!(philo.index & 1)]);
-		*philo.state = e_fork;
-		if (stt_update_sim(1, &philo))
-			break ;
+		*philo.state = e_fork1;
+		stt_update_sim(1, &philo);
 	}
-	*philo.state = e_death;
-	return (1);
+	*philo.state = e_done;
 }
 
 void	*philo_start(void *varg)
@@ -106,10 +89,7 @@ void	*philo_start(void *varg)
 	if (philo.forks[0] == philo.forks[1])
 	{
 		pthread_mutex_lock(philo.forks[0]);
-		*philo.state = e_fork;
-		while (stt_update_clock(0, 0, &philo) == 0)
-			;
-		*philo.state = e_death;
+		*philo.state = e_fork0;
 		return (NULL);
 	}
 	stt_philo_main(philo);

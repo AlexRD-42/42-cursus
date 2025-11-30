@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:18 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/30 17:27:35 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/30 18:49:07 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,11 @@ enum e_philo_state
 {
 	e_death = 0,
 	e_idle = 1,
-	e_fork = 2,
-	e_eat = 3,
-	e_sleep = 4
+	e_fork0 = 2,
+	e_fork1 = 3,
+	e_eat = 4,
+	e_sleep = 5,
+	e_done = 6
 };
 
 size_t		ft_strlen(const char *str);

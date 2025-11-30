@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/30 18:36:02 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/30 18:57:01 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	stt_print_state(uint8_t state, size_t index, const char *time_str)
 {
 	char				buffer[32];
 	const char			*ptr = ft_itoa_r((int64_t)index, buffer + 31);
-	static const char	*msg[5] = {" died", " is thinking", " has taken a fork", " is eating",
+	static const char	*msg[6] = {" died", " is thinking", " has taken a fork", " has taken a fork", " is eating",
 		" is sleeping"};
 
 	ft_writev(STDOUT_FILENO, (const char *[5]){time_str, "ms: ", ptr, msg[state], NULL}, '\n');
@@ -48,9 +48,11 @@ int	stt_get_state(t_shared_cfg *cfg)
 	while (i < cfg->count)
 	{
 		cur_state = cfg->state[i];
+		if (cur_state == e_done)
+			continue ;
 		if (cfg->time_now - last_meal[i] > cfg->time.death)
 		{
-			stt_print_state(0, i, time_str);
+			stt_print_state(0, i, time_str);	// DED
 			return (1);
 		}
 		if (cur_state != cfg->prev_state[i])
@@ -72,7 +74,7 @@ int	main(void)
 	struct timeval		now;
 
 	int			argc = 2;
-	const char	*argv[2] = {NULL, "4 301 200 100"};
+	const char	*argv[2] = {NULL, "2 401 200 100 5"};
 
 	if (sim_init(argc, argv, &cfg))
 		return (1);
