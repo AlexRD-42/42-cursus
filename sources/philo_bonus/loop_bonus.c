@@ -1,28 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_bonus.c                                       :+:      :+:    :+:   */
+/*   loop_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/27 12:04:26 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/01 17:35:04 by adeimlin         ###   ########.fr       */
+/*   Created: 2025/12/01 17:36:15 by adeimlin          #+#    #+#             */
+/*   Updated: 2025/12/01 17:36:16 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdint.h>
-#include <stddef.h>
-#include <unistd.h>
-#include <pthread.h>
-#include "philosophers.h"
-
-// Returns: 0) OK, 1) Failure (P)
-int	sim_init(int argc, const char **argv, t_sim_cfg *sim_cfg)
-{
-	size_t	i;
-
-	if (input_validation(argc, argv, &sim_cfg->params) != 0)
-		return (1);
-
-	return (0);
-}

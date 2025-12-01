@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/01 14:28:36 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/01 17:35:37 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,19 @@
 #include "philosophers.h"
 
 // num_ph, die, eat, sleep, eat_count
-// Could do interpolation per update!
-// Each worker has its own internal tick, where then the average speed of 
-// each tick is calculated by the linear interp of each update. Really unnecessary though
-
 static inline
 int	stt_print_state(uint8_t state, size_t index, const char *time_str)
 {
 	char				buffer[32];
 	const char			*ptr = ft_itoa_r((int64_t)index + 1, buffer + 31);
 	static const char	*msg[6] = {" died", " is thinking", " has taken a fork", " has taken a fork", " is eating",
-		" is sleeping"};
+		" is sleeping",};
 
 	ft_writev(STDOUT_FILENO, (const char *[5]){time_str, "ms: ", ptr, msg[state], NULL}, '\n');
 	return (state);
 }
 
-static
+static inline
 int	stt_get_state(t_sim_cfg *cfg)
 {
 	size_t		i;
@@ -54,7 +50,7 @@ int	stt_get_state(t_sim_cfg *cfg)
 		done_count += cur_state == e_done;
 		if (cur_state != e_done && cfg->time_now - last_meal[i] > cfg->params.death)
 			return (stt_print_state(0, i, time_str) == 0);	// DED
-		if (cur_state != cfg->prev_state[i])
+		if (cur_state != e_done && cur_state != cfg->prev_state[i])
 		{
 			if (cur_state == e_eat)
 				last_meal[i] = cfg->time_now;
@@ -72,7 +68,7 @@ int	main(void)
 	struct timeval		now;
 
 	int			argc = 2;
-	const char	*argv[2] = {NULL, "5 401 200 100"};
+	const char	*argv[2] = {NULL, "4 410 200 200 20"};
 
 	if (sim_init(argc, argv, &cfg))
 		return (1);

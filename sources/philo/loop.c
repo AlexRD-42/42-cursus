@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 11:18:54 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/01 14:28:57 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/01 14:47:51 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,35 @@
 #include "philosophers.h"
 
 static inline
+long	stt_update_time(long prev_time, long cur_time, const atomic_long *time_now)
+{
+	while (cur_time == prev_time)
+	{
+		cur_time = *time_now;
+		usleep(FT_UPDATE_INTERVAL);
+	}
+	return (cur_time);
+}
+
+static inline
 void	stt_update_clock(long delay, t_philo *philo)
 {
 	static thread_local long	cur_time = 0;
+	static thread_local long	avg_delay = 0;
 	long						dt;
 	long						prev_time;
 
-	while (delay >= 0)
+	prev_time = cur_time;
+	cur_time = stt_update_time(prev_time, cur_time, philo->time_now);
+	dt = (cur_time - prev_time);
+	avg_delay = avg_delay - avg_delay / 8 + dt / 8;
+	delay -= dt;
+	while (delay >= avg_delay / 2)
 	{
 		prev_time = cur_time;
-		while (cur_time == prev_time)
-		{
-			cur_time = *philo->time_now;
-			usleep(FT_UPDATE_INTERVAL);
-		}
+		cur_time = stt_update_time(prev_time, cur_time, philo->time_now);
 		dt = (cur_time - prev_time);
+		avg_delay = avg_delay - avg_delay / 8 + dt / 8;
 		delay -= dt;
 	}
 }

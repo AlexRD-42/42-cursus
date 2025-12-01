@@ -1,5 +1,6 @@
 # Configuration ------------------------------- #
 NAME = philo
+BONUS_NAME = philo_bonus
 BUILD_PATH = build
 INC_PATH = includes
 OBJ_PATH = $(BUILD_PATH)/obj
@@ -9,6 +10,7 @@ VPATH = sources sources/utils sources/tests sources/philo sources/philo_bonus
 # Files --------------------------------------- #
 LIBS =
 SRCS = input_parsing.c io.c memory.c string.c main.c loop.c init.c
+BONUS_SRCS = input_parsing.c io.c memory.c string.c main_bonus.c loop_bonus.c init_bonus.c
 OBJS = $(addprefix $(OBJ_PATH)/, $(SRCS:.c=.o))
 
 # Flags --------------------------------------- #
@@ -16,7 +18,8 @@ CC = clang
 CFLAGS = -Wall -Wextra $(addprefix -I,$(INC_PATH)) -flto -fstrict-aliasing -pthread
 LFLAGS =
 DEBUG = -g -Wpedantic -Wcast-qual -Wfloat-equal -Wswitch-default -Wduplicated-branches -Wduplicated-cond -Wsign-conversion
-SANITIZERS = -fsanitize=address,undefined,leak -fno-omit-frame-pointer
+# SANITIZERS = -fsanitize=address,undefined,leak -fno-omit-frame-pointer
+SANITIZERS = -fsanitize=undefined -fno-omit-frame-pointer
 FAST = -march=native -O3 -ffast-math
 
 # Pattern Rule -------------------------------- #
@@ -36,6 +39,10 @@ $(BUILD_PATH):
 # Phonies ------------------------------------- #
 all: $(BIN)
 
+bonus: SRCS = $(BONUS_SRCS)
+bonus: NAME = $(BONUS_NAME)
+bonus: clean $(BIN)
+
 debug: CFLAGS += $(DEBUG) $(SANITIZERS)
 debug: clean $(BIN)
 
@@ -46,8 +53,8 @@ clean:
 	rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(BIN)
+	rm -f $(BUILD_PATH)/$(NAME) $(BUILD_PATH)/$(BONUS_NAME) 
 
 re: fclean all
 
-.PHONY: all clean fclean re fast debug
+.PHONY: all clean fclean re fast debug bonus
