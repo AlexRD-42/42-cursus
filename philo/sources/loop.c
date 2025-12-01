@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 11:18:54 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/30 18:55:46 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/11/30 21:55:39 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,6 @@
 #include <sys/time.h>
 #include <pthread.h>
 #include "philosophers.h"
-
-// timestamp_in_ms X has taken a fork
-// timestamp_in_ms X is eating
-// timestamp_in_ms X is sleeping
-// timestamp_in_ms X is thinking
-// timestamp_in_ms X died
 
 static inline
 void	stt_update_clock(long delay, t_philo *philo)
