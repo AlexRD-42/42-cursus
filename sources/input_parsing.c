@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   input_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 12:04:26 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/30 17:28:13 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/01 14:25:21 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include <stddef.h>
 #include <unistd.h>
 #include <pthread.h>
-#include "philosophers.h"
+#include "philosophers_common.h"
 
 // Returns: 0) OK, -1) ARGCOUNT
 static
-int	stt_init_multiple(const char **argv, size_t count, t_shared_cfg *philos)
+int	stt_init_multiple(const char **argv, size_t count, t_params *params)
 {
 	size_t		i;
 	const char	*str;
@@ -38,18 +38,18 @@ int	stt_init_multiple(const char **argv, size_t count, t_shared_cfg *philos)
 			return (-1);
 		i++;
 	}
-	philos->count = (size_t) vars[0];
-	philos->time.death = 1000 * (vars[1]);
-	philos->time.eat = 1000 * (vars[2]);
-	philos->time.sleep = 1000 * (vars[3]);
-	philos->eat_count = (size_t) vars[4];
+	params->count = (size_t) vars[0];
+	params->death = 1000 * (vars[1]);
+	params->eat = 1000 * (vars[2]);
+	params->sleep = 1000 * (vars[3]);
+	params->eat_count = (size_t) vars[4];
 	return (0);
 }
 
 // num_ph, die, eat, sleep, eat_count
 // Returns: 0) OK, -1) ARGCOUNT
 static
-int	stt_init_single(const char *str, t_shared_cfg *philos)
+int	stt_init_single(const char *str, t_params *philos)
 {
 	size_t	i;
 	int64_t	vars[5];
@@ -70,16 +70,15 @@ int	stt_init_single(const char *str, t_shared_cfg *philos)
 	if (*str != 0 || i < 4)
 		return (-1);
 	philos->count = (size_t) vars[0];
-	philos->time.death = 1000 * vars[1];
-	philos->time.eat = 1000 * vars[2];
-	philos->time.sleep = 1000 * vars[3];
+	philos->death = 1000 * vars[1];
+	philos->eat = 1000 * vars[2];
+	philos->sleep = 1000 * vars[3];
 	philos->eat_count = (size_t) vars[4];
 	return (0);
 }
 
 // Returns: 0) OK, -1) ARGCOUNT, -2) EINVAL, -4) Philos exceeded count
-static
-int	stt_input_validation(int argc, const char **argv, t_shared_cfg *philos)
+int	input_validation(int argc, const char **argv, t_params *philos)
 {
 	int	rvalue;
 
@@ -102,37 +101,5 @@ int	stt_input_validation(int argc, const char **argv, t_shared_cfg *philos)
 		write(STDERR_FILENO, "init_error: too many philos\n", 28);
 		return (-4);
 	}
-	return (0);
-}
-
-static
-int	stt_let_there_be_life(size_t index, t_shared_cfg *cfg)
-{
-	t_philo	*philo;
-
-	philo = &(t_philo){.index = index, .eat_count = cfg->eat_count,
-		.time_now = &cfg->time_now, .time = cfg->time, .state = cfg->state + index,
-		.forks = {cfg->mutex + index, cfg->mutex + (index + 1) % cfg->count}};
-	cfg->prev_state[index] = e_idle;
-	cfg->state[index] = e_death;
-	pthread_create(cfg->threads + index, NULL, philo_start, (void *) philo);
-	while (cfg->state[index] == e_death)				// Waits for thread to confirm it has copied the struct
-			usleep(FT_UPDATE_INTERVAL);
-	return (0);
-}
-
-// Returns: 0) OK, 1) Failure (P)
-int	sim_init(int argc, const char **argv, t_shared_cfg *shared_cfg)
-{
-	size_t	i;
-
-	if (stt_input_validation(argc, argv, shared_cfg) != 0)
-		return (1);
-	i = 0;
-	while (i < shared_cfg->count)
-		pthread_mutex_init(shared_cfg->mutex + i++, NULL);
-	i = 0;
-	while (i < shared_cfg->count)
-		stt_let_there_be_life(i++, shared_cfg);
 	return (0);
 }

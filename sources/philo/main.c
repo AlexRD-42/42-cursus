@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/01 12:05:46 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/01 14:28:36 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	stt_print_state(uint8_t state, size_t index, const char *time_str)
 }
 
 static
-int	stt_get_state(t_shared_cfg *cfg)
+int	stt_get_state(t_sim_cfg *cfg)
 {
 	size_t		i;
 	size_t		done_count;
@@ -48,11 +48,11 @@ int	stt_get_state(t_shared_cfg *cfg)
 
 	i = 0;
 	done_count = 0;
-	while (i < cfg->count)
+	while (i < cfg->params.count)
 	{
 		cur_state = cfg->state[i];
 		done_count += cur_state == e_done;
-		if (cur_state != e_done && cfg->time_now - last_meal[i] > cfg->time.death)
+		if (cur_state != e_done && cfg->time_now - last_meal[i] > cfg->params.death)
 			return (stt_print_state(0, i, time_str) == 0);	// DED
 		if (cur_state != cfg->prev_state[i])
 		{
@@ -62,12 +62,12 @@ int	stt_get_state(t_shared_cfg *cfg)
 		}
 		i++;
 	}
-	return (done_count == cfg->count);
+	return (done_count == cfg->params.count);
 }
 
 int	main(void)
 {
-	static t_shared_cfg	cfg = {.time_now = 0};
+	static t_sim_cfg	cfg = {.time_now = 0};
 	long				start;
 	struct timeval		now;
 

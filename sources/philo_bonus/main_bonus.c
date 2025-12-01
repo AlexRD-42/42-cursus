@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/01 12:05:11 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/01 14:31:37 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdatomic.h>
 #include <sys/time.h>
 #include <pthread.h>
-#include "philosophers.h"
+#include "philosophers_bonus.h"
 
 // num_ph, die, eat, sleep, eat_count
 // Could do interpolation per update!
@@ -38,7 +38,7 @@ int	stt_print_state(uint8_t state, size_t index, const char *time_str)
 }
 
 static
-int	stt_get_state(t_shared_cfg *cfg)
+int	stt_get_state(t_sim_cfg *cfg)
 {
 	size_t		i;
 	size_t		done_count;
@@ -67,7 +67,7 @@ int	stt_get_state(t_shared_cfg *cfg)
 
 int	main(void)
 {
-	static t_shared_cfg	cfg = {.time_now = 0};
+	static t_sim_cfg	cfg = {.time_now = 0};
 	long				start;
 	struct timeval		now;
 

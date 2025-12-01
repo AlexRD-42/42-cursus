@@ -5,7 +5,7 @@
       "name": "Debug Executable (LLDB)",
       "type": "lldb",
       "request": "launch",
-      "program": "${workspaceFolder}/philo_bonus/build/philo",
+      "program": "${workspaceFolder}/build/philo",
       "cwd": "${workspaceFolder}",
       "args": [],
       "env": { "LSAN_OPTIONS": "detect_leaks=0" },

@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 11:18:54 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/30 21:55:39 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/01 14:28:57 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ void	stt_update_sim(bool eat, t_philo *philo)
 	if (eat == 1)
 	{
 		*philo->state = e_eat;
-		philo->eat_count--;
-		stt_update_clock(philo->time.eat, philo);
+		philo->params.eat_count--;
+		stt_update_clock(philo->params.eat, philo);
 		pthread_mutex_unlock(philo->forks[0]);
 		pthread_mutex_unlock(philo->forks[1]);
 		*philo->state = e_sleep;
-		stt_update_clock(philo->time.sleep, philo);
+		stt_update_clock(philo->params.sleep, philo);
 		*philo->state = e_idle;
 	}
 }
@@ -60,7 +60,7 @@ void	stt_update_sim(bool eat, t_philo *philo)
 static
 void	stt_philo_main(t_philo philo)
 {
-	while (philo.eat_count > 0)
+	while (philo.params.eat_count > 0)
 	{
 		stt_update_sim(0, &philo);
 		pthread_mutex_lock(philo.forks[philo.index & 1]);
