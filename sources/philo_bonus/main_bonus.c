@@ -6,76 +6,62 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/01 17:36:02 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/02 13:46:45 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <bits/types/struct_timeval.h>
 #include <stdint.h>
 #include <stddef.h>
-#include <stdbool.h>
 #include <unistd.h>
-#include <stdatomic.h>
-#include <sys/time.h>
-#include <pthread.h>
+#include <fcntl.h>
+#include <semaphore.h>
 #include "philosophers_bonus.h"
 
-static inline
-int	stt_print_state(uint8_t state, size_t index, const char *time_str)
-{
-	char				buffer[32];
-	const char			*ptr = ft_itoa_r((int64_t)index, buffer + 31);
-	static const char	*msg[6] = {" died", " is thinking", " has taken a fork", " has taken a fork", " is eating",
-		" is sleeping"};
-
-	ft_writev(STDOUT_FILENO, (const char *[5]){time_str, "ms: ", ptr, msg[state], NULL}, '\n');
-	return (state);
-}
-
 static
-int	stt_monitor_state(t_thread_cfg *cfg, const t_params params)
+int	stt_let_there_be_life(t_params params, pid_t *cpid_list, const char *sem_name)
 {
-	struct timeval	now;
-	long			start;
-	long			last_meal;
-	long 			local_time_now;
+	size_t	i;
+	pid_t	process_id;
 
-	last_meal = 0;
-	gettimeofday(&now, NULL);
-	start = now.tv_sec * 1000000 + now.tv_usec;
-	while (true)
+	i = 0;
+	while (i < params.count)
 	{
-		usleep(FT_UPDATE_INTERVAL);
-		gettimeofday(&now, NULL);
-		local_time_now = (1000000 * now.tv_sec + now.tv_usec) - start;
-		cfg->time_now = local_time_now;
-		if (local_time_now - last_meal > params.death)
-			_exit(stt_print_state(cfg->state, cfg->index, ));
-		if (cur_state != cfg->prev_state[i])
-		{
-			if (cur_state == e_eat)
-				last_meal[i] = cfg->time_now;
-			cfg->prev_state[i] = stt_print_state((uint8_t)cur_state, i, time_str);
-		}
+		process_id = fork();
+		if (process_id == 0)
+			return (philo_start(i, params, sem_name));
+		else if (process_id > 0)
+			cpid_list[i] = process_id;
+		else
+			return (-1);
+		i++;
 	}
+	return (0);
 }
 
-void	*monitor_start(void *varg)
-{
-	const t_philo	philo = *(t_philo *) varg;
-	
-}
+int			argc = 2;
+const char	*argv[2] = {NULL, "5 401 200 100"};
 
 // num_ph, die, eat, sleep, eat_count
 int	main(void)
 {
-	static t_sim_cfg	cfg = {.time_now = 0};
-	long				start;
-	struct timeval		now;
+	int			rvalue;
+	t_params	params;
+	sem_t		*sem;
+	const char	sem_name[8] = "__forks";
+	pid_t		cpid_list[FT_MAX_PHILO];
 
-	int			argc = 2;
-	const char	*argv[2] = {NULL, "5 401 200 100"};
-
-
-	return (0);
+	sem_unlink(sem_name);
+	rvalue = 0;
+	if (init_params(argc, argv, &params) != 0)
+		return (1);
+	sem = sem_open(sem_name, O_CREAT | O_EXCL, 0644, params.count);
+	if (sem == SEM_FAILED)
+		return (1);
+	if (stt_let_there_be_life(params, cpid_list, sem_name))
+		rvalue = 1;
+	while (1)
+		;
+	sem_close(sem);
+	sem_unlink(sem_name);
+	return (rvalue);
 }

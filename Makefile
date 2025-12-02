@@ -9,15 +9,16 @@ VPATH = sources sources/utils sources/tests sources/philo sources/philo_bonus
 
 # Files --------------------------------------- #
 LIBS =
-SRCS = input_parsing.c io.c memory.c string.c main.c loop.c init.c
-BONUS_SRCS = input_parsing.c io.c memory.c string.c main_bonus.c loop_bonus.c init_bonus.c
+# SRCS = init.c io.c memory.c string.c main.c loop.c monitor.c
+SRCS = init.c io.c memory.c string.c main_bonus.c loop_bonus.c monitor_bonus.c
+BONUS_SRCS = input_parsing.c io.c memory.c string.c main_bonus.c loop_bonus.c monitor_bonus.c
 OBJS = $(addprefix $(OBJ_PATH)/, $(SRCS:.c=.o))
 
 # Flags --------------------------------------- #
 CC = clang
 CFLAGS = -Wall -Wextra $(addprefix -I,$(INC_PATH)) -flto -fstrict-aliasing -pthread
 LFLAGS =
-DEBUG = -g -Wpedantic -Wcast-qual -Wfloat-equal -Wswitch-default -Wduplicated-branches -Wduplicated-cond -Wsign-conversion
+DEBUG = -g -Wpedantic -Wcast-qual -Wfloat-equal -Wswitch-default -Wsign-conversion
 # SANITIZERS = -fsanitize=address,undefined,leak -fno-omit-frame-pointer
 SANITIZERS = -fsanitize=undefined -fno-omit-frame-pointer
 FAST = -march=native -O3 -ffast-math

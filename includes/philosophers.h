@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:18 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/01 14:28:20 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/02 14:52:51 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 
 typedef struct s_philo
 {
-	const size_t		index;
+	size_t				index;
 	t_params			params;
 	const atomic_long	*time_now;
-	atomic_char			*state;
+	atomic_uchar		*state;
 	pthread_mutex_t		*forks[2];
 }	t_philo;
 
@@ -37,10 +37,9 @@ typedef struct s_sim_cfg
 	atomic_char		state[FT_MAX_PHILO];	// Read by main, written by philos
 	char			prev_state[FT_MAX_PHILO];
 	pthread_mutex_t	mutex[FT_MAX_PHILO];	// Wtf, 10 kb?
-	pthread_t		threads[FT_MAX_PHILO];
 }	t_sim_cfg;
 
-int			sim_init(int argc, const char **argv, t_sim_cfg *philo_cfg);
-void		*philo_start(void *varg);
+int		monitor_state(t_sim_cfg *cfg);
+void	*philo_start(void *varg);
 
 #endif

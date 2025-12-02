@@ -6,81 +6,47 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/01 17:35:37 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/02 13:47:05 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <bits/types/struct_timeval.h>
 #include <stdint.h>
 #include <stddef.h>
-#include <stdbool.h>
-#include <unistd.h>
-#include <stdatomic.h>
-#include <sys/time.h>
-#include <pthread.h>
 #include "philosophers.h"
 
-// num_ph, die, eat, sleep, eat_count
-static inline
-int	stt_print_state(uint8_t state, size_t index, const char *time_str)
+static
+int	stt_let_there_be_life(size_t index, t_sim_cfg *cfg)
 {
-	char				buffer[32];
-	const char			*ptr = ft_itoa_r((int64_t)index + 1, buffer + 31);
-	static const char	*msg[6] = {" died", " is thinking", " has taken a fork", " has taken a fork", " is eating",
-		" is sleeping",};
+	t_philo		*philo;
+	pthread_t	thread_id;
 
-	ft_writev(STDOUT_FILENO, (const char *[5]){time_str, "ms: ", ptr, msg[state], NULL}, '\n');
-	return (state);
+	philo = &(t_philo){.index = index, .params = cfg->params,
+		.time_now = &cfg->time_now, .state = cfg->state + index,
+		.forks = {cfg->mutex + index, cfg->mutex + (index + 1) % cfg->params.count}};
+	cfg->prev_state[index] = e_idle;
+	cfg->state[index] = e_death;
+	pthread_create(&thread_id, NULL, philo_start, (void *) philo);
+	pthread_detach(thread_id);
+	while (cfg->state[index] == e_death)	// Waits for thread to confirm it has copied the struct
+			usleep(FT_UPDATE_INTERVAL);
+	return (0);
 }
 
-static inline
-int	stt_get_state(t_sim_cfg *cfg)
-{
-	size_t		i;
-	size_t		done_count;
-	static long	last_meal[FT_MAX_PHILO] = {0};
-	const char	*time_str = ft_itoa_stt(cfg->time_now / 1000);
-	char		cur_state;
-
-	i = 0;
-	done_count = 0;
-	while (i < cfg->params.count)
-	{
-		cur_state = cfg->state[i];
-		done_count += cur_state == e_done;
-		if (cur_state != e_done && cfg->time_now - last_meal[i] > cfg->params.death)
-			return (stt_print_state(0, i, time_str) == 0);	// DED
-		if (cur_state != e_done && cur_state != cfg->prev_state[i])
-		{
-			if (cur_state == e_eat)
-				last_meal[i] = cfg->time_now;
-			cfg->prev_state[i] = stt_print_state((uint8_t)cur_state, i, time_str);
-		}
-		i++;
-	}
-	return (done_count == cfg->params.count);
-}
+int			argc = 2;
+const char	*argv[2] = {NULL, "5 401 200 100"};
 
 int	main(void)
 {
 	static t_sim_cfg	cfg = {.time_now = 0};
-	long				start;
-	struct timeval		now;
+	size_t				i;
 
-	int			argc = 2;
-	const char	*argv[2] = {NULL, "4 410 200 200 20"};
-
-	if (sim_init(argc, argv, &cfg))
+	if (init_params(argc, argv, &cfg.params) != 0)
 		return (1);
-	gettimeofday(&now, NULL);
-	start = now.tv_sec * 1000000 + now.tv_usec;
-	while (true)
-	{
-		usleep(FT_UPDATE_INTERVAL);
-		gettimeofday(&now, NULL);
-		cfg.time_now = (1000000 * now.tv_sec + now.tv_usec) - start;
-		if (stt_get_state(&cfg))
-			break ;
-	}
-	return (0);
+	i = 0;
+	while (i < cfg.params.count)
+		pthread_mutex_init(cfg.mutex + i++, NULL);
+	i = 0;
+	while (i < cfg.params.count)
+		stt_let_there_be_life(i++, &cfg);
+	return (monitor_state(&cfg));
 }

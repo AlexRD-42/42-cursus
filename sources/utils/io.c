@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:50:30 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/11/30 16:09:19 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/02 13:42:16 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,25 @@ int64_t	ft_strntol(const char *str, size_t length)
 	while (*str >= '0' && *str <= '9' && str < end)
 		number = number * 10 - (*str++ - '0');
 	return (sign * number);
+}
+
+ssize_t	ft_putnbr_fd(int64_t number, int fd)
+{
+	const int64_t	sign = (number >= 0) - (number < 0);
+	char			buffer[32];
+	char			*ptr;
+
+	if (fd < 0)
+		return (-1);
+	ptr = buffer + 31;
+	*(ptr) = sign * (number % 10) + '0';
+	number = sign * (number / 10);
+	while (number != 0)
+	{
+		*(--ptr) = (number % 10) + '0';
+		number /= 10;
+	}
+	if (sign < 0)
+		*(--ptr) = '-';
+	return (write(fd, ptr, 32 - (uintptr_t)(ptr - buffer)));
 }

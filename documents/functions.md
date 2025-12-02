@@ -44,6 +44,6 @@ waitpid:		wait for a specific child to exit (or change state).
 <semaphore.h>
 sem_open:		open / create a named POSIX semaphore.
 sem_close:		close the handle to a named semaphore.
+sem_unlink:		remove the named semaphore from the system.
 sem_post:		increment (signal) the semaphore.
 sem_wait:		decrement (block until > 0) the semaphore.
-sem_unlink:		remove the named semaphore from the system.

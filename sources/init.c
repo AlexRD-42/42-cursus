@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_parsing.c                                    :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 12:04:26 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/01 14:25:21 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/02 11:14:04 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <limits.h>
 #include <stdint.h>
 #include <stddef.h>
 #include <unistd.h>
@@ -25,7 +26,7 @@ int	stt_init_multiple(const char **argv, size_t count, t_params *params)
 	int64_t		vars[5];
 
 	i = 0;
-	vars[4] = SIZE_MAX;
+	vars[4] = LONG_MAX;
 	while (i < count)
 	{
 		str = argv[i];
@@ -42,7 +43,7 @@ int	stt_init_multiple(const char **argv, size_t count, t_params *params)
 	params->death = 1000 * (vars[1]);
 	params->eat = 1000 * (vars[2]);
 	params->sleep = 1000 * (vars[3]);
-	params->eat_count = (size_t) vars[4];
+	params->eat_count = vars[4];
 	return (0);
 }
 
@@ -55,7 +56,7 @@ int	stt_init_single(const char *str, t_params *philos)
 	int64_t	vars[5];
 
 	i = 0;
-	vars[4] = -1;
+	vars[4] = LONG_MAX;
 	while (i < 5 && *str >= '0' && *str <= '9')	// first char must be a number
 	{
 		vars[i] = ft_strtol(str);
@@ -73,12 +74,12 @@ int	stt_init_single(const char *str, t_params *philos)
 	philos->death = 1000 * vars[1];
 	philos->eat = 1000 * vars[2];
 	philos->sleep = 1000 * vars[3];
-	philos->eat_count = (size_t) vars[4];
+	philos->eat_count = vars[4];
 	return (0);
 }
 
 // Returns: 0) OK, -1) ARGCOUNT, -2) EINVAL, -4) Philos exceeded count
-int	input_validation(int argc, const char **argv, t_params *philos)
+int	init_params(int argc, const char **argv, t_params *philos)
 {
 	int	rvalue;
 

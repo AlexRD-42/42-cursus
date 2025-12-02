@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:10:29 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/01 14:29:51 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/02 13:42:26 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_params
 	long	death;
 	long	eat;
 	long	sleep;
-	size_t	eat_count;
+	long	eat_count;
 }	t_params;
 
 enum e_philo_state
@@ -47,7 +47,9 @@ enum e_philo_state
 	e_done = 6
 };
 
-int			input_validation(int argc, const char **argv, t_params *philos);
+ssize_t	ft_putnbr_fd(int64_t number, int fd);
+
+int			init_params(int argc, const char **argv, t_params *philos);
 size_t		ft_strlen(const char *str);
 char		*ft_strlcpy(char *restrict dst, const char *restrict src, size_t dst_size);
 int64_t		ft_strtol(const char *str);
