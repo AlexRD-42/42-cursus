@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 17:36:15 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/02 15:03:20 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/02 15:58:50 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,28 +92,27 @@ int	stt_philo_main(t_philo philo)
 	return (0);
 }
 
-
 int	philo_start(size_t index, t_params params, const char *sem_name)
 {
 	int				rvalue;
 	t_philo			philo;
 	t_thread_cfg	cfg;
-	sem_t			*sem;
 	pthread_t		thread_id;
 
 	cfg.index = index;
 	cfg.params = params;
 	cfg.time_now = 0;
 	cfg.state = e_idle;
-	sem = sem_open(sem_name, 0);
-	if (sem == SEM_FAILED)
-		exit(1);
+	cfg.sem = sem_open(sem_name, 0);
+	if (cfg.sem == SEM_FAILED)
+		return(1);
 	pthread_create(&thread_id, NULL, monitor_start, (void *) &cfg);
 	pthread_detach(thread_id);
-	philo = (t_philo){cfg.index, cfg.params, &cfg.time_now, &cfg.state, sem};
+	philo = (t_philo){cfg.index, cfg.params, &cfg.time_now, &cfg.state, cfg.sem};
 	while (cfg.time_now == 0)
 		usleep(FT_UPDATE_INTERVAL);
 	rvalue = stt_philo_main(philo);
-	sem_close(sem);
-	exit(rvalue);
+	while (true)
+		;
+	return(rvalue);
 }

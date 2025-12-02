@@ -6,12 +6,13 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 10:59:51 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/02 13:46:21 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/02 15:57:24 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <sys/time.h>
 #include "philosophers_bonus.h"
 #include "philosophers_common.h"
@@ -67,8 +68,8 @@ int	stt_monitor_state(t_thread_cfg *cfg, const char *index_str)
 		usleep(FT_UPDATE_INTERVAL);
 		state = stt_update(cfg, start, index_str);
 	}
-	cfg->time_now = -1;		// Communicates death to philo process
-	return (state == e_death);
+	cfg->time_now = -1;
+	exit(1);
 }
 
 void	*monitor_start(void *varg)

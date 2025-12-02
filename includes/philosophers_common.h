@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:10:29 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/02 13:42:26 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/02 15:05:52 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ enum e_philo_state
 	e_sleep = 5,
 	e_done = 6
 };
-
-ssize_t	ft_putnbr_fd(int64_t number, int fd);
 
 int			init_params(int argc, const char **argv, t_params *philos);
 size_t		ft_strlen(const char *str);
