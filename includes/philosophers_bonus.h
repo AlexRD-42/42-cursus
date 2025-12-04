@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:18 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/02 15:49:27 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:32:59 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_thread_cfg
 	t_params		params;
 	atomic_long		time_now;
 	atomic_uchar	state;
-	sem_t			*sem;
 }	t_thread_cfg;
 
 int		philo_start(size_t index, t_params params, const char *sem_name);

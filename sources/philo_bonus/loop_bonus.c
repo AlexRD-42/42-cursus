@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 17:36:15 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/04 09:54:58 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:34:46 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,18 @@ int	philo_start(size_t index, t_params params, const char *sem_name)
 	t_philo			ph;
 	t_thread_cfg	cfg;
 	pthread_t		thread_id;
+	sem_t			*sem;
 
 	cfg.index = index;
 	cfg.params = params;
 	cfg.time_now = 0;
 	cfg.state = e_idle;
-	cfg.sem = sem_open(sem_name, 0);
-	if (cfg.sem == SEM_FAILED)
+	sem = sem_open(sem_name, 0);
+	if (sem == SEM_FAILED)
 		return (1);
 	pthread_create(&thread_id, NULL, monitor_start, (void *) &cfg);
 	pthread_detach(thread_id);
-	ph = (t_philo){cfg.index, cfg.params, &cfg.time_now, &cfg.state, cfg.sem};
+	ph = (t_philo){cfg.index, cfg.params, &cfg.time_now, &cfg.state, sem};
 	while (cfg.time_now == 0)
 		usleep(FT_UPDATE_INTERVAL);
 	rvalue = stt_philo_main(ph);

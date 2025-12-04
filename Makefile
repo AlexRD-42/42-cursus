@@ -9,8 +9,7 @@ VPATH = sources sources/utils sources/tests sources/philo sources/philo_bonus
 
 # Files --------------------------------------- #
 LIBS =
-# SRCS = init.c clock.c io.c memory.c string.c main.c loop.c monitor.c
-SRCS = init.c clock.c io.c memory.c string.c main_bonus.c loop_bonus.c monitor_bonus.c
+SRCS = init.c clock.c io.c memory.c string.c main.c loop.c monitor.c
 OBJS = $(addprefix $(OBJ_PATH)/, $(SRCS:.c=.o))
 BONUS_SRCS = init.c clock.c io.c memory.c string.c main_bonus.c loop_bonus.c monitor_bonus.c
 BONUS_OBJS = $(addprefix $(OBJ_PATH)/, $(BONUS_SRCS:.c=.o))
@@ -20,8 +19,7 @@ CC = clang
 CFLAGS = -Wall -Wextra $(addprefix -I,$(INC_PATH)) -flto -fstrict-aliasing -pthread
 LFLAGS =
 DEBUG = -g -Wpedantic -Wcast-qual -Wfloat-equal -Wswitch-default -Wsign-conversion
-# SANITIZERS = -fsanitize=address,undefined,leak -fno-omit-frame-pointer
-SANITIZERS = -fsanitize=undefined -fno-omit-frame-pointer
+SANITIZERS = -fsanitize=address,undefined,leak -fno-omit-frame-pointer
 FAST = -march=native -O3 -ffast-math
 
 # Pattern Rule -------------------------------- #
