@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 10:59:51 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/04 09:52:44 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 13:56:07 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	stt_print_state(uint8_t state, long local_time_now, const char *istr)
 	const char			*tstr = ft_itoa_r(local_time_now / 1000, buffer + 31);
 	static const char	*msg[7] = {" died", " is thinking", " has taken a fork",
 		" has taken a fork", " is eating", " is sleeping", NULL};
-	const char			*msg_vec[5] = {tstr, "ms: ", istr, msg[state], NULL};
+	const char			*msg_vec[5] = {tstr, " ", istr, msg[state], NULL};
 
 	ft_writev(STDOUT_FILENO, msg_vec, '\n');
 	return (state);
@@ -43,14 +43,14 @@ int	stt_update(t_thread_cfg *cfg, long start, const char *index_str)
 	local_time_now = (1000000 * now.tv_sec + now.tv_usec) - start;
 	local_cur_state = cfg->state;		// Only one access
 	cfg->time_now = local_time_now;		// Only one access
-	if (local_time_now - last_meal > cfg->params.death)
-		local_cur_state = e_death;
 	if (local_cur_state != prev_state)
 	{
 		if (local_cur_state == e_eat)
 			last_meal = cfg->time_now;
 		prev_state = stt_print_state(local_cur_state, local_time_now, index_str);
 	}
+	if (local_time_now - last_meal > cfg->params.death)
+		local_cur_state = e_death;
 	return (local_cur_state);
 }
 

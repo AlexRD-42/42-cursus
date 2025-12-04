@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:10:29 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/04 09:37:58 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 14:24:57 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@
 #  define FT_MAX_PHILO 256
 # endif
 
-// In microseconds
+# ifndef FT_LAG_COMPENSATION
+#  define FT_LAG_COMPENSATION 5000
+# endif
+
 # ifndef FT_UPDATE_INTERVAL
 #  define FT_UPDATE_INTERVAL 8
 # endif

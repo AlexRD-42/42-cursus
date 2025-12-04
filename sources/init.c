@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 12:04:26 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/02 11:14:04 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 13:58:00 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	stt_init_multiple(const char **argv, size_t count, t_params *params)
 		i++;
 	}
 	params->count = (size_t) vars[0];
-	params->death = 1000 * (vars[1]);
+	params->death = 1000 * (vars[1]) + FT_LAG_COMPENSATION;
 	params->eat = 1000 * (vars[2]);
 	params->sleep = 1000 * (vars[3]);
 	params->eat_count = vars[4];
@@ -71,7 +71,7 @@ int	stt_init_single(const char *str, t_params *philos)
 	if (*str != 0 || i < 4)
 		return (-1);
 	philos->count = (size_t) vars[0];
-	philos->death = 1000 * vars[1];
+	philos->death = 1000 * vars[1] + FT_LAG_COMPENSATION;
 	philos->eat = 1000 * vars[2];
 	philos->sleep = 1000 * vars[3];
 	philos->eat_count = vars[4];

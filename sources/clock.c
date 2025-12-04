@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 09:35:23 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/04 10:19:31 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 13:59:42 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@
 static inline long	\
 stt_update_time(long prev_time, long cur_time, const atomic_long *time_now)
 {
+	cur_time = *time_now;
 	while (cur_time == prev_time)
 	{
-		cur_time = *time_now;
 		usleep(FT_UPDATE_INTERVAL);
+		cur_time = *time_now;
 	}
 	return (cur_time);
 }
