@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/02 15:44:24 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 09:32:02 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	stt_terminate(pid_t *cpid_list, size_t count)
 	i = 0;
 	while (i < count)
 	{
-		kill(cpid_list[i], SIGTERM);
+		kill(cpid_list[i], SIGKILL);
 		i++;
 	}
 	i = 0;
@@ -39,8 +39,8 @@ void	stt_terminate(pid_t *cpid_list, size_t count)
 	}
 }
 
-static
-int	stt_let_there_be_life(t_params params, pid_t *cpid_list, const char *sem_name)
+static int	\
+stt_let_there_be_life(t_params params, pid_t *cpid_list, const char *sem_name)
 {
 	size_t	count;
 	int		status;

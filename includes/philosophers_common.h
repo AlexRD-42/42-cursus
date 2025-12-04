@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:10:29 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/02 15:05:52 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 09:37:58 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,16 @@ typedef struct s_params
 enum e_philo_state
 {
 	e_death = 0,
-	e_idle = 1,
-	e_fork0 = 2,
-	e_fork1 = 3,
-	e_eat = 4,
-	e_sleep = 5,
-	e_done = 6
+	e_idle = 1u,
+	e_fork0 = 2u,
+	e_fork1 = 3u,
+	e_eat = 4u,
+	e_sleep = 5u,
+	e_done = 6u
 };
 
 int			init_params(int argc, const char **argv, t_params *philos);
+int			change_state(uint8_t new_state, atomic_uchar *state, const atomic_long *tnow, long delay);
 size_t		ft_strlen(const char *str);
 char		*ft_strlcpy(char *restrict dst, const char *restrict src, size_t dst_size);
 int64_t		ft_strtol(const char *str);

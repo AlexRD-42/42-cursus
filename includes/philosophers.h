@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:18 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/02 14:52:51 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 09:06:34 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ typedef struct s_sim_cfg
 {
 	t_params		params;
 	atomic_long		time_now;
-	atomic_char		state[FT_MAX_PHILO];	// Read by main, written by philos
-	char			prev_state[FT_MAX_PHILO];
+	atomic_uchar	state[FT_MAX_PHILO];	// Read by main, written by philos
+	unsigned char	prev_state[FT_MAX_PHILO];
 	pthread_mutex_t	mutex[FT_MAX_PHILO];	// Wtf, 10 kb?
 }	t_sim_cfg;
 

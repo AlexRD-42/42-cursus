@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/02 13:47:05 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 09:31:07 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	stt_let_there_be_life(size_t index, t_sim_cfg *cfg)
 
 	philo = &(t_philo){.index = index, .params = cfg->params,
 		.time_now = &cfg->time_now, .state = cfg->state + index,
-		.forks = {cfg->mutex + index, cfg->mutex + (index + 1) % cfg->params.count}};
+		.forks = {cfg->mutex + index,
+		cfg->mutex + (index + 1) % cfg->params.count}};
 	cfg->prev_state[index] = e_idle;
 	cfg->state[index] = e_death;
 	pthread_create(&thread_id, NULL, philo_start, (void *) philo);
@@ -37,9 +38,10 @@ const char	*argv[2] = {NULL, "5 401 200 100"};
 
 int	main(void)
 {
-	static t_sim_cfg	cfg = {.time_now = 0};
+	static t_sim_cfg	cfg;
 	size_t				i;
 
+	cfg.time_now = 0;
 	if (init_params(argc, argv, &cfg.params) != 0)
 		return (1);
 	i = 0;
