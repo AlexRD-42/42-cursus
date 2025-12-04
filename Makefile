@@ -9,10 +9,11 @@ VPATH = sources sources/utils sources/tests sources/philo sources/philo_bonus
 
 # Files --------------------------------------- #
 LIBS =
-# SRCS = init.c io.c memory.c string.c main.c loop.c monitor.c
+# SRCS = init.c clock.c io.c memory.c string.c main.c loop.c monitor.c
 SRCS = init.c clock.c io.c memory.c string.c main_bonus.c loop_bonus.c monitor_bonus.c
-BONUS_SRCS = input_parsing.c io.c memory.c string.c main_bonus.c loop_bonus.c monitor_bonus.c
 OBJS = $(addprefix $(OBJ_PATH)/, $(SRCS:.c=.o))
+BONUS_SRCS = init.c clock.c io.c memory.c string.c main_bonus.c loop_bonus.c monitor_bonus.c
+BONUS_OBJS = $(addprefix $(OBJ_PATH)/, $(BONUS_SRCS:.c=.o))
 
 # Flags --------------------------------------- #
 CC = clang
@@ -41,6 +42,7 @@ $(BUILD_PATH):
 all: $(BIN)
 
 bonus: SRCS = $(BONUS_SRCS)
+bonus: OBJS = $(BONUS_OBJS)
 bonus: NAME = $(BONUS_NAME)
 bonus: clean $(BIN)
 

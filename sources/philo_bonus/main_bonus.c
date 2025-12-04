@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/04 09:32:02 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 10:33:36 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,8 @@ stt_let_there_be_life(t_params params, pid_t *cpid_list, const char *sem_name)
 	return (0);
 }
 
-int			argc = 2;
-const char	*argv[2] = {NULL, "5 401 200 100"};
-
 // num_ph, die, eat, sleep, eat_count
-int	main(void)
+int	main(int argc, const char **argv)
 {
 	int			rvalue;
 	t_params	params;

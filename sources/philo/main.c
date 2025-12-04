@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/04 09:31:07 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:27:56 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,11 @@ int	stt_let_there_be_life(size_t index, t_sim_cfg *cfg)
 	pthread_create(&thread_id, NULL, philo_start, (void *) philo);
 	pthread_detach(thread_id);
 	while (cfg->state[index] == e_death)	// Waits for thread to confirm it has copied the struct
-			usleep(FT_UPDATE_INTERVAL);
+		usleep(FT_UPDATE_INTERVAL);
 	return (0);
 }
 
-int			argc = 2;
-const char	*argv[2] = {NULL, "5 401 200 100"};
-
-int	main(void)
+int	main(int argc, const char **argv)
 {
 	static t_sim_cfg	cfg;
 	size_t				i;

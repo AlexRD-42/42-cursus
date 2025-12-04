@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 11:01:35 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/04 09:31:51 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:26:46 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ static inline
 int	stt_print_state(uint8_t state, size_t index, long time_now)
 {
 	char				buffer[64];
-	const char			*time_str = ft_itoa_r(time_now / 1000, buffer + 31);
-	const char			*index_str = ft_itoa_r((int64_t)index + 1, buffer + 63);
+	const char			*tstr = ft_itoa_r(time_now / 1000, buffer + 31);
+	const char			*istr = ft_itoa_r((int64_t)index + 1, buffer + 63);
 	static const char	*msg[7] = {" died", " is thinking", " has taken a fork",
-		" has taken a fork", " is eating", " is sleeping", ""};
+		" has taken a fork", " is eating", " is sleeping", NULL};
+	const char			*msg_vec[5] = {tstr, "ms: ", istr, msg[state], NULL};
 
-	ft_writev(STDOUT_FILENO, (const char *[5])
-		{time_str, "ms: ", index_str, msg[state], NULL}, '\n');
+	ft_writev(STDOUT_FILENO, msg_vec, '\n');
 	return (state);
 }
 

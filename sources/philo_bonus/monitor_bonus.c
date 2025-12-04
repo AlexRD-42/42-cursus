@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 10:59:51 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/04 09:31:56 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 09:52:44 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@
 #include "philosophers_bonus.h"
 
 static inline
-int	stt_print_state(uint8_t state, long local_time_now, const char *index_str)
+int	stt_print_state(uint8_t state, long local_time_now, const char *istr)
 {
 	char				buffer[32];
-	const char			*time_str = ft_itoa_r((int64_t)local_time_now / 1000, buffer + 31);
+	const char			*tstr = ft_itoa_r(local_time_now / 1000, buffer + 31);
 	static const char	*msg[7] = {" died", " is thinking", " has taken a fork",
-		" has taken a fork", " is eating", " is sleeping", ""};
+		" has taken a fork", " is eating", " is sleeping", NULL};
+	const char			*msg_vec[5] = {tstr, "ms: ", istr, msg[state], NULL};
 
-	ft_writev(STDOUT_FILENO, (const char *[5])
-		{time_str, "ms: ", index_str, msg[state], NULL}, '\n');
+	ft_writev(STDOUT_FILENO, msg_vec, '\n');
 	return (state);
 }
 
