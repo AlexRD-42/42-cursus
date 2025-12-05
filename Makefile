@@ -5,14 +5,14 @@ BUILD_PATH = build
 INC_PATH = includes
 OBJ_PATH = $(BUILD_PATH)/obj
 BIN = $(BUILD_PATH)/$(NAME)
+BONUS_BIN = $(BUILD_PATH)/$(BONUS_NAME)
 VPATH = sources sources/utils sources/tests sources/philo sources/philo_bonus
 
 # Files --------------------------------------- #
 LIBS =
-# SRCS = init.c clock.c io.c memory.c string.c main.c loop.c monitor.c
-SRCS = init.c clock.c io.c memory.c string.c main_bonus.c loop_bonus.c monitor_bonus.c
+SRCS = io.c memory.c string.c input_parsing.c loop.c main.c forks.c monitor.c
 OBJS = $(addprefix $(OBJ_PATH)/, $(SRCS:.c=.o))
-BONUS_SRCS = init.c clock.c io.c memory.c string.c main_bonus.c loop_bonus.c monitor_bonus.c
+BONUS_SRCS = io.c memory.c string.c input_parsing.c loop.c main_bonus.c forks_bonus.c monitor_bonus.c
 BONUS_OBJS = $(addprefix $(OBJ_PATH)/, $(BONUS_SRCS:.c=.o))
 
 # Flags --------------------------------------- #
@@ -27,9 +27,12 @@ FAST = -march=native -O3 -ffast-math
 $(OBJ_PATH)/%.o: %.c | $(OBJ_PATH)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Linking Rule -------------------------------- #
+# Linking Rules ------------------------------- #
 $(BIN): $(OBJS) | $(BUILD_PATH)
 	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBS) $(LFLAGS)
+
+$(BONUS_BIN): $(BONUS_OBJS) | $(BUILD_PATH)
+	$(CC) $(CFLAGS) -o $@ $(BONUS_OBJS) $(LIBS) $(LFLAGS)
 
 # Directory Rule ------------------------------ #
 $(OBJ_PATH):
@@ -38,12 +41,9 @@ $(BUILD_PATH):
 	@mkdir -p $@
 
 # Phonies ------------------------------------- #
-all: $(BIN)
+all: $(BIN) $(BONUS_BIN)
 
-bonus: SRCS = $(BONUS_SRCS)
-bonus: OBJS = $(BONUS_OBJS)
-bonus: NAME = $(BONUS_NAME)
-bonus: clean $(BIN)
+bonus: $(BONUS_BIN)
 
 debug: CFLAGS += $(DEBUG) $(SANITIZERS)
 debug: clean $(BIN)
@@ -52,10 +52,10 @@ fast: CFLAGS += $(FAST)
 fast: clean $(BIN)
 
 clean:
-	rm -f $(OBJS)
+	rm -rf $(OBJ_PATH)
 
 fclean: clean
-	rm -f $(BUILD_PATH)/$(NAME) $(BUILD_PATH)/$(BONUS_NAME) 
+	rm -f $(BIN) $(BONUS_BIN)
 
 re: fclean all
 

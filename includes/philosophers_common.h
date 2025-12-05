@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:10:29 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 10:06:43 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 15:48:47 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,15 @@ typedef struct s_params
 	long	eat_count;
 }	t_params;
 
-typedef struct s_state
+typedef struct s_philo
 {
-	const atomic_long	*time_now;
-	atomic_long			*last_meal;
-	atomic_uchar		*state;
-}	t_state;
+	size_t			index;
+	t_params		params;
+	atomic_long		*time_now;
+	atomic_long		*last_meal;
+	atomic_uchar	*state;
+	void			*forks[2];
+}	t_philo;
 
 enum e_philo_state
 {
@@ -57,9 +60,10 @@ enum e_philo_state
 	e_done = 6u
 };
 
-ssize_t	ft_putnbr(int64_t number);
 int			init_params(int argc, const char **argv, t_params *philos);
-int			update_clock(long delay, const atomic_long *time_now);
+int			philo_loop(t_philo ph);
+void		take_fork(void *ptr);
+void		drop_forks(void *ptr1, void *ptr2);
 size_t		ft_strlen(const char *str);
 char		*ft_strlcpy(char *restrict dst, const char *restrict src, size_t dst_size);
 int64_t		ft_strtol(const char *str);

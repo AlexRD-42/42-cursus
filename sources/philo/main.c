@@ -6,13 +6,24 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 15:05:37 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 15:59:37 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
 #include <stddef.h>
 #include "philosophers.h"
+
+static
+void	*stt_philo_start(void *varg)
+{
+	t_philo	philo;
+
+	philo = *(t_philo *)varg;
+	*philo.state = e_idle;
+	philo_loop(philo);
+	return (NULL);
+}
 
 static
 int	stt_let_there_be_life(size_t index, t_sim_cfg *cfg)
@@ -28,21 +39,17 @@ int	stt_let_there_be_life(size_t index, t_sim_cfg *cfg)
 	cfg->prev_state[index] = e_idle;
 	cfg->state[index] = e_death;
 	cfg->last_meal[index] = 0;
-	pthread_create(&thread_id, NULL, philo_start, (void *) philo);
+	pthread_create(&thread_id, NULL, stt_philo_start, (void *) philo);
 	pthread_detach(thread_id);
 	while (cfg->state[index] == e_death)	// Waits for thread to confirm it has copied the struct
 		usleep(FT_UPDATE_INTERVAL);
 	return (0);
 }
 
-// int			argc = 2;
-// const char	*argv[2] = {NULL, "5 700 200 100"};
-// const char	*argv[2] = {NULL, "3 700 200 100"};
-
 int	main(int argc, const char **argv)
 {
-	static t_sim_cfg	cfg;
 	size_t				i;
+	static t_sim_cfg	cfg;
 
 	cfg.time_now = 0;
 	if (init_params(argc, argv, &cfg.params) != 0)

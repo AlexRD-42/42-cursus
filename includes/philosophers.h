@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:18 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/04 16:27:29 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 15:39:07 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@
 # include <unistd.h>
 # include "philosophers_common.h"
 
-typedef struct s_philo
-{
-	size_t				index;
-	t_params			params;
-	const atomic_long	*time_now;
-	atomic_long			*last_meal;
-	atomic_uchar		*state;
-	pthread_mutex_t		*forks[2];
-}	t_philo;
-
 // 40 bytes per fork
 typedef struct s_sim_cfg
 {
@@ -42,6 +32,5 @@ typedef struct s_sim_cfg
 }	t_sim_cfg;
 
 int		monitor_state(t_sim_cfg *cfg);
-void	*philo_start(void *varg);
 
 #endif

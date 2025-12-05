@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 15:05:08 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 15:50:26 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,37 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdbool.h>
 #include <fcntl.h>
 #include <semaphore.h>
 #include "philosophers_bonus.h"
 #include <sys/wait.h>
+
+static
+int	stt_philo_start(size_t index, t_params params, const char *sem_name)
+{
+	int				rvalue;
+	t_philo			ph;
+	t_thread_cfg	cfg;
+	pthread_t		thread_id;
+	sem_t			*sem;
+
+	cfg.index = index;
+	cfg.params = params;
+	cfg.time_now = 0;
+	cfg.state = e_idle;
+	cfg.last_meal = 0;
+	sem = sem_open(sem_name, 0);
+	if (sem == SEM_FAILED)
+		return (1);
+	ph = (t_philo){cfg.index, cfg.params, &cfg.time_now, &cfg.last_meal, &cfg.state, {sem, sem}};
+	pthread_create(&thread_id, NULL, monitor_start, (void *) &cfg);
+	pthread_detach(thread_id);
+	rvalue = philo_loop(ph);
+	while (true)
+		;
+	return (rvalue);
+}
 
 static
 void	stt_terminate(pid_t *cpid_list, size_t count)
@@ -51,7 +78,7 @@ stt_let_there_be_life(t_params params, pid_t *cpid_list, const char *sem_name)
 	{
 		process_id = fork();
 		if (process_id == 0)
-			exit(philo_start(count, params, sem_name));
+			exit(stt_philo_start(count, params, sem_name));
 		else if (process_id > 0)
 			cpid_list[count] = process_id;
 		else
