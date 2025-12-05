@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   input_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 12:04:26 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 11:08:13 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 18:11:50 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
 #include <stdint.h>
 #include <stddef.h>
-#include <unistd.h>
-#include <pthread.h>
-#include "philosophers_common.h"
+#include "philosophers.h"
 
 // Returns: 0) OK, -1) ARGCOUNT
 static

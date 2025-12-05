@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 09:35:23 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 16:00:03 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 18:24:10 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdbool.h>
 #include <stdatomic.h>
 #include <threads.h>
-#include "philosophers_common.h"
+#include "philosophers.h"
 
 static
 int	stt_update_clock(long delay, const atomic_long *time_now)
@@ -58,11 +58,10 @@ void	stt_delay_eating(t_philo *ph)
 	const long	time_to_eat = ph->params.eat;
 	const long	time_left = ph->params.death - (*ph->time_now - *ph->last_meal);
 	const long	time_slack = time_left - time_to_eat;
-	const long	time_margin = 20000;
 
-	if (time_slack < time_margin || time_left > 3 * ph->params.eat)
+	if (time_slack < FT_TIME_MARGIN || time_left > 3 * ph->params.eat)
 		return ;
-	stt_update_clock(time_slack - time_margin, ph->time_now);
+	stt_update_clock(time_slack - FT_TIME_MARGIN, ph->time_now);
 	return ;
 }
 

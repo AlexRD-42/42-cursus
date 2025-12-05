@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 11:01:35 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 15:41:46 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 18:13:15 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdbool.h>
 #include <sys/time.h>
 #include <unistd.h>
-#include "philosophers.h"
+#include "philosophers_mandatory.h"
 
 // num_ph, die, eat, sleep, eat_count
 static inline

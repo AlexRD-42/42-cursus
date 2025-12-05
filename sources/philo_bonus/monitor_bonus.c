@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 10:59:51 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 15:01:48 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 18:16:01 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <sys/time.h>
-#include "philosophers_common.h"
+#include "philosophers.h"
 #include "philosophers_bonus.h"
 
 static inline

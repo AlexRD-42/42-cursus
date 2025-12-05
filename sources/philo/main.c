@@ -6,13 +6,13 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 15:59:37 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 18:13:10 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
 #include <stddef.h>
-#include "philosophers.h"
+#include "philosophers_mandatory.h"
 
 static
 void	*stt_philo_start(void *varg)
