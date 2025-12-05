@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 11:01:35 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/04 13:55:54 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 16:28:21 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	stt_get_state(t_sim_cfg *cfg, long time_now)
 {
 	size_t		i;
 	size_t		done_count;
-	static long	last_meal[FT_MAX_PHILO] = {0};
 	uint8_t		cur_state;
 
 	i = 0;
@@ -50,10 +49,10 @@ int	stt_get_state(t_sim_cfg *cfg, long time_now)
 		if (cur_state != e_done && cur_state != cfg->prev_state[i])
 		{
 			if (cur_state == e_eat)
-				last_meal[i] = time_now;
+				cfg->last_meal[i] = time_now;
 			cfg->prev_state[i] = stt_print_state(cur_state, i, time_now);
 		}
-		if (cur_state != e_done && time_now - last_meal[i] > cfg->params.death)
+		if (cur_state != e_done && time_now - cfg->last_meal[i] > cfg->params.death)
 			return (stt_print_state(0, i, time_now) == 0);	// DED
 		i++;
 	}

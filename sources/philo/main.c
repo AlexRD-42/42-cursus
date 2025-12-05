@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/04 14:18:47 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 19:12:59 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ int	stt_let_there_be_life(size_t index, t_sim_cfg *cfg)
 
 	philo = &(t_philo){.index = index, .params = cfg->params,
 		.time_now = &cfg->time_now, .state = cfg->state + index,
+		.last_meal = cfg->last_meal + index,
 		.forks = {cfg->mutex + index,
 		cfg->mutex + (index + 1) % cfg->params.count}};
 	cfg->prev_state[index] = e_idle;
 	cfg->state[index] = e_death;
+	cfg->last_meal[index] = 0;
 	pthread_create(&thread_id, NULL, philo_start, (void *) philo);
 	pthread_detach(thread_id);
 	while (cfg->state[index] == e_death)	// Waits for thread to confirm it has copied the struct
@@ -34,7 +36,8 @@ int	stt_let_there_be_life(size_t index, t_sim_cfg *cfg)
 }
 
 int			argc = 2;
-const char	*argv[2] = {NULL, "3 700 200 100"};
+const char	*argv[2] = {NULL, "5 700 200 100"};
+// const char	*argv[2] = {NULL, "3 700 200 100"};
 // int	main(int argc, const char **argv)
 
 int	main(void)

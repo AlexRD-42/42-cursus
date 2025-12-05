@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:10:29 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/04 14:24:57 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 19:51:25 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ enum e_philo_state
 };
 
 int			init_params(int argc, const char **argv, t_params *philos);
+int			stt_update_clock(long delay, const atomic_long *time_now);
 int			change_state(uint8_t new_state, atomic_uchar *state, const atomic_long *tnow, long delay);
 size_t		ft_strlen(const char *str);
 char		*ft_strlcpy(char *restrict dst, const char *restrict src, size_t dst_size);

@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:18 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/04 11:27:49 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/04 16:27:29 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_philo
 	size_t				index;
 	t_params			params;
 	const atomic_long	*time_now;
+	atomic_long			*last_meal;
 	atomic_uchar		*state;
 	pthread_mutex_t		*forks[2];
 }	t_philo;
@@ -35,6 +36,7 @@ typedef struct s_sim_cfg
 	t_params		params;
 	atomic_long		time_now;
 	atomic_uchar	state[FT_MAX_PHILO];
+	atomic_long		last_meal[FT_MAX_PHILO];
 	unsigned char	prev_state[FT_MAX_PHILO];
 	pthread_mutex_t	mutex[FT_MAX_PHILO];
 }	t_sim_cfg;
