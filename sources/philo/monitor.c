@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 11:01:35 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/04 16:28:21 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 09:15:44 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	stt_print_state(uint8_t state, size_t index, long time_now)
 	return (state);
 }
 
-// Returns 1 on death or done
+// Returns 0 on death or done
 static inline
 int	stt_get_state(t_sim_cfg *cfg, long time_now)
 {
@@ -47,37 +47,13 @@ int	stt_get_state(t_sim_cfg *cfg, long time_now)
 		cur_state = cfg->state[i];
 		done_count += cur_state == e_done;
 		if (cur_state != e_done && cur_state != cfg->prev_state[i])
-		{
-			if (cur_state == e_eat)
-				cfg->last_meal[i] = time_now;
 			cfg->prev_state[i] = stt_print_state(cur_state, i, time_now);
-		}
 		if (cur_state != e_done && time_now - cfg->last_meal[i] > cfg->params.death)
-			return (stt_print_state(0, i, time_now) == 0);	// DED
+			return (stt_print_state(0, i, time_now));	// DED
 		i++;
 	}
-	return (done_count == cfg->params.count);
+	return (done_count != cfg->params.count);
 }
-
-// ssize_t	stt_putnbr(int64_t number)
-// {
-// 	const int64_t	sign = (number >= 0) - (number < 0);
-// 	char			buffer[32];
-// 	char			*ptr;
-
-// 	ptr = buffer + 31;
-// 	*ptr-- = '\n';
-// 	*(ptr) = sign * (number % 10) + '0';
-// 	number = sign * (number / 10);
-// 	while (number != 0)
-// 	{
-// 		*(--ptr) = (number % 10) + '0';
-// 		number /= 10;
-// 	}
-// 	if (sign < 0)
-// 		*(--ptr) = '-';
-// 	return (write(STDOUT_FILENO, ptr, 32 - (uintptr_t)(ptr - buffer)));
-// }
 
 int	monitor_state(t_sim_cfg *cfg)
 {
@@ -86,9 +62,8 @@ int	monitor_state(t_sim_cfg *cfg)
 	struct timeval	now;
 
 	gettimeofday(&now, NULL);
-	cfg->time_now = 0;
 	prev_time = now.tv_sec * 1000000 + now.tv_usec;
-	while (stt_get_state(cfg, cfg->time_now) == 0)
+	while (stt_get_state(cfg, cfg->time_now))
 	{
 		usleep(FT_UPDATE_INTERVAL);
 		gettimeofday(&now, NULL);
@@ -98,19 +73,3 @@ int	monitor_state(t_sim_cfg *cfg)
 	}
 	return (0);
 }
-
-// int	monitor_state(t_sim_cfg *cfg)
-// {
-// 	long			start;
-// 	struct timeval	now;
-
-// 	gettimeofday(&now, NULL);
-// 	start = now.tv_sec * 1000000 + now.tv_usec;
-// 	while (stt_get_state(cfg, cfg->time_now) == 0)
-// 	{
-// 		usleep(FT_UPDATE_INTERVAL);
-// 		gettimeofday(&now, NULL);
-// 		cfg->time_now = (1000000 * now.tv_sec + now.tv_usec) - start;
-// 	}
-// 	return (0);
-// }

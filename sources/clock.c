@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 09:35:23 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/04 19:55:22 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 10:00:20 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ stt_update_time(long prev_time, long cur_time, const atomic_long *time_now)
 	return (cur_time);
 }
 
-static inline
-int	stt_update_clock(long delay, const atomic_long *time_now)
+int	update_clock(long delay, const atomic_long *time_now)
 {
 	static thread_local long	cur_time = 0;
 	long						dt;
@@ -48,15 +47,4 @@ int	stt_update_clock(long delay, const atomic_long *time_now)
 		delay -= dt;
 	}
 	return (cur_time < 0);
-}
-
-int	change_state\
-(uint8_t new_state, atomic_uchar *state, const atomic_long *tnow, long delay)
-{
-	if (stt_update_clock(0, tnow))
-		return (1);
-	*state = new_state;
-	if (stt_update_clock(delay, tnow))
-		return (1);
-	return (0);
 }
