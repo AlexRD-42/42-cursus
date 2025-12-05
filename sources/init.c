@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 12:04:26 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/04 13:58:00 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 11:08:13 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	stt_init_single(const char *str, t_params *philos)
 	return (0);
 }
 
-// Returns: 0) OK, -1) ARGCOUNT, -2) EINVAL, -4) Philos exceeded count
+// Returns: 0) OK, -1) ARGCOUNT, -2) EINVAL, -4) Philos outside range
 int	init_params(int argc, const char **argv, t_params *philos)
 {
 	int	rvalue;
@@ -97,9 +97,9 @@ int	init_params(int argc, const char **argv, t_params *philos)
 		write(STDERR_FILENO, "init_error: argument is not a number\n", 37);
 		return (-2);
 	}
-	if (philos->count > FT_MAX_PHILO)
+	if (philos->count == 0 || philos->count > FT_MAX_PHILO)
 	{
-		write(STDERR_FILENO, "init_error: too many philos\n", 28);
+		write(STDERR_FILENO, "init_error: invalid philo count\n", 32);
 		return (-4);
 	}
 	return (0);

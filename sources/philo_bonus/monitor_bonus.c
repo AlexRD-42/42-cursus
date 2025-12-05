@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 10:59:51 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/04 13:56:07 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 15:01:48 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static inline
 int	stt_update(t_thread_cfg *cfg, long start, const char *index_str)
 {
 	struct timeval	now;
-	static long		last_meal = 0;
 	static uint8_t	prev_state = e_idle;
 	long			local_time_now;
 	long			local_cur_state;		// Local vars so that only one atomic access is used
@@ -46,10 +45,10 @@ int	stt_update(t_thread_cfg *cfg, long start, const char *index_str)
 	if (local_cur_state != prev_state)
 	{
 		if (local_cur_state == e_eat)
-			last_meal = cfg->time_now;
+			cfg->last_meal = cfg->time_now;
 		prev_state = stt_print_state(local_cur_state, local_time_now, index_str);
 	}
-	if (local_time_now - last_meal > cfg->params.death)
+	if (local_time_now - cfg->last_meal > cfg->params.death)
 		local_cur_state = e_death;
 	return (local_cur_state);
 }

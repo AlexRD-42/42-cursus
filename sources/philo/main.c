@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 10:48:41 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 15:05:37 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ int	stt_let_there_be_life(size_t index, t_sim_cfg *cfg)
 	return (0);
 }
 
-int			argc = 2;
+// int			argc = 2;
 // const char	*argv[2] = {NULL, "5 700 200 100"};
-const char	*argv[2] = {NULL, "3 700 200 100"};
+// const char	*argv[2] = {NULL, "3 700 200 100"};
 
-int	main(void)
+int	main(int argc, const char **argv)
 {
 	static t_sim_cfg	cfg;
 	size_t				i;
