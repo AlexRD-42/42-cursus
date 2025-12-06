@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 21:09:54 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/06 16:58:12 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	*stt_philo_start(void *varg)
 	t_philo	philo;
 
 	philo = *(t_philo *)varg;
-	*philo.state = e_idle;
 	philo_loop(philo);
 	return (NULL);
 }
@@ -28,21 +27,19 @@ void	*stt_philo_start(void *varg)
 static
 int	stt_let_there_be_life(size_t index, t_sim_cfg *cfg)
 {
-	t_philo		*philo;
-	pthread_t	thread_id;
+	static t_philo	philo[FT_MAX_PHILO];
+	pthread_t		thread_id;
 
-	philo = &(t_philo){.index = index, .params = cfg->params,
+	philo[index] = (t_philo){.index = index, .params = cfg->params,
 		.time_now = &cfg->time_now, .state = cfg->state + index,
 		.last_meal = cfg->last_meal + index,
 		.forks = {cfg->mutex + index,
 		cfg->mutex + (index + 1) % cfg->params.count}};
 	cfg->prev_state[index] = e_idle;
-	cfg->state[index] = e_death;
+	cfg->state[index] = e_idle;
 	cfg->last_meal[index] = 0;
-	pthread_create(&thread_id, NULL, stt_philo_start, (void *) philo);
+	pthread_create(&thread_id, NULL, stt_philo_start, (void *) (philo + index));
 	pthread_detach(thread_id);
-	while (cfg->state[index] == e_death)	// Waits for thread to confirm it has copied the struct
-		usleep(FT_TICK_INTERVAL);
 	return (0);
 }
 

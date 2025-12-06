@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:10:29 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/06 11:31:19 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/06 12:24:11 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <unistd.h>
 
 # ifndef FT_MAX_PHILO
-#  define FT_MAX_PHILO 1024
+#  define FT_MAX_PHILO 512
 # endif
 
 # ifndef FT_LAG_COMPENSATION

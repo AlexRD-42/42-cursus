@@ -27,8 +27,6 @@ BONUS_NAME = philo_bonus
 BONUS_BIN = $(BUILD_PATH)/$(BONUS_NAME) 
 BONUS_SRCS = utils.c input_parsing.c loop.c main_bonus.c forks_bonus.c monitor_bonus.c 
 BONUS_OBJS = $(addprefix $(OBJ_PATH)/, $(BONUS_SRCS:.c=.o))
-$(BONUS_BIN): $(BONUS_OBJS) | $(BUILD_PATH) 
-	$(CC) $(LDFLAGS) -o $@ $(BONUS_OBJS) $(LDLIBS)
 
 # Pattern Rules: Compilation ------------------ #
 $(OBJ_PATH)/%.o: %.c | $(OBJ_PATH)
@@ -37,6 +35,8 @@ $(OBJ_PATH)/%.o: %.c | $(OBJ_PATH)
 # Linking
 $(BIN): $(OBJS) | $(BUILD_PATH)	
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LDLIBS)
+$(BONUS_BIN): $(BONUS_OBJS) | $(BUILD_PATH) 
+	$(CC) $(LDFLAGS) -o $@ $(BONUS_OBJS) $(LDLIBS)
 
 # Directory
 $(OBJ_PATH):

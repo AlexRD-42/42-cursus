@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 09:35:23 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 21:35:41 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/06 16:55:11 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ int	stt_philo_init(t_philo *ph)
 {
 	while (*ph->time_now == 0)
 		usleep(FT_TICK_INTERVAL);
+	*ph->last_meal = *ph->time_now;
 	if (ph->index & 1)
 		stt_update_clock(ph->params.eat / 2, ph->time_now);
-	*ph->last_meal = *ph->time_now;
 	if (ph->index == ph->params.count)
 	{
 		take_fork(ph->forks[0]);
