@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 10:59:51 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 18:16:01 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 22:06:37 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	stt_update(t_thread_cfg *cfg, long start, const char *index_str)
 		prev_state = stt_print_state(local_cur_state, local_time_now, index_str);
 	}
 	if (local_time_now - cfg->last_meal > cfg->params.death)
-		local_cur_state = e_death;
+		local_cur_state = stt_print_state(e_death, local_time_now, index_str);	// DED;
 	return (local_cur_state);
 }
 
@@ -65,7 +65,7 @@ int	stt_monitor_state(t_thread_cfg *cfg, const char *index_str)
 	state = e_idle;
 	while (state != e_death && state != e_done)
 	{
-		usleep(FT_UPDATE_INTERVAL);
+		usleep(FT_TICK_INTERVAL);
 		state = stt_update(cfg, start, index_str);
 	}
 	cfg->time_now = -1;

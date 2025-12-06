@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:10:29 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 18:46:06 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 21:09:58 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,12 @@
 #  define FT_MAX_PHILO 256
 # endif
 
-# ifndef FT_TIME_MARGIN
-#  define FT_TIME_MARGIN 0
-# endif
-
 # ifndef FT_LAG_COMPENSATION
-#  define FT_LAG_COMPENSATION 0
+#  define FT_LAG_COMPENSATION 1000
 # endif
 
-# ifndef FT_UPDATE_INTERVAL
-#  define FT_UPDATE_INTERVAL 8
+# ifndef FT_TICK_INTERVAL
+#  define FT_TICK_INTERVAL 1
 # endif
 
 typedef struct s_params

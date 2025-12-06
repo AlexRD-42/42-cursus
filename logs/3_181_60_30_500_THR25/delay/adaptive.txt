@@ -1,0 +1,12 @@
+Make finished
+26000 1 died
+75470 1 died
+----
+3373 2 died
+14747 2 died
+32922 3 died
+71919 3 died
+----
+----
+----
+done

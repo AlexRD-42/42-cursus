@@ -1,0 +1,19 @@
+Make finished
+30637 2 died
+31962 1 died
+----
+29974 1 died
+30638 2 died
+84025 3 died
+----
+2951 3 died
+14808 1 died
+29975 1 died
+34251 2 died
+43095 2 died
+----
+14988 1 died
+40692 3 died
+77282 1 died
+----
+done

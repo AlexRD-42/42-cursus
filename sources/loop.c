@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 09:35:23 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 18:24:10 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 21:35:41 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	stt_update_clock(long delay, const atomic_long *time_now)
 		cur_time = *time_now;
 		while (cur_time == prev_time)
 		{
-			usleep(FT_UPDATE_INTERVAL);
+			usleep((delay >> (1 + (delay < 1000))) + 1);
 			cur_time = *time_now;
 		}
 		dt = (cur_time - prev_time);
@@ -55,13 +55,14 @@ int	stt_change_state(uint8_t new_state, t_philo *ph, long delay)
 static inline
 void	stt_delay_eating(t_philo *ph)
 {
-	const long	time_to_eat = ph->params.eat;
-	const long	time_left = ph->params.death - (*ph->time_now - *ph->last_meal);
-	const long	time_slack = time_left - time_to_eat;
+	long	time_left;
+	long	time_slack;
 
-	if (time_slack < FT_TIME_MARGIN || time_left > 3 * ph->params.eat)
+	time_left = ph->params.death - (*ph->time_now - *ph->last_meal);
+	time_slack = time_left - ph->params.eat;
+	if (time_slack < 0 || time_left > 3 * ph->params.eat)
 		return ;
-	stt_update_clock(time_slack - FT_TIME_MARGIN, ph->time_now);
+	stt_update_clock(time_slack, ph->time_now);
 	return ;
 }
 
@@ -69,7 +70,7 @@ static inline
 int	stt_philo_init(t_philo *ph)
 {
 	while (*ph->time_now == 0)
-		usleep(FT_UPDATE_INTERVAL);
+		usleep(FT_TICK_INTERVAL);
 	if (ph->index & 1)
 		stt_update_clock(ph->params.eat / 2, ph->time_now);
 	*ph->last_meal = *ph->time_now;

@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 11:01:35 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 18:13:15 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/05 20:56:09 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	monitor_state(t_sim_cfg *cfg)
 	prev_time = now.tv_sec * 1000000 + now.tv_usec;
 	while (stt_get_state(cfg, cfg->time_now))
 	{
-		usleep(FT_UPDATE_INTERVAL);
+		usleep(FT_TICK_INTERVAL);
 		gettimeofday(&now, NULL);
 		dt = (1000000 * now.tv_sec + now.tv_usec) - prev_time;
 		cfg->time_now += dt;
