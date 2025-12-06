@@ -6,12 +6,12 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:18 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 18:10:20 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/06 11:31:10 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
+#ifndef PHILOSOPHERS_MANDATORY_H
+# define PHILOSOPHERS_MANDATORY_H
 
 # include <stdint.h>
 # include <stddef.h>

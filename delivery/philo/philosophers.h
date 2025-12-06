@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:10:29 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/06 11:31:19 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/06 11:30:08 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stddef.h>
 # include <stdatomic.h>
 # include <unistd.h>
+# include <pthread.h>
 
 # ifndef FT_MAX_PHILO
 #  define FT_MAX_PHILO 1024
@@ -60,6 +61,18 @@ enum e_philo_state
 	e_done = 6u
 };
 
+// 40 bytes per fork
+typedef struct s_sim_cfg
+{
+	t_params		params;
+	atomic_long		time_now;
+	atomic_uchar	state[FT_MAX_PHILO];
+	atomic_long		last_meal[FT_MAX_PHILO];
+	unsigned char	prev_state[FT_MAX_PHILO];
+	pthread_mutex_t	mutex[FT_MAX_PHILO];
+}	t_sim_cfg;
+
+int			monitor_state(t_sim_cfg *cfg);
 int			init_params(int argc, const char **argv, t_params *philos);
 int			philo_loop(t_philo ph);
 void		take_fork(void *ptr);

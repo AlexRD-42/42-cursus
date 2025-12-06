@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:10:29 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/06 11:31:19 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/06 11:30:50 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,17 @@ enum e_philo_state
 	e_done = 6u
 };
 
+typedef struct s_thread_cfg
+{
+	size_t			index;
+	t_params		params;
+	atomic_long		time_now;
+	atomic_long		last_meal;
+	atomic_uchar	state;
+}	t_thread_cfg;
+
+int			philo_start(size_t index, t_params params, const char *sem_name);
+void		*monitor_start(void *varg);
 int			init_params(int argc, const char **argv, t_params *philos);
 int			philo_loop(t_philo ph);
 void		take_fork(void *ptr);
