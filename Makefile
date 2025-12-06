@@ -45,13 +45,13 @@ $(BUILD_PATH):
 	@mkdir -p $@
 
 # Phonies ------------------------------------- #
-all: $(BIN)
+all: $(BIN) $(BONUS_BIN)
 
 clean:
 	$(RM) -r $(OBJ_PATH)
 
 fclean:
-	$(RM) -r $(BUILD_PATH)
+	$(RM) $(BIN) $(BONUS_BIN)
 
 re: fclean all
 
