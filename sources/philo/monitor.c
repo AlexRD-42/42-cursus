@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 11:01:35 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 20:56:09 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/06 08:17:54 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,15 @@ int	stt_get_state(t_sim_cfg *cfg, long time_now)
 	while (i < cfg->params.count)
 	{
 		cur_state = cfg->state[i];
-		done_count += cur_state == e_done;
-		if (cur_state != e_done && cur_state != cfg->prev_state[i])
+		if (cur_state == e_done)
+		{
+			done_count++;
+			i++;
+			continue ;
+		}
+		if (cur_state != cfg->prev_state[i])
 			cfg->prev_state[i] = stt_print_state(cur_state, i, time_now);
-		if (cur_state != e_done && time_now - cfg->last_meal[i] > cfg->params.death)
+		if (time_now - cfg->last_meal[i] > cfg->params.death)
 			return (stt_print_state(0, i, time_now));	// DED
 		i++;
 	}

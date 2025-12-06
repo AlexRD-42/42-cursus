@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:10:29 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 21:09:58 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/06 08:12:18 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 # include <unistd.h>
 
 # ifndef FT_MAX_PHILO
-#  define FT_MAX_PHILO 256
+#  define FT_MAX_PHILO 1024
 # endif
 
 # ifndef FT_LAG_COMPENSATION
-#  define FT_LAG_COMPENSATION 1000
+#  define FT_LAG_COMPENSATION 0
 # endif
 
 # ifndef FT_TICK_INTERVAL
@@ -64,13 +64,8 @@ int			init_params(int argc, const char **argv, t_params *philos);
 int			philo_loop(t_philo ph);
 void		take_fork(void *ptr);
 void		drop_forks(void *ptr1, void *ptr2);
-size_t		ft_strlen(const char *str);
-char		*ft_strlcpy(char *restrict dst, const char *restrict src, size_t dst_size);
 int64_t		ft_strtol(const char *str);
-void		*ft_memcpy(void *restrict dst, const void *restrict src, size_t length);
-char		*ft_itoa_stt(int64_t number);
 char		*ft_itoa_r(int64_t number, char *ptr);
 ssize_t		ft_writev(int fd, const char **vec, char endl);
-const char	**ft_strvcpy(char **restrict wdst, const char **restrict vec, char *restrict end);
 
 #endif

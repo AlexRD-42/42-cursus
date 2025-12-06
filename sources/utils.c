@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:50:30 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 09:11:36 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/06 08:11:22 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,50 @@
 # define FT_IO_BUFSIZE 4096
 #endif
 
-// ft_error, ft_write
+static
+size_t	ft_strlen(const char *str)
+{
+	const char	*ostr = str;
 
-const char	**ft_strvcpy(char **restrict wdst,
-	const char **restrict vec, char *restrict end);
+	while (*str != 0)
+		str++;
+	return ((size_t)(str - ostr));
+}
+
+// Copies a null terminated array of strings into a single buffer
+// Returns: NULL on full copy, or the mutated vec array for incomplete copies
+static
+const char	**ft_strvcpy(
+	char **restrict			wdst	/*mutable pointer to a buffer*/,
+	const char **restrict	vec		/*null terminated array of cstrings*/,
+	char *restrict			end		/*end = pointer to the end of the buffer*/)
+{
+	const char	*restrict	src;
+	char		*restrict	dst;
+	size_t					length;
+	size_t					space_left;
+
+	dst = (char *restrict)*wdst;
+	while (*vec != NULL)
+	{
+		src = (const char *restrict)*vec++;
+		length = ft_strlen(src) + (*vec == NULL);
+		while (length > 0)
+		{
+			if (dst >= end)
+				return (vec - 1);
+			space_left = (size_t)(end - dst);
+			if (length < space_left)
+				space_left = length;
+			length -= space_left;
+			while (space_left-- > 0)
+				*dst++ = *src++;
+			*wdst = dst;
+			vec[-1] = src;
+		}
+	}
+	return (NULL);
+}
 
 ssize_t	ft_writev(int fd, const char **vec, char endl)
 {
@@ -51,27 +91,6 @@ ssize_t	ft_writev(int fd, const char **vec, char endl)
 	if (bytes_written < 0)
 		return (-1);
 	return (bytes_total + bytes_written);
-}
-
-// Returned result is not re_entrant
-char	*ft_itoa_stt(int64_t number)
-{
-	static thread_local char	buffer[32];
-	char						*ptr;
-	const int8_t				sign = (number >= 0) - (number < 0);
-
-	ptr = buffer + 31;
-	*ptr = 0;
-	*(--ptr) = sign * (number % 10) + '0';
-	number = sign * (number / 10);
-	while (number != 0)
-	{
-		*(--ptr) = (number % 10) + '0';
-		number /= 10;
-	}
-	if (sign == -1)
-		*(--ptr) = '-';
-	return (ptr);
 }
 
 char	*ft_itoa_r(int64_t number, char *ptr)
@@ -105,40 +124,4 @@ int64_t	ft_strtol(const char *str)
 	while (*str >= '0' && *str <= '9')
 		number = number * 10 - (*str++ - '0');
 	return (sign * number);
-}
-
-int64_t	ft_strntol(const char *str, size_t length)
-{
-	const char	*end = str + length;
-	int64_t		number;
-	int64_t		sign;
-
-	number = 0;
-	while (str < end && (*str == ' ' || (*str >= '\t' && *str <= '\r')))
-		str++;
-	sign = -1 + ((*str == '-') << 1);
-	str += (sign == 1) || (*str == '+');
-	while (*str >= '0' && *str <= '9' && str < end)
-		number = number * 10 - (*str++ - '0');
-	return (sign * number);
-}
-
-ssize_t	ft_putnbr(int64_t number)
-{
-	const int64_t	sign = (number >= 0) - (number < 0);
-	char			buffer[32];
-	char			*ptr;
-
-	ptr = buffer + 31;
-	*ptr-- = '\n';
-	*(ptr) = sign * (number % 10) + '0';
-	number = sign * (number / 10);
-	while (number != 0)
-	{
-		*(--ptr) = (number % 10) + '0';
-		number /= 10;
-	}
-	if (sign < 0)
-		*(--ptr) = '-';
-	return (write(STDOUT_FILENO, ptr, 32 - (uintptr_t)(ptr - buffer)));
 }

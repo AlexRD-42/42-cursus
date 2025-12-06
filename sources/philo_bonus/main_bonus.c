@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 18:21:03 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/06 08:14:47 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int	stt_philo_start(size_t index, t_params params, const char *sem_name)
 	sem = sem_open(sem_name, 0);
 	if (sem == SEM_FAILED)
 		return (1);
-	ph = (t_philo){cfg.index, cfg.params, &cfg.time_now, &cfg.last_meal, &cfg.state, {sem, sem}};
+	ph = (t_philo){cfg.index, cfg.params, &cfg.time_now,
+		&cfg.last_meal, &cfg.state, {sem, sem}};
 	pthread_create(&thread_id, NULL, monitor_start, (void *) &cfg);
 	pthread_detach(thread_id);
 	rvalue = philo_loop(ph);

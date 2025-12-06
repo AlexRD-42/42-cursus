@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 12:04:26 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/05 18:11:50 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/06 08:14:04 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	stt_init_single(const char *str, t_params *philos)
 
 	i = 0;
 	vars[4] = LONG_MAX;
-	while (i < 5 && *str >= '0' && *str <= '9')	// first char must be a number
+	while (i < 5 && *str >= '0' && *str <= '9')
 	{
 		vars[i] = ft_strtol(str);
 		if (vars[i] < 0)

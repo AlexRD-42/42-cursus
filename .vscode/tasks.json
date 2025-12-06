@@ -6,7 +6,7 @@
 		"type": "shell",
 		"command": "bear",
 		"options": {"cwd": "${workspaceFolder}"},
-		"args": ["--output", "build/compile_commands.json", "--","make", "debug"],
+		"args": ["--output", "build/compile_commands.json", "--","make", "asan"],
 		"group": { "kind": "build", "isDefault": true },
     }
   ]
