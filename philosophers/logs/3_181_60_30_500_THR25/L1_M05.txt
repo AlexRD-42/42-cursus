@@ -1,0 +1,62 @@
+Make finished
+11088 3 died
+28141 2 died
+28323 2 died
+28324 2 died
+36277 2 died
+48269 1 died
+50495 3 died
+58210 1 died
+68806 2 died
+73153 2 died
+73151 2 died
+75255 3 died
+79298 2 died
+88456 3 died
+----
+7896 2 died
+11691 2 died
+20128 3 died
+22658 3 died
+27902 3 died
+40616 2 died
+41756 1 died
+45857 2 died
+56879 2 died
+62728 1 died
+66226 3 died
+77428 3 died
+79837 2 died
+86590 1 died
+----
+2954 3 died
+4460 2 died
+13559 1 died
+22779 1 died
+29769 2 died
+30614 3 died
+31031 2 died
+35734 2 died
+37239 1 died
+40795 2 died
+43866 2 died
+45077 3 died
+64894 1 died
+70313 1 died
+73565 1 died
+74356 3 died
+----
+1387 2 died
+4281 2 died
+6390 3 died
+22114 3 died
+22118 3 died
+29288 1 died
+29771 2 died
+31816 1 died
+37058 1 died
+37843 3 died
+66999 2 died
+78090 1 died
+----
+done

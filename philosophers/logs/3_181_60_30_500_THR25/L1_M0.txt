@@ -1,0 +1,38 @@
+Make finished
+4219 3 died
+48749 2 died
+60018 1 died
+87556 3 died
+----
+19826 2 died
+23924 3 died
+37962 1 died
+40252 2 died
+49351 1 died
+50017 2 died
+50019 2 died
+68033 3 died
+73754 1 died
+79237 3 died
+----
+4279 2 died
+8500 1 died
+18197 2 died
+22718 2 died
+38145 1 died
+43324 2 died
+51283 2 died
+57486 1 died
+67969 1 died
+73035 1 died
+73814 3 died
+----
+65926 2 died
+73817 3 died
+81711 1 died
+83699 1 died
+85024 3 died
+86531 2 died
+89124 1 died
+----
+done

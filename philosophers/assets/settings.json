@@ -1,0 +1,60 @@
+{
+    "explorer.compactFolders": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "42header.username": "adeimlin",
+    "42header.email": "adeimlin@student.42porto.com",
+    "editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	"git.enableSmartCommit": true,
+	"git.confirmSync": false,
+	"github.copilot.editor.enableAutoCompletions": false,
+	"workbench.iconTheme": "material-icon-theme",
+	"explorer.confirmDragAndDrop": false,
+	"github.copilot.advanced": {"authPermissions": "minimal"},
+	"explorer.confirmDelete": false,
+	"editor.minimap.enabled": false,
+	"editor.inlineSuggest.enabled": false,
+	
+	"editor.tokenColorCustomizations":
+	{
+		// "support.type", "entity.name.enum", 
+		"textMateRules": // blue #569CD6, cyan #4EC9B0, blue 2 #4FC3F7
+		[
+			{"scope": "comment", "settings": { "foreground": "#4fb44f"}},
+			{"scope": "storage.type", "settings": { "foreground": "#569CD6"}},
+			{"scope": "support.type", "settings": { "foreground": "#569CD6"}},
+			{"scope": "storage.modifier", "settings": { "foreground": "#4B8CDC"}},
+			// {"scope": "entity.name.type, entity.name.class, entity.name.struct", "settings": { "foreground": "#4EC9B0"}},
+			// {"scope": "variable.parameter", "settings": { "foreground": "#ffffff"}},
+			// {"scope": "variable.other.member", "settings": { "foreground": "#9CDCFE"}},
+		]
+	},
+	"editor.semanticTokenColorCustomizations":
+	{
+		"enabled": true,
+		"rules":
+		{
+    		// "type.builtin": "#569CD6",
+			// "class": "#4EC9B0",
+			// "struct": "#4EC9B0",
+			// "property": "#9CDCFE",
+			// "keyword": "#569CD6",
+			// "variable": {"foreground": "#ffffff","fontStyle": ""},
+			// "parameter": {"foreground": "#D4D4D4","fontStyle": ""},
+			// "variable.readonly": {"foreground": "#ffffff","fontStyle": "italic"},
+			// "parameter.readonly": {"foreground": "#D4D4D4","fontStyle": "italic"},
+			// "enum": "#4EC9B0",
+		}
+	},
+	"github.copilot.chat.agent.runTasks": false,
+	"github.copilot.editor.enableCodeActions": false,
+	"github.copilot.chat.codeGeneration.useInstructionFiles": false,
+	"workbench.activityBar.location": "top",
+	"explorer.confirmPasteNative": false,
+	"debug.autoExpandLazyVariables": "on",
+	"terminal.integrated.enableMultiLinePasteWarning": "never",
+	"git.openRepositoryInParentFolders": "never",
+	"C_Cpp.copilotHover": "disabled",
+	"workbench.colorTheme": "Visual Studio Dark - C++",
+	"editor.inlayHints.enabled": "off",
+}
