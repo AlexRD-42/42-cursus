@@ -25,7 +25,7 @@ FAST = -march=native -O3 -ffast-math -fstrict-aliasing
 # Bonus --------------------------------------- # 
 BONUS_NAME = philo_bonus 
 BONUS_BIN = $(BUILD_PATH)/$(BONUS_NAME) 
-BONUS_SRCS = utils.c input_parsing.c loop.c main_bonus.c forks_bonus.c monitor_bonus.c 
+BONUS_SRCS = utils.c input_parsing.c loop.c main_bonus.c forks_bonus.c monitor_bonus.c process_bonus.c
 BONUS_OBJS = $(addprefix $(OBJ_PATH)/, $(BONUS_SRCS:.c=.o))
 
 # Pattern Rules: Compilation ------------------ #

@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 10:59:51 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/06 08:29:07 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/07 11:43:26 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	stt_print_state(uint8_t state, long local_time_now, const char *istr)
 	const char			*msg_vec[5] = {tstr, " ", istr, msg[state], NULL};
 
 	ft_writev(STDOUT_FILENO, msg_vec, '\n');
+	if (state == 6)
+		write(1, "wtf\n", 4);
 	return (state);
 }
 
@@ -41,6 +43,8 @@ int	stt_update(t_thread_cfg *cfg, long start, const char *istr)
 	gettimeofday(&now, NULL);
 	local_time_now = (1000000 * now.tv_sec + now.tv_usec) - start;
 	local_cur_state = cfg->state;		// Only one access
+	if (local_cur_state == e_done)
+		return (e_done);
 	cfg->time_now = local_time_now;		// Only one access
 	if (local_cur_state != prev_state)
 	{
