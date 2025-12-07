@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/06 08:14:47 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/07 10:05:06 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,31 @@ void	stt_philo_extinction(pid_t *cpid_list, size_t count)
 static
 int	stt_philo_start(size_t index, t_params params, const char *sem_name)
 {
-	int				rvalue;
 	t_philo			ph;
 	t_thread_cfg	cfg;
 	pthread_t		thread_id;
 	sem_t			*sem;
 
-	cfg.index = index;
-	cfg.params = params;
-	cfg.time_now = 0;
-	cfg.state = e_idle;
-	cfg.last_meal = 0;
+	cfg = (t_thread_cfg){.index = index, .params = params, .time_now = 0,
+		.last_meal = 0, .state = e_idle};
 	sem = sem_open(sem_name, 0);
 	if (sem == SEM_FAILED)
+	{
+		write(STDERR_FILENO, "init_error: semaphore failed\n", 29);
 		return (1);
+	}
 	ph = (t_philo){cfg.index, cfg.params, &cfg.time_now,
 		&cfg.last_meal, &cfg.state, {sem, sem}};
-	pthread_create(&thread_id, NULL, monitor_start, (void *) &cfg);
-	pthread_detach(thread_id);
-	rvalue = philo_loop(ph);
+	if (pthread_create(&thread_id, NULL, monitor_start, &cfg)
+		|| pthread_detach(thread_id))
+	{
+		write(STDERR_FILENO, "init_error: thread failure\n", 27);
+		return (1);
+	}
+	philo_loop(&ph);
 	while (true)
-		;
-	return (rvalue);
+		usleep(10000);
+	return (1);
 }
 
 static int	\
@@ -85,6 +88,7 @@ stt_let_there_be_life(t_params params, pid_t *cpid_list, const char *sem_name)
 		else
 		{
 			stt_philo_extinction(cpid_list, count);
+			write(STDERR_FILENO, "init_error: fork failure\n", 25);
 			return (1);
 		}
 		count++;
@@ -109,7 +113,10 @@ int	main(int argc, const char **argv)
 		return (1);
 	sem = sem_open(sem_name, O_CREAT | O_EXCL, 0644, params.count);
 	if (sem == SEM_FAILED)
+	{
+		write(STDERR_FILENO, "init_error: semaphore failed\n", 29);
 		return (1);
+	}
 	if (stt_let_there_be_life(params, cpid_list, sem_name))
 		rvalue = 1;
 	sem_close(sem);

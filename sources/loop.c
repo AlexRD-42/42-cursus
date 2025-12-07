@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 09:35:23 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/06 16:55:11 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/07 09:39:03 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,8 @@ void	stt_delay_eating(t_philo *ph)
 
 	time_left = ph->params.death - (*ph->time_now - *ph->last_meal);
 	time_slack = time_left - ph->params.eat;
-	if (time_slack < 0 || time_left > 3 * ph->params.eat)
-		return ;
-	stt_update_clock(time_slack, ph->time_now);
+	if (time_slack > 0)
+		stt_update_clock(time_slack, ph->time_now);
 	return ;
 }
 
@@ -83,28 +82,28 @@ int	stt_philo_init(t_philo *ph)
 	return (0);
 }
 
-int	philo_loop(t_philo ph)
+int	philo_loop(t_philo *ph)
 {
-	if (stt_philo_init(&ph))
+	if (stt_philo_init(ph))
 		return (1);
-	while (ph.params.eat_count > 0)
+	while (ph->params.eat_count > 0)
 	{
-		stt_delay_eating(&ph);
-		take_fork(ph.forks[ph.index & 1]);
-		if (stt_change_state(e_fork0, &ph, 0))
+		take_fork(ph->forks[ph->index & 1]);
+		if (stt_change_state(e_fork0, ph, 0))
 			return (1);
-		take_fork(ph.forks[!(ph.index & 1)]);
-		if (stt_change_state(e_fork1, &ph, 0))
+		take_fork(ph->forks[!(ph->index & 1)]);
+		if (stt_change_state(e_fork1, ph, 0))
 			return (1);
-		if (stt_change_state(e_eat, &ph, ph.params.eat))
+		if (stt_change_state(e_eat, ph, ph->params.eat))
 			return (1);
-		ph.params.eat_count--;
-		drop_forks(ph.forks[0], ph.forks[1]);
-		if (stt_change_state(e_sleep, &ph, ph.params.sleep))
+		ph->params.eat_count--;
+		drop_forks(ph->forks[0], ph->forks[1]);
+		if (stt_change_state(e_sleep, ph, ph->params.sleep))
 			return (1);
-		if (stt_change_state(e_idle, &ph, 0))
+		if (stt_change_state(e_idle, ph, 0))
 			return (1);
+		stt_delay_eating(ph);
 	}
-	stt_change_state(e_done, &ph, 0);
+	stt_change_state(e_done, ph, 0);
 	return (0);
 }

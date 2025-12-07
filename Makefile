@@ -50,7 +50,7 @@ all: $(BIN) $(BONUS_BIN)
 clean:
 	$(RM) -r $(OBJ_PATH)
 
-fclean:
+fclean: clean
 	$(RM) $(BIN) $(BONUS_BIN)
 
 re: fclean all

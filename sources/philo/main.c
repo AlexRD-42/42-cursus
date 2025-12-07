@@ -6,21 +6,19 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 14:21:09 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/06 16:58:12 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/07 09:58:56 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
 #include <stddef.h>
+#include <unistd.h>
 #include "philosophers_mandatory.h"
 
 static
 void	*stt_philo_start(void *varg)
 {
-	t_philo	philo;
-
-	philo = *(t_philo *)varg;
-	philo_loop(philo);
+	philo_loop((t_philo *)varg);
 	return (NULL);
 }
 
@@ -38,8 +36,10 @@ int	stt_let_there_be_life(size_t index, t_sim_cfg *cfg)
 	cfg->prev_state[index] = e_idle;
 	cfg->state[index] = e_idle;
 	cfg->last_meal[index] = 0;
-	pthread_create(&thread_id, NULL, stt_philo_start, (void *) (philo + index));
-	pthread_detach(thread_id);
+	if (pthread_create(&thread_id, NULL, stt_philo_start, philo + index))
+		return (1);
+	if (pthread_detach(thread_id))
+		return (1);
 	return (0);
 }
 
@@ -53,9 +53,21 @@ int	main(int argc, const char **argv)
 		return (1);
 	i = 0;
 	while (i < cfg.params.count)
-		pthread_mutex_init(cfg.mutex + i++, NULL);
+	{
+		if (pthread_mutex_init(cfg.mutex + i++, NULL))
+		{
+			write(STDERR_FILENO, "init_error: mutex failure\n", 26);
+			return (1);
+		}
+	}
 	i = 0;
 	while (i < cfg.params.count)
-		stt_let_there_be_life(i++, &cfg);
+	{
+		if (stt_let_there_be_life(i++, &cfg))
+		{
+			write(STDERR_FILENO, "init_error: thread failure\n", 27);
+			return (1);
+		}
+	}
 	return (monitor_state(&cfg));
 }

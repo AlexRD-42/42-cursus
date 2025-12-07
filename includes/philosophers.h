@@ -6,7 +6,7 @@
 /*   By: adeimlin <adeimlin@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 14:10:29 by adeimlin          #+#    #+#             */
-/*   Updated: 2025/12/06 12:24:11 by adeimlin         ###   ########.fr       */
+/*   Updated: 2025/12/07 10:35:01 by adeimlin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 # ifndef FT_LAG_COMPENSATION
 #  define FT_LAG_COMPENSATION 0
 # endif
+
+// Make the simulation go faster
+# ifndef FT_MS
+#  define FT_MS 1000
+# endif 
 
 # ifndef FT_TICK_INTERVAL
 #  define FT_TICK_INTERVAL 1
@@ -61,7 +66,7 @@ enum e_philo_state
 };
 
 int			init_params(int argc, const char **argv, t_params *philos);
-int			philo_loop(t_philo ph);
+int			philo_loop(t_philo *ph);
 void		take_fork(void *ptr);
 void		drop_forks(void *ptr1, void *ptr2);
 int64_t		ft_strtol(const char *str);
